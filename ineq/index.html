@@ -1,0 +1,395 @@
+<html>
+<head>
+	<title>Quadratic Inequalities</title>
+	<link rel="stylesheet" href="style.css">
+	<meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+	<script>
+	// From http://stackoverflow.com/questions/1527803/generating-random-numbers-in-javascript-in-a-specific-range
+	function getRandomInt(min, max) {
+	    return Math.floor(Math.random() * (max - min + 1)) + min;
+	}
+	
+	// From http://stackoverflow.com/questions/4652468/is-there-a-javascript-function-that-reduces-a-fraction
+	function reduce(numerator,denominator){
+	  var gcd = function gcd(a,b){
+	    return b ? gcd(b, a%b) : a;
+	  };
+	  gcd = gcd(numerator,denominator);
+	  return [numerator/gcd, denominator/gcd];
+	}
+	
+	function trueHalfTheTime() {
+		return getRandomInt(0,1) == 0 ? true : false;
+	}
+	
+	function sign(number) {
+		return number ? number < 0 ? -1 : 1 : 0;
+	}
+	
+	function printExpr(expr) {
+		var out = "";
+		if (expr.length == 0) {
+			out += "0";
+		} else {
+			for (var i = 0; i < expr.length; i++) {
+				if (expr[i] == 0 && expr.length > 1) {
+					if (i+1 < expr.length && expr[i+1] == "x" && expr.length == 2) {
+						out += "0";
+					}
+					i++;
+				} else if ((expr[i] == 1 || expr[i] == -1) && i < expr.length-1 && (expr[i+1] == "x" || expr[i+1] == "x2")) {
+					// If = 1 and the next token is an x2 or x, skip it
+					if (expr[i] == 1 && i != 0)
+						out += " + ";
+					else if (expr[i] == -1)
+						out += " &ndash; ";
+				} else if (!isNaN(expr[i]) && expr[i] < 0) {
+					out += " &ndash; " + Math.abs(expr[i]);
+				} else if (!isNaN(expr[i]) && expr[i] > 0) {
+					if (i != 0)
+						out += " + "
+					out += Math.abs(expr[i]);
+				} else {
+					if (expr[i] == "x2") {
+						out += "<i>x</i><sup>2</sup>";
+					} else if (expr[i] == "x") {
+						out += "<i>x</i>";
+					} else {
+						out += expr[i];
+					}
+				}
+			}
+		}
+		
+		return out;
+	}
+	
+	function changeOptions() {
+		if (document.getElementById("opt-easy").checked) {
+			document.getElementById("opt-standard-form").value = "1";
+			document.getElementById("opt-zero-solution").value = "0.5";
+			document.getElementById("opt-num-start").value = "1";
+			document.getElementById("opt-num-end").value = "6";
+			document.getElementById("opt-denom-start").value = "1";
+			document.getElementById("opt-denom-end").value = "1";
+			document.getElementById("opt-diff-squares").value = "0";
+			document.getElementById("opt-perfect-square").value = "0";
+			document.getElementById("opt-gcf").value = "0";
+			document.getElementById("opt-gcf-start").value = "1";
+			document.getElementById("opt-gcf-end").value = "1";
+		} else if (document.getElementById("opt-medium").checked) {
+			document.getElementById("opt-standard-form").value = "1";
+			document.getElementById("opt-zero-solution").value = "0.33";
+			document.getElementById("opt-num-start").value = "1";
+			document.getElementById("opt-num-end").value = "6";
+			document.getElementById("opt-denom-start").value = "1";
+			document.getElementById("opt-denom-end").value = "2";
+			document.getElementById("opt-diff-squares").value = "0.1";
+			document.getElementById("opt-perfect-square").value = "0";
+			document.getElementById("opt-gcf").value = "0";
+			document.getElementById("opt-gcf-start").value = "1";
+			document.getElementById("opt-gcf-end").value = "1";
+		} else if (document.getElementById("opt-hard").checked) {
+			document.getElementById("opt-standard-form").value = "0.5";
+			document.getElementById("opt-zero-solution").value = "0.33";
+			document.getElementById("opt-num-start").value = "1";
+			document.getElementById("opt-num-end").value = "9";
+			document.getElementById("opt-denom-start").value = "1";
+			document.getElementById("opt-denom-end").value = "3";
+			document.getElementById("opt-diff-squares").value = "0.1";
+			document.getElementById("opt-perfect-square").value = "0.1";
+			document.getElementById("opt-gcf").value = "0.5";
+			document.getElementById("opt-gcf-start").value = "2";
+			document.getElementById("opt-gcf-end").value = "3";
+		} else if (document.getElementById("opt-challenge").checked) {
+			document.getElementById("opt-standard-form").value = "0.5";
+			document.getElementById("opt-zero-solution").value = "0.33";
+			document.getElementById("opt-num-start").value = "1";
+			document.getElementById("opt-num-end").value = "9";
+			document.getElementById("opt-denom-start").value = "1";
+			document.getElementById("opt-denom-end").value = "6";
+			document.getElementById("opt-diff-squares").value = "0.2";
+			document.getElementById("opt-perfect-square").value = "0.2";
+			document.getElementById("opt-gcf").value = "0.5";
+			document.getElementById("opt-gcf-start").value = "2";
+			document.getElementById("opt-gcf-end").value = "5";
+		}
+	}
+	
+	function generateProblem() {
+		document.getElementById("log").innerHTML = "";
+		
+		// Load options
+		var standardForm = parseFloat(document.getElementById("opt-standard-form").value);
+		var probZeroSolution = parseFloat(document.getElementById("opt-zero-solution").value);
+		var bRange = [parseInt(document.getElementById("opt-num-start").value), parseInt(document.getElementById("opt-num-end").value)];
+		var aRange = [parseInt(document.getElementById("opt-denom-start").value), parseInt(document.getElementById("opt-denom-end").value)];
+		var probDiffSquares = parseFloat(document.getElementById("opt-diff-squares").value);
+		var probPerfectSquare = parseFloat(document.getElementById("opt-perfect-square").value);
+		var probGCF = parseFloat(document.getElementById("opt-gcf").value);
+		var gcfRange = [parseInt(document.getElementById("opt-gcf-start").value), parseInt(document.getElementById("opt-gcf-end").value)];
+		
+		// Generate problem
+		var a1, a2, b1, b2;
+		
+		// Check if whole numbers are allowed by checking if '1' is in the denominator range
+		var allowWholeNumbers = false;
+		if (1 >= aRange[0] && 1 <= aRange[1]) {
+			allowWholeNumbers = true;
+		}
+				
+		// Generate values for a1, b1, a2, b2
+		do {
+			a1 = getRandomInt(aRange[0], aRange[1]);
+			a2 = getRandomInt(aRange[0], aRange[1]);
+			b1 = getRandomInt(bRange[0], bRange[1]);
+			b2 = getRandomInt(bRange[0], bRange[1]);
+			
+			
+			if (Math.random() < probZeroSolution) {
+				trueHalfTheTime() ? b1 = 0 : b2 = 0;
+			}
+			
+		} while ((!allowWholeNumbers && ((b1/a1==b1/a1>>0 && b1/a1!=0) || (b2/a2==b2/a2>>0 && b2/a2!=0))));
+		
+		// Reduce
+		var r1 = reduce(b1,a1);
+		var r2 = reduce(b2,a2);
+		b1 = r1[0];
+		a1 = r1[1];
+		b2 = r2[0];
+		a2 = r2[1];
+		
+		// Add signs
+		var s = getRandomInt(0,2);
+		if (s == 0) {
+			// Both positive
+		} else if (s == 1) {
+			// One solution will be positive, one negative
+			trueHalfTheTime() ? b1 *= -1 : b2 *= -1;
+		} else if (s == 2) {
+			// Both negative
+			b1 *= -1;
+			b2 *= -1;
+		}
+		
+		if (Math.random() < probDiffSquares && b1/a1 != 0 && b2/a2 != 0) {
+			a2 = a1;
+			b2 = -b1;
+			document.getElementById("log").innerHTML += "Generated difference of squares<br/>";
+		} else if (Math.random() < probPerfectSquare && b1/a1 != 0 && b2/a2 != 0) {
+			a2 = a1;
+			b2 = b1;
+			document.getElementById("log").innerHTML += "Generated perfect square<br/>";
+		}
+		
+		document.getElementById("log").innerHTML += "<b>Generated factors:</b> ("+a1+"x + "+b1+")("+a2+"x + "+b2+")<br/>";
+		
+		// Add GCF if required
+		if (Math.random() < probGCF) {
+			var gcf = getRandomInt(gcfRange[0], gcfRange[1]);
+			if (trueHalfTheTime()) {
+				b1 = b1 * gcf;
+				a1 = a1 * gcf;
+			} else {
+				b2 = b2 * gcf;
+				a2 = a2 * gcf;				
+			}
+			document.getElementById("log").innerHTML += "Added GCF of "+gcf+": ("+a1+"x + "+b1+")("+a2+"x + "+b2+")<br/>";
+		}
+		
+		// Pretty print problem
+		var leftSide = new Array();
+		var rightSide = new Array();
+		var a = a1*a2;
+		var b = (a1*b2 + b1*a2);
+		var c = b1*b2;
+		var inequalitySign = getRandomInt(0,3);
+		
+		if (Math.random() < standardForm) {
+			leftSide.push(a);
+			leftSide.push("x2");
+			leftSide.push(b);
+			leftSide.push("x");
+			leftSide.push(c);
+		} else {
+			if (trueHalfTheTime()) {
+				leftSide.push(a);
+				leftSide.push("x2");
+			} else {
+				rightSide.push(-a);
+				rightSide.push("x2");
+			}
+			
+			if (trueHalfTheTime()) {
+				leftSide.push(b);
+				leftSide.push("x");
+			} else {
+				rightSide.push(-b);
+				rightSide.push("x");
+			}
+			
+			if (trueHalfTheTime()) {
+				leftSide.push(c);
+			} else {
+				rightSide.push(-c);
+			}
+		}
+		
+		document.getElementById("log").innerHTML += "Left side tokens: " + leftSide + "<br>";
+		document.getElementById("log").innerHTML += "Right side tokens: " + rightSide + "<br>";
+		
+		var out = printExpr(leftSide);
+		
+		if (inequalitySign == 0)
+			out += " &gt; ";
+		else if (inequalitySign == 1)
+			out += " &ge; ";
+		else if (inequalitySign == 2)
+			out += " &lt; ";
+		else if (inequalitySign == 3)
+			out += " &le; ";
+		
+		out += printExpr(rightSide);
+		
+		document.getElementById('problem-box').innerHTML = out;
+		
+		//Put in descending order
+		if (b1/a1 < b2/a2) {
+			var n3 = b1;
+			var d3 = a1;
+			b1 = b2;
+			a1 = a2;
+			b2 = n3;
+			a2 = d3;
+		}
+		
+		// Flip signs of fractions to create solution -b/a
+		if (b1 < 0 || a1 < 0) {
+			// If either numerator or denominator is negative, make fraction positive
+			b1 = Math.abs(b1);
+			a1 = Math.abs(a1);
+		} else {
+			// Else, make numerator negative and denominator positive
+			b1 = -Math.abs(b1);
+			a1 = Math.abs(a1);
+		}
+		if (b2 < 0 || a2 < 0) {
+			// If either numerator or denominator is negative, make fraction positive
+			b2 = Math.abs(b2);
+			a2 = Math.abs(a2);
+		} else {
+			// Else, make numerator negative and denominator positive
+			b2 = -Math.abs(b2);
+			a2 = Math.abs(a2);
+		}
+		
+		// Reduce and pretty print solution
+		r = reduce(b1,a1);
+		b1 = Math.abs(r[0]) * sign(b1);
+		a1 = Math.abs(r[1]) * sign(a1);
+		var s1;
+		if (a1 == 1) {
+			s1 = b1;
+		} else if (b1 == 0) {
+			s1 = "0";
+		} else {
+			s1 = "<sup>"+b1+"</sup>" + "&frasl;" + "<sub>"+a1+"</sub>";
+		}
+		
+		// Reduce and pretty print solution
+		r = reduce(b2,a2);
+		b2 = Math.abs(r[0]) * sign(b2);
+		a2 = Math.abs(r[1]) * sign(a2);
+		var s2;
+		if (a2 == 1) {
+			s2 = b2;
+		} else if (b2 == 0) {
+			s2 = "0";
+		} else {
+			s2 = "<sup>"+b2+"</sup>" + "&frasl;" + "<sub>"+a2+"</sub>";
+		}
+		
+		document.getElementById("log").innerHTML += "Solution 1: "+b1+"/"+a1+"<br/>";
+		document.getElementById("log").innerHTML += "Solution 2: "+b2+"/"+a2+"<br/>";
+		
+		var solution;
+		switch (inequalitySign) {
+		case 0:
+			if (sign(a) == 1) {
+				solution = "<i>x</i> &lt; "+s1+" or "+"<i>x</i> &gt; "+s2;
+			} else {
+				solution = "<i>x</i> &gt; "+s1+" and "+"<i>x</i> &lt; "+s2;
+			}
+			break;
+		case 1:
+			if (sign(a) == 1) {
+				solution = "<i>x</i> &le; "+s1+" or "+"<i>x</i> &ge; "+s2;
+			} else {
+				solution = "<i>x</i> &ge; "+s1+" and "+"<i>x</i> &le; "+s2;
+			}
+			break;
+		case 2:
+			if (sign(a) == 1) {
+				solution = "<i>x</i> &gt; "+s1+" and "+"<i>x</i> &lt; "+s2;
+			} else {
+				solution = "<i>x</i> &lt; "+s1+" or "+"<i>x</i> &gt; "+s2;
+			}
+			break;
+		case 3:
+			if (sign(a) == 1) {
+				solution = "<i>x</i> &ge; "+s1+" and "+"<i>x</i> &le; "+s2;
+			} else {
+				solution = "<i>x</i> &le; "+s1+" or "+"<i>x</i> &ge; "+s2;
+			}
+			break;
+		default:
+			break;
+		}
+		
+		document.getElementById('solution-box').innerHTML = solution;
+	}
+	</script>
+</head>
+<body onload="changeOptions();">
+	<div id="wrapper">
+		<p>Solve:</p>
+		<div id="problem-box"></div>
+		
+		<p>Solution:</p>
+		<div id="solution-box"></div>
+		
+		<div id="options">
+		<p>Problem parameters:</p>
+		<form>
+		
+		<label><input type="radio" id="opt-easy" name="level" onclick="changeOptions();" checked> Easy</label><br/>
+		<label><input type="radio" id="opt-medium" name="level" onclick="changeOptions();"> Medium</label><br/>
+		<label><input type="radio" id="opt-hard" name="level" onclick="changeOptions();"> Hard</label><br/>
+		<label><input type="radio" id="opt-challenge" name="level" onclick="changeOptions();"> Challenge</label><br/><br/>
+		
+		<label><span class="label">Standard form</span><input type="number" id="opt-standard-form" min="0" max="1" step="0.1"></label>
+		<br/>
+		<label><span class="label">A solution = 0</span><input type="number" id="opt-zero-solution" min="0" max="1" step="0.1"></label>
+		<br/>
+		<label><span class="label">Num. range</span><input type="number" id="opt-num-start" min="1" max="100" step="1"></label><label> to <input type="number" id="opt-num-end" min="1" max="100" step="1"></label>
+		<br/>
+		<label><span class="label">Denom. range</span><input type="number" id="opt-denom-start" min="1" max="100" step="1"></label><label> to <input type="number" id="opt-denom-end" min="1" max="100" step="1"></label>
+		<br/>
+		<label><span class="label">Diff. of Squares</span><input type="number" id="opt-diff-squares" min="0" max="1" step="0.1"></label>
+		<br/>
+		<label><span class="label">Perfect Square</span><input type="number" id="opt-perfect-square" min="0" max="1" step="0.1"></label>
+		<br/>
+		<label><span class="label">GCF</span><input type="number" id="opt-gcf" min="0" max="1" step="0.1"></label>
+		<br/>
+		<label><span class="label">GCF range</span><input type="number" id="opt-gcf-start" min="1" max="100" step="1"></label><label> to <input type="number" id="opt-gcf-end" min="1" max="100" step="1"></label>
+		
+		
+		</form>
+		
+		</div>
+		<input id="generate-button" type="button" value="Generate" onclick="generateProblem();" />
+	</div>
+	<div id="log"></div>
+</body>
+</html>

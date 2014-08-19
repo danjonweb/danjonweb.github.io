@@ -1,0 +1,46 @@
+body {
+	font-family: Verdana, sans-serif;
+	margin: 10px;
+	font-size: 16;
+}
+p {
+	margin: 0px;
+	padding: 0px;
+}
+#problem-box {
+	height: 40px;
+	margin-top: 10px;
+	margin-left: 50px;
+}
+#solution-box {
+	height: 40px;
+	margin-top: 10px;
+}
+#wrapper {
+	margin: 0px;
+	padding: 10px 20px;
+	border: 1px solid black;
+}
+#log {
+	margin: 10px auto;
+	font-size: 10px;
+}
+#options {
+	padding: 10px;
+	width: 220px;
+	font-size: 10px;
+	text-align: left;
+	border: 1px solid black;
+	margin-bottom: 10px;
+}
+#options p {
+	font-size: 12px;
+	font-weight: bold;
+	margin-bottom: 10px;
+}
+.label {
+	width: 80px;
+	display: inline-block;
+	text-align: right;
+	padding-right: 5px;
+}
