@@ -1,0 +1,213 @@
+<html>
+<head>
+<style>
+body {
+	padding: 20px;
+}
+#container {
+	width: 600px;
+	margin: 0 auto 0 auto;
+}
+#equation {
+	font-size: 2em;
+	text-align: center;
+}
+#image-parent {
+}
+#image {
+	height: 200px;
+	position: relative;
+}
+.term {
+	display: inline-block;
+	width: 150px;
+}
+.top {
+	height: 100px;
+	position: absolute;
+	top: 0;
+	width: 150px;
+	cursor: pointer;
+	border: 1px solid black;
+}
+.eq {
+	width: 1px;
+	background-color: black;
+	display: inline-block;
+	margin: 0 10px 0 10px;
+	height: 100%;
+}
+.var {
+	font-size: 1.5em;
+	text-align: center;
+}
+.op {
+	display: inline-block;
+	font-size: 1.5em;
+	margin: 0 10px 0 10px;
+}
+.block {
+	width: 20px;
+	height: 20px;
+	margin: 1px;
+	display: inline-block;
+}
+.pos {
+	background-color: springgreen;
+}
+.neg {
+	background-color: blueviolet;
+}
+.cancelled {
+	width: 20px;
+	height: 20px;
+	background-repeat: no-repeat;
+	background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyRpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoTWFjaW50b3NoKSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDo0OTIyN0FFRjVDOTAxMUU0ODc5Q0I3QjZGNThFQjkzRiIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDo0OTIyN0FGMDVDOTAxMUU0ODc5Q0I3QjZGNThFQjkzRiI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOjQ5MjI3QUVENUM5MDExRTQ4NzlDQjdCNkY1OEVCOTNGIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjQ5MjI3QUVFNUM5MDExRTQ4NzlDQjdCNkY1OEVCOTNGIi8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+C9/5wQAAAH1JREFUeNqs1FkKwCAMBNDM3P/OqbW0iFTNli9ReSQugYioPAHVdxgPDmMFkAdbVqhEe4aV6FdyFTqeYQnKeSKL8m8yg3K1EEW5W4ygPG3worSU4UHpuEATagbvxmHJlN6He0IZ+V47lNEmsELTTbVBIwBKMuZM0+CMXgIMALyyTCEGybr5AAAAAElFTkSuQmCC);
+}
+#tokens {
+	margin-top: 20px;
+}
+</style>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js" ></script>
+<script>jQuery.fn.reverse = [].reverse;</script>
+<script>
+// Returns a random integer between min (included) and max (excluded)
+// Using Math.round() will give you a non-uniform distribution!
+function getRandomPosInt(min, max) {
+  return Math.floor(Math.random() * (max - min)) + min;
+}
+function getRandomInt(min, max) {
+  var n = getRandomPosInt(min, max);
+  var sign = getRandomBool() ? 1 : -1;
+  return n * sign;
+}
+function getRandomBool() {
+	var n = Math.random();
+	if (n < 0.5) {
+		return false;
+	}
+	return true;
+}
+function prettyPrint(tokens) {
+	//document.getElementById("tokens").innerHTML = "<small>Tokens: " + tokens + "</small>";
+	var s = "";
+	for (var i = 0; i < tokens.length; i++) {
+		if (tokens[i] == "+" && i+1 < tokens.length && tokens[i+1] < 0) {
+			tokens[i] = "-";
+			tokens[i+1] = tokens[i+1] * -1;
+		}
+	}
+	
+	for (var i = 0; i < tokens.length; i++) {
+		s += tokens[i];
+		s += " ";
+	}
+	
+	document.getElementById("equation").innerHTML = s;
+}
+window.onload = function() {
+	var tokens = [];
+	var xFirst = getRandomBool();
+	var t1;
+	if (xFirst) {
+		tokens.push("x");
+		tokens.push("+");
+		t1 = getRandomInt(1, 10);
+		tokens.push(t1);
+	} else {
+		t1 = getRandomInt(1, 10)
+		tokens.push(t1);
+		tokens.push("+");
+		tokens.push("x");
+	}
+	tokens.push("=");
+	var t2 = getRandomInt(1, 20)
+	tokens.push(t2);
+	
+	window.answer = t2 - t1;
+	
+	var html = "<div class='term'><div class='top'></div><div class='bottom'>";
+	for (var i = 0; i < tokens.length; i++) {
+		if (tokens[i] == "x") {
+			html += "<div class='var'>?</div>";
+		} else if (tokens[i] == "=") {
+			html += "</div></div> <div class='eq'></div> <div class='term'><div class='top'></div><div class='bottom'>";
+		} else if (tokens[i] == "+") {
+			html += "</div></div> <div class='op'>+</div> <div class='term'><div class='top'></div><div class='bottom'>";
+		} else if (!isNaN(tokens[i])){
+			var sign = tokens[i] < 0 ? "neg" : "pos";
+			var n = Math.abs(tokens[i]);
+			for (var j = 0; j < n; j++) {
+				html += "<div class='block " + sign + "'></div>";
+			}
+		}
+	}
+	html += '</div></div>'
+	document.getElementById("image").innerHTML = html;
+	
+	prettyPrint(tokens);
+}
+</script>
+</head>
+<body>
+<div id="container">
+<div id="equation"></div>
+<p>To solve this problem visually, click inside the boxes to add positive (green) or negative (purple) blocks. You want to get the variable (?) by itself by cancelling out blocks with opposite signs. <u>Remember: whatever you do on one side of the equation must be balanced on the other side.</u></p>
+<form>
+<label><input type="radio" name="sign" value="pos" checked> Positive Blocks</label><br>
+<label><input type="radio" name="sign" value="neg"> Negative Blocks</label>
+</form>
+<div id="image-parent">
+<div id="image"></div>
+</div>
+<form style="margin-top:30px;">
+<label for="answer">Answer: </label><input type="text" id="answer">
+<button id="submit">Check</button>
+</form>
+<div id="tokens"></div>
+</div>
+<script>
+$('#image').on('click','.top',function(){
+	var isCancelled = false;
+	var newBlockSign = $('input[name=sign]:checked').val();
+	
+	$(this).parent().find('.bottom .block').each(function(){
+		if ((!$(this).hasClass('cancelled') && $(this).hasClass('pos') && newBlockSign === 'neg') || (!$(this).hasClass('cancelled') && $(this).hasClass('neg') && newBlockSign === 'pos')) {
+			$(this).addClass('cancelled');
+			isCancelled = true;
+			return false;
+		}
+	});
+	
+	$(this).append("<div class='block " + newBlockSign + (isCancelled ? " cancelled" : "") + "'></div>");
+	
+});
+
+$('#image').on('click', '.top .block', function(e){
+	var term = $(this).parent().parent();
+	var isCancelled = $(this).hasClass('cancelled');
+	$(this).remove();
+	if (isCancelled) {
+		term.find('.bottom .block').reverse().each(function(){
+			if ($(this).hasClass('cancelled')) {
+				$(this).removeClass('cancelled');
+				return false;
+			}
+		});
+	}
+	return false;
+});
+
+$('#submit').on('click', function(){
+	if ($('#answer').val() == window.answer) {
+		alert('Correct! Refresh the page to get a new problem.');
+	} else {
+		alert('Incorrect! Try again.');
+	}
+	return false;
+});
+
+$('#image').mousedown(function(e){ e.preventDefault(); })
+</script>
+</body>
+</html>
