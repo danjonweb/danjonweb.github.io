@@ -343,7 +343,7 @@
             // Draw current frame
             var xOffset = this.xPos-0.5*(this.width*this.scale-this.width);
             var yOffset = this.yPos-0.5*(this.height*this.scale-this.height);
-            c.drawImage(this.source, this.current_frame * (this.width * window.devicePixelRatio), 0, this.width, this.height, xOffset, yOffset, this.width*this.scale, this.height*this.scale);
+            c.drawImage(this.source, this.current_frame * (this.width * window.devicePixelRatio), 0, this.width*window.devicePixelRatio, this.height*window.devicePixelRatio, xOffset, yOffset, this.width*this.scale, this.height*this.scale);
             
             if (this.requestStop) {
                 // Stop is requested -- cycle through animation until first frame is reached, then set isMoving to false.
