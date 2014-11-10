@@ -714,6 +714,13 @@
             GAME_CANVAS = document.getElementById('game');
             if (GAME_CANVAS.getContext) {
                 GAME_CONTEXT = GAME_CANVAS.getContext('2d');
+                
+                if (window.devicePixelRatio == 2) {
+					GAME_CANVAS.setAttribute('width', 720);
+					GAME_CANVAS.setAttribute('height', 920);
+					GAME_CONTEXT.scale(2, 2);
+				}
+                
                 GAME_COUNT = 0;
                 GAME_TIMER = setInterval(loop, TIMER_SPEED);
             }
@@ -832,8 +839,9 @@
             padding: 0;
             margin: 0;
         }
-        div#container {
-            
+        canvas {
+	        width: 360px;
+	        height: 460px;
         }
         div#command-container {
 	        padding: 10px;
