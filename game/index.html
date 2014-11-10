@@ -833,22 +833,17 @@
             margin: 0;
         }
         div#container {
-            width: 100%;
-            background-color: #DDD;
-            margin: 0 auto 0 auto;
-            padding: 10px;
-            box-sizing: border-box;
+            
+        }
+        div#command-container {
+	        padding: 10px;
         }
         form {
             width: 220px;
-            float: right;
         }
         #commands {
             width: 99%;
             height: 100px;
-        }
-        canvas {
-            border: 1px solid black;
         }
     </style>
 </head>
@@ -856,11 +851,13 @@
 <body onload="start();">
     <div id="container">
         <canvas height="460" id="game" width="360"></canvas>
-        <form>
-            <textarea id="commands"></textarea><br>
-            <input type="button" value="Go" id="go" />
-            <input type="button" value="Pause" id="pause" />
-        </form>
+        <div id="command-container">
+	        <form>
+	            <textarea id="commands"></textarea><br>
+	            <input type="button" value="Go" id="go" />
+	            <input type="button" value="Pause" id="pause" />
+	        </form>
+        </div>
     </div>
 </body>
 
