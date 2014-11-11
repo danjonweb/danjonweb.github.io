@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html>
-
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <link href='http://fonts.googleapis.com/css?family=Roboto+Condensed' rel='stylesheet' type='text/css'>
     <title>Game</title>
     <script type="text/javascript">
         var ENTITIES = [];
@@ -43,6 +43,20 @@
 				var data = PICKUP_IMAGES[key];
 				PICKUP_IMAGES[key] = new Image();
 				PICKUP_IMAGES[key].src = data;
+	    	}
+		}
+		
+		var COMMAND_IMAGES;
+		if (window.devicePixelRatio == 2) {
+			COMMAND_IMAGES = {'m':'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAMAAACdt4HsAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAFRQTFRFZGRkTU1NXl5eY2NjXFxcUFBQT09PYmJiWlpaZWVlZmZmYGBgWFhYUlJSUVFRTk5OVlZWXV1dV1dXVVVVU1NTW1tbX19fVFRUYWFhWVlZ////AAAAr/92AwAAABx0Uk5T////////////////////////////////////ABey4tcAAAENSURBVHja3NfLDoJAEERRfD9QQQEV/P//tCqpMu3EyL7PBjdzF52ZAasX7GGANVzhLjU8ZQcrqOQAR6gSBG5wghEYugZlJHOAHOAgOVAGlvIvkiHQgQdJQ+AIh1luqE8oQaCHFjxMRny4GJjAkVq+DlaCwAM4SD5/DXMSbyhvqp1kCPTSiQc6yhT8umwzBC7AgIc5zSgjWQJnYWQuUF4yGQJceJE4TG+quDheth5mhsAWNuBhxkgM+HCthYNkKEOAixvgYv6Om8qHK36EOMLFfGYILKARD9MDfUgrY+AXcLbAVnzAHPBHSPnSyRSwGIqXTPny9UcIIxkC/ONZBhzhxuqDuLEY4NoEgbcAAwAIngJwvpVurgAAAABJRU5ErkJggg=='};
+		} else if (window.devicePixelRation == 1) {
+			COMMAND_IMAGES = {'m':'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAFRQTFRFZGRkTU1NXl5eY2NjXFxcUFBQT09PYmJiWlpaZWVlZmZmYGBgWFhYUlJSUVFRTk5OVlZWXV1dV1dXVVVVU1NTW1tbX19fVFRUYWFhWVlZ////AAAAr/92AwAAABx0Uk5T////////////////////////////////////ABey4tcAAAD0SURBVHjalNLRsoMgDEVRa0FtBTUKUuD//7M5UKZz+xLvfnXNhCBdztPkvVJEJzfPL24c7/eOezyez04E+25MjNNEpUb+B/YdQCnviXruL5HBcWCIMb4Ecp7toAWJwLltwxhjsC5RSiAz91lWBCEcRwjfMSmBAGDMOMrAcQeHQZFLpe+1y2BZnMOY9FMjV4DlQvgF7cpkYO2ytDE4av1crx1jZDAMWmNMJRVgXcX1PZEMtF5Xa7WuR8W69QmBECklg9tt5TAGgwK3cbGEB3AVDBwWBsATar/uGkAV1Strvx9PKEYZ5NwAiNauVA9rTM4ieAswABzGQJlyXPNJAAAAAElFTkSuQmCC'};
+		}
+		for (var key in COMMAND_IMAGES) {
+			if (COMMAND_IMAGES.hasOwnProperty(key)) {
+				var data = COMMAND_IMAGES[key];
+				COMMAND_IMAGES[key] = new Image();
+				COMMAND_IMAGES[key].src = data;
 	    	}
 		}
         
@@ -104,6 +118,9 @@
         var GAME_CONTEXT;
         var GAME_COUNT;
         var IS_EXE = false;
+        var COMMANDS = {'main':[], 'sub1':[], 'sub2':[]};
+        var CLICKED_PART;
+        var CLICKED_INDEX;
         
         function cellAboveCell(n) {
             if (n === -1) {
@@ -678,7 +695,6 @@
 
             GAME_COUNT = GAME_COUNT + 1 > 999 ? 0 : GAME_COUNT + 1;
         }
-
         function start() {
             document.getElementById('pause').onclick = function() {
                 if (GAME_TIMER != null) {
@@ -716,14 +732,33 @@
                     if (i === commands.length-1) setTimeout(function(){IS_EXE = false;}, speed*i);
                 }
             }
-            var list = document.getElementsByClassName('command');
-            
-            var commandEvent = function() {
-	            alert('a');
+            document.getElementById('command-chooser-close').onclick = function() {
+	            document.getElementById('command-chooser').style.display = 'none';
             }
+            
+            // Command blank
+            var commandEvent = function() {
+	            CLICKED_PART = this.dataset.part;
+	            CLICKED_INDEX = this.dataset.index;
+	            document.getElementById('command-chooser').style.display = 'block';
+            }
+            var list = document.getElementsByClassName('command');
             for (var i = 0; i < list.length; i++) {
 	            list.item(i).onclick = commandEvent;
-	            list.item(i).touchstart = commandEvent;
+	            //list.item(i).touchstart = commandEvent;
+            }
+            
+            // Command choose
+            var commandChooseEvent = function() {
+	            COMMANDS[CLICKED_PART][CLICKED_INDEX] = this.dataset.command;
+	            document.querySelector('.command[data-part="' + CLICKED_PART + '"][data-index="' + CLICKED_INDEX + '"]').dataset.command = this.dataset.command;
+	            document.getElementById('command-chooser').style.display = 'none';
+	            
+            }
+            list = document.getElementsByClassName('command-choose');
+            for (var i = 0; i < list.length; i++) {
+	            list.item(i).onclick = commandChooseEvent;
+	            //list.item(i).touchstart = commandEvent;
             }
             
             GAME_CANVAS = document.getElementById('game');
@@ -850,17 +885,17 @@
         }
     </script>
     <style type="text/css">
-        html, body {
+        body {
+	        font-family: 'Roboto Condensed', sans-serif;
             padding: 0;
             margin: 0;
-            background-color: black;
+            background-color: #333;
         }
         div#container {
 			width: 560px;
 			height: 100%;
 			margin: 0 auto 0 auto;
 			padding: 0;
-			background-color: #333;
 		}
         canvas {
 	        float: left;
@@ -870,9 +905,11 @@
 	        float: right;
 	        width: 200px;
 	        overflow: hidden;
+	        position: relative;
+	        border: 1px solid #555;
+	        box-sizing: border-box;
         }
         .section-title {
-	        font-family: monospace;
 	        font-size: 14px;
 	        color: white;
 	        text-align: center;
@@ -890,9 +927,8 @@
 	        box-sizing: border-box;
 	        float: left;
 	        cursor: pointer;
-        }
-        .command:hover {
-	        background-color: #555;
+	        color: white;
+	        text-align: center;
         }
         .command:nth-of-type(4n) {
 	        border-right: none;
@@ -904,13 +940,33 @@
 	        
         }
         #command-chooser {
-	        position: fixed;
-	        top: 10px;
-	        left: 10px;
-	        width: 50%;
-	        height: 200px;
-	        background-color: red;
+	        position: absolute;
+	        top: 0;
+	        left: 0;
+	        width: 100%;
+	        height: 100%;
+	        background-color: #333;
 	        display: none;
+        }
+        .command[data-command="m"] {
+	        background-image: url('img/forward.png');
+	        background-repeat: no-repeat;
+	        background-position: center center;
+        }
+        .command[data-command="cw"] {
+	        background-image: url('img/turnLeft.png');
+	        background-repeat: no-repeat;
+	        background-position: center center;
+        }
+        .command[data-command="ccw"] {
+	        background-image: url('img/turnRight.png');
+	        background-repeat: no-repeat;
+	        background-position: center center;
+        }
+        .command[data-command="j"] {
+	        background-image: url('img/jump.png');
+	        background-repeat: no-repeat;
+	        background-position: center center;
         }
 		@media only screen 
 		and (min-device-width : 0px) 
@@ -936,65 +992,69 @@
 		    
 		    <div class="section-title">Main</div>
 		    <div class="section">
-			    <div class="command"></div>
-			    <div class="command"></div>
-			    <div class="command"></div>
-			    <div class="command"></div>
+			    <div class="command" data-part="main" data-index="0" data-command=""></div>
+			    <div class="command" data-part="main" data-index="1" data-command=""></div>
+			    <div class="command" data-part="main" data-index="2" data-command=""></div>
+			    <div class="command" data-part="main" data-index="3" data-command=""></div>
 			    
-			    <div class="command"></div>
-			    <div class="command"></div>
-			    <div class="command"></div>
-			    <div class="command"></div>
+			    <div class="command" data-part="main" data-index="4" data-command=""></div>
+			    <div class="command" data-part="main" data-index="5" data-command=""></div>
+			    <div class="command" data-part="main" data-index="6" data-command=""></div>
+			    <div class="command" data-part="main" data-index="7" data-command=""></div>
 			    
-			    <div class="command"></div>
-			    <div class="command"></div>
-			    <div class="command"></div>
-			    <div class="command"></div>
+			    <div class="command" data-part="main" data-index="8" data-command=""></div>
+			    <div class="command" data-part="main" data-index="9" data-command=""></div>
+			    <div class="command" data-part="main" data-index="10" data-command=""></div>
+			    <div class="command" data-part="main" data-index="11" data-command=""></div>
 			    
-			    <div class="command"></div>
-			    <div class="command"></div>
-			    <div class="command"></div>
-			    <div class="command"></div>
+			    <div class="command" data-part="main" data-index="12" data-command=""></div>
+			    <div class="command" data-part="main" data-index="13" data-command=""></div>
+			    <div class="command" data-part="main" data-index="14" data-command=""></div>
+			    <div class="command" data-part="main" data-index="15" data-command=""></div>
 			    
 			    <div style="clear: both;"></div>
 			</div>
 		    <div class="section-title">Sub1</div>
 		    <div class="section">
-			    <div class="command"></div>
-			    <div class="command"></div>
-			    <div class="command"></div>
-			    <div class="command"></div>
+			    <div class="command" data-part="sub1" data-index="0" data-command=""></div>
+			    <div class="command" data-part="sub1" data-index="1" data-command=""></div>
+			    <div class="command" data-part="sub1" data-index="2" data-command=""></div>
+			    <div class="command" data-part="sub1" data-index="3" data-command=""></div>
 			    
-			    <div class="command"></div>
-			    <div class="command"></div>
-			    <div class="command"></div>
-			    <div class="command"></div>
+			    <div class="command" data-part="sub1" data-index="4" data-command=""></div>
+			    <div class="command" data-part="sub1" data-index="5" data-command=""></div>
+			    <div class="command" data-part="sub1" data-index="6" data-command=""></div>
+			    <div class="command" data-part="sub1" data-index="7" data-command=""></div>
 			    
 			    <div style="clear: both;"></div>
 		    </div>
 		    <div class="section-title">Sub2</div>
 		    <div class="section">
-			    <div class="command"></div>
-			    <div class="command"></div>
-			    <div class="command"></div>
-			    <div class="command"></div>
+			    <div class="command" data-part="sub2" data-index="0" data-command=""></div>
+			    <div class="command" data-part="sub2" data-index="1" data-command=""></div>
+			    <div class="command" data-part="sub2" data-index="2" data-command=""></div>
+			    <div class="command" data-part="sub2" data-index="3" data-command=""></div>
 			    
-			    <div class="command"></div>
-			    <div class="command"></div>
-			    <div class="command"></div>
-			    <div class="command"></div>
+			    <div class="command" data-part="sub2" data-index="4" data-command=""></div>
+			    <div class="command" data-part="sub2" data-index="5" data-command=""></div>
+			    <div class="command" data-part="sub2" data-index="6" data-command=""></div>
+			    <div class="command" data-part="sub2" data-index="7" data-command=""></div>
 			    
 			    <div style="clear: both;"></div>
 		    </div>
-		    
 		    <input type="button" value="Go" id="go" />
 		    <input type="button" value="Pause" id="pause" />
+		    
+		    <div id="command-chooser">
+			    <div class="command command-choose" data-command="m"></div>
+			    <div class="command command-choose" data-command="cw"></div>
+			    <div class="command command-choose" data-command="ccw"></div>
+			    <div class="command command-choose" data-command="j"></div>
+			    <input id="command-chooser-close" type="button" value="OK" />
+		    </div>
+		    
 		</div>
 		<div style="clear: both;"></div>
-		
-		<div id="command-chooser">
-	    
-    	</div>
 	</div>
     
 </body>
