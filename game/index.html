@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <link href='http://fonts.googleapis.com/css?family=Roboto+Condensed' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Geo' rel='stylesheet' type='text/css'>
     <title>Game</title>
     <script type="text/javascript">
         var ENTITIES = [];
@@ -35,30 +35,25 @@
         '0','0','0','0','0','0','0','0','0','0',
         '0','0','0','0','0','0','0','0','0','0'];
         
-        var PICKUP_IMAGES = {
-	        'KR':'data:image/png;base64,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'
-        };
-        for (var key in PICKUP_IMAGES) {
-			if (PICKUP_IMAGES.hasOwnProperty(key)) {
-				var data = PICKUP_IMAGES[key];
-				PICKUP_IMAGES[key] = new Image();
-				PICKUP_IMAGES[key].src = data;
+        var IMAGES;
+        if (window.devicePixelRatio == 2) {
+	        IMAGES = {
+		        'player':'player@2x.png',
+	        	'KR':'key_red.png'
+        	}
+	    } else if (window.devicePixelRatio == 1) {
+		    IMAGES = {
+			    'player':'player.png',
+	        	'KR':'key_red.png'
+        	}
+	    }
+        for (var key in IMAGES) {
+			if (IMAGES.hasOwnProperty(key)) {
+				var path = IMAGES[key];
+				IMAGES[key] = new Image();
+				IMAGES[key].src = 'img/' + path;
 	    	}
-		}
-		
-		var COMMAND_IMAGES;
-		if (window.devicePixelRatio == 2) {
-			COMMAND_IMAGES = {'m':'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAMAAACdt4HsAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAFRQTFRFZGRkTU1NXl5eY2NjXFxcUFBQT09PYmJiWlpaZWVlZmZmYGBgWFhYUlJSUVFRTk5OVlZWXV1dV1dXVVVVU1NTW1tbX19fVFRUYWFhWVlZ////AAAAr/92AwAAABx0Uk5T////////////////////////////////////ABey4tcAAAENSURBVHja3NfLDoJAEERRfD9QQQEV/P//tCqpMu3EyL7PBjdzF52ZAasX7GGANVzhLjU8ZQcrqOQAR6gSBG5wghEYugZlJHOAHOAgOVAGlvIvkiHQgQdJQ+AIh1luqE8oQaCHFjxMRny4GJjAkVq+DlaCwAM4SD5/DXMSbyhvqp1kCPTSiQc6yhT8umwzBC7AgIc5zSgjWQJnYWQuUF4yGQJceJE4TG+quDheth5mhsAWNuBhxkgM+HCthYNkKEOAixvgYv6Om8qHK36EOMLFfGYILKARD9MDfUgrY+AXcLbAVnzAHPBHSPnSyRSwGIqXTPny9UcIIxkC/ONZBhzhxuqDuLEY4NoEgbcAAwAIngJwvpVurgAAAABJRU5ErkJggg=='};
-		} else if (window.devicePixelRation == 1) {
-			COMMAND_IMAGES = {'m':'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAFRQTFRFZGRkTU1NXl5eY2NjXFxcUFBQT09PYmJiWlpaZWVlZmZmYGBgWFhYUlJSUVFRTk5OVlZWXV1dV1dXVVVVU1NTW1tbX19fVFRUYWFhWVlZ////AAAAr/92AwAAABx0Uk5T////////////////////////////////////ABey4tcAAAD0SURBVHjalNLRsoMgDEVRa0FtBTUKUuD//7M5UKZz+xLvfnXNhCBdztPkvVJEJzfPL24c7/eOezyez04E+25MjNNEpUb+B/YdQCnviXruL5HBcWCIMb4Ecp7toAWJwLltwxhjsC5RSiAz91lWBCEcRwjfMSmBAGDMOMrAcQeHQZFLpe+1y2BZnMOY9FMjV4DlQvgF7cpkYO2ytDE4av1crx1jZDAMWmNMJRVgXcX1PZEMtF5Xa7WuR8W69QmBECklg9tt5TAGgwK3cbGEB3AVDBwWBsATar/uGkAV1Strvx9PKEYZ5NwAiNauVA9rTM4ieAswABzGQJlyXPNJAAAAAElFTkSuQmCC'};
-		}
-		for (var key in COMMAND_IMAGES) {
-			if (COMMAND_IMAGES.hasOwnProperty(key)) {
-				var data = COMMAND_IMAGES[key];
-				COMMAND_IMAGES[key] = new Image();
-				COMMAND_IMAGES[key].src = data;
-	    	}
-		}
+		}	
         
         // Cells that cannot be walked on
         var MAP_WALLS = ['W'];
@@ -184,7 +179,7 @@
             return isBlocked;
         }
         function Player() {
-            this.source = new Image();
+            this.source = IMAGES['player'];
             
             this.current_frame = 0;
             this.start_frame = 0;
@@ -206,13 +201,6 @@
             this.scale = 1;
             
             this.direction = 's';
-            
-            if (window.devicePixelRatio == 2) {
-	            this.source.src = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAA1oAAABcCAMAAABAzTQsAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyRpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoTWFjaW50b3NoKSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDowM0E5QTc0MzVFNkExMUU0ODc5Q0I3QjZGNThFQjkzRiIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDowM0E5QTc0NDVFNkExMUU0ODc5Q0I3QjZGNThFQjkzRiI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOjAzQTlBNzQxNUU2QTExRTQ4NzlDQjdCNkY1OEVCOTNGIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjAzQTlBNzQyNUU2QTExRTQ4NzlDQjdCNkY1OEVCOTNGIi8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+bK2eVgAAACFQTFRFA0N/ngMDvAMDA1Kfc1g5nSLiiR7GoXxQimpFYkI5////pDIO/gAAAAt0Uk5T/////////////wBKTwHyAAADqElEQVR42uzd0U4jMQwFUJZd2C3//8ErNS+WLEeeCZRJOX5CtHPrJD59GKry8pHq1qiPRsl5TE4nbcec3Vf0YpTRQgstOWihJQcttIwyWmihJQetDWndDtbK0MhZzzmatkvOc6wILbTQQksOWmjJQQsto4wWWmjJQWsvWreFWhkaOSvH/3w5z7QitNBCCy05aKElBy20jDJaaKElB61daN3UVuWtZ5cctNCSg5ZCCy2FFloKLTlooWWUd6f1r6ijL3C1nJ9Aa75X/dH5rpxzZ321HLTQQgsttNBCCy200EILLbTQQgutHWmNC/42ah59tZyfQ2u+Y+PRDonvyuk8v0PiCjlooYUWWmihhRZaaKGFFlpooYUWWmih9Uhanb3qkPjenP5VKyQek4MWWmihhRZaaKGFFlpooYUWWmihtQut/DHEccH4TYyIv+l8vPI6OStDvMtXfFZDkHfpyjnzE69GOXdyhRy00EILLbTQQgsttNBCCy200EILrb1oVQM9D5r/W+Wr5awM8S7/Jvzox2GvlnP047BVD1fIQQsttNBCCy200EILLbTQQgsttNDakdZ7qOprDeNzqob6OW/3ymn50c/qpxrffs7oqsp5C1XlxOfMc+b9VGMd8+Ne9XPibuRTOJoTEzo5see8V/1Xrybt6K7mSeucDlpooYUWWmihhRZaaKGFFlpooYXWXrTyBbmV6tH5YqqKtzXnN2HzFueqDuyz1pUHLq8x9tBfV5Vzbgiq1R0do9Fh3pM/91oZ65j/1WsZ3eYeOn9CiFWd1/xtAi200EILLbTQQgsttNBCCy200EJrF1rVVnZGObc4fv4V6r2ofBu9uv2ab33Giq+VO6munY/yvKuXUPPV5QHKh5Qr5p+72Z3P9Cit6nbz6Or1Xp2c6rb7qHlOnrH+Wkby6HbeQydnvidooYUWWmihhRZaaKGFFlpooYUWWs9BKw7Ne6PiwefoMeivoeK4/L7X+LmzTfmqeMCjxitWQ3xuXdUN4oi56q2/rpwQ8z8OVv5I7tEb1nGNVW8dWjknpnXWuLKWOBXVKvr9j8qnPM9BCy200EILLbTQQgsttNBCCy200NqFVn+Uj5LI27cyNOtpeS3nSMRj6w/ZI5PPnVf15ri+onM566uY7/BXrwsttNBCCy200EILLbTQQgsttNBCa19a1ct/xTA9sqr+P2u7r7/SHWvf00ELLbTQQgsttNBCCy200EILLbTQ2peWUgotpS5a/wUYAP2gIPfmyf2IAAAAAElFTkSuQmCC';
-	        } else {
-		        this.source.src = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAbAAAAAuCAMAAAB+i7yfAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyRpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoTWFjaW50b3NoKSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDowM0E5QTc0NzVFNkExMUU0ODc5Q0I3QjZGNThFQjkzRiIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDowM0E5QTc0ODVFNkExMUU0ODc5Q0I3QjZGNThFQjkzRiI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOjAzQTlBNzQ1NUU2QTExRTQ4NzlDQjdCNkY1OEVCOTNGIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjAzQTlBNzQ2NUU2QTExRTQ4NzlDQjdCNkY1OEVCOTNGIi8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+g5l4UwAAACFQTFRFA0N/ngMDvAMDA1Kfc1g5nSLiiR7GoXxQimpFYkI5////pDIO/gAAAAt0Uk5T/////////////wBKTwHyAAACXElEQVR42uya4W7CMAyEWaFs5f0feFatnU52EhhNMpjufiBKr7ZzH2oqttPtR1vSLekdPdk2zjOh0UnABEzAxgPbKmqn8/qemm2EZ04jARMwARsNbGuqnc4re9q2vp5pjQRMwARsKLDtn+q/fhEFTMAEbBqwL1Ltml6e+cDCVMWAjngaq+7oETABE7AJwOzcZ1K4oJfnT4CFwewwwzjiyZ9nGF08AiZgAiZgB4HlqTKMg57iqTaM5zwCJmACNhQYHiXtnL1xk7/Jj61dPPN//OUUMFJfT1g4B40iXTwCJmACNhoYZx184U/XvTztlEf8i0DtcbyXp/Y4zhW6eARMwARsArDrLv7Z0T/hWkXPuq6w4fCROhxx0WOl2LPuYo9/EjyhDsftfp+q6PExsISaxw3Z45UxVfFyDq02KkIrLkfABEzARgPDORTiw9CJ5TfccB/H0BCv7ZFeyA4dvUKxF3saKXC7WkxWEJNcLpd23O7/bRcriwp5m3TxuvLXQsAETMCGAuNBc9Aoaq8fu64kbFR8E8ct2OVXoQifDUGHUqddoR0ywqog9zf2Hqy0Bow3Dyu1LEv28AZmCh4kVuxiZisbKmRPmETABEzAJgPzdK5Jvn5cYLkvuzya8/lsr3ksnPI1m+xCTrnRi3cFJ83Vir1gcP+tIjzQ13YX78jVMjB43JY7trt4FNyiWN+EJWePgAmYgA0FVgy6BgMjttO5a0OXBgxfXjG158yNdfE38m6jhuduizDwE70ETMAEbA4wLvF4Us+J6z8yevem4zR6OQImYAI2B5j0FvoWYAABT42bcyeWIAAAAABJRU5ErkJggg==';
-	        }
-            
         }
         Player.prototype.stop = function() {
             if (this.direction === 'n') {
@@ -426,7 +414,7 @@
                 
                 // Draw extras
                 if (MAP_PICKUPS[i] !== '0') {
-	                var img = PICKUP_IMAGES[MAP_PICKUPS[i]];
+	                var img = IMAGES[MAP_PICKUPS[i]];
 	                var x = (i % MAP_WIDTH)*CELL_WIDTH;
 	                var y = Math.floor(i / MAP_WIDTH)*CELL_HEIGHT;
 	                var w, h;
@@ -886,7 +874,7 @@
     </script>
     <style type="text/css">
         body {
-	        font-family: 'Roboto Condensed', sans-serif;
+	        font-family: 'Geo', sans-serif;
             padding: 0;
             margin: 0;
             background-color: #333;
@@ -949,28 +937,29 @@
 	        display: none;
         }
         .command[data-command="m"] {
-	        background-image: url('img/forward.png');
+	        background-image: url('img/forward@2x.png');
 	        background-repeat: no-repeat;
 	        background-position: center center;
         }
         .command[data-command="cw"] {
-	        background-image: url('img/turnLeft.png');
+	        background-image: url('img/turnLeft@2x.png');
 	        background-repeat: no-repeat;
 	        background-position: center center;
         }
         .command[data-command="ccw"] {
-	        background-image: url('img/turnRight.png');
+	        background-image: url('img/turnRight@2x.png');
 	        background-repeat: no-repeat;
 	        background-position: center center;
         }
         .command[data-command="j"] {
-	        background-image: url('img/jump.png');
+	        background-image: url('img/jump@2x.png');
 	        background-repeat: no-repeat;
 	        background-position: center center;
         }
+        /* Small screen < 560px */
 		@media only screen 
-		and (min-device-width : 0px) 
-		and (max-device-width : 560px) {
+		and (min-device-width: 0px) 
+		and (max-device-width: 560px) {
 			div#container {
 				width: 100%;
 				margin: 0;
@@ -982,6 +971,68 @@
 				width: 40%;
 			}
 		}
+		
+		/* < 400 */
+		@media
+		only screen and (max-width: 400px) {
+			.command[data-command="m"] {
+		        background-image: url('img/forward@1x.png');
+	        }
+	        .command[data-command="cw"] {
+		        background-image: url('img/turnLeft@1x.png');
+	        }
+	        .command[data-command="ccw"] {
+		        background-image: url('img/turnRight@1x.png');
+	        }
+	        .command[data-command="j"] {
+		        background-image: url('img/jump@1x.png');
+	        }
+		}
+		
+		/* Retina and > 400 */
+		@media
+		only screen and (-webkit-min-device-pixel-ratio: 2),
+		only screen and (   min--moz-device-pixel-ratio: 2),
+		only screen and (     -o-min-device-pixel-ratio: 2/1),
+		only screen and (        min-device-pixel-ratio: 2),
+		only screen and (                min-resolution: 192dpi),
+		only screen and (                min-resolution: 2dppx) {
+			.command[data-command="m"] {
+		        background-image: url('img/forward@4x.png');
+	        }
+	        .command[data-command="cw"] {
+		        background-image: url('img/turnLeft@4x.png');
+	        }
+	        .command[data-command="ccw"] {
+		        background-image: url('img/turnRight@4x.png');
+	        }
+	        .command[data-command="j"] {
+		        background-image: url('img/jump@4x.png');
+	        }
+		}
+		
+		/* Retina and < 400*/	
+		@media
+		only screen and (-webkit-min-device-pixel-ratio: 2)      and (max-width: 400px),
+		only screen and (   min--moz-device-pixel-ratio: 2)      and (max-width: 400px),
+		only screen and (     -o-min-device-pixel-ratio: 2/1)    and (max-width: 400px),
+		only screen and (        min-device-pixel-ratio: 2)      and (max-width: 400px),
+		only screen and (                min-resolution: 192dpi) and (max-width: 400px),
+		only screen and (                min-resolution: 2dppx)  and (max-width: 400px) {
+			.command[data-command="m"] {
+		        background-image: url('img/forward@2x.png');
+	        }
+	        .command[data-command="cw"] {
+		        background-image: url('img/turnLeft@2x.png');
+	        }
+	        .command[data-command="ccw"] {
+		        background-image: url('img/turnRight@2x.png');
+	        }
+	        .command[data-command="j"] {
+		        background-image: url('img/jump@2x.png');
+	        }
+		}
+		
     </style>
 </head>
 
