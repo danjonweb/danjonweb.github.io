@@ -716,6 +716,15 @@
                     if (i === commands.length-1) setTimeout(function(){IS_EXE = false;}, speed*i);
                 }
             }
+            var list = document.getElementsByClassName('command');
+            
+            var commandEvent = function() {
+	            alert('a');
+            }
+            for (var i = 0; i < list.length; i++) {
+	            list.item(i).onclick = commandEvent;
+	            list.item(i).touchstart = commandEvent;
+            }
             
             GAME_CANVAS = document.getElementById('game');
             if (GAME_CANVAS.getContext) {
@@ -841,38 +850,153 @@
         }
     </script>
     <style type="text/css">
-        body {
+        html, body {
             padding: 0;
             margin: 0;
+            background-color: black;
         }
+        div#container {
+			width: 560px;
+			height: 100%;
+			margin: 0 auto 0 auto;
+			padding: 0;
+			background-color: #333;
+		}
         canvas {
+	        float: left;
 	        width: 360px;
-	        height: 460px;
         }
         div#command-container {
-	        padding: 10px;
+	        float: right;
+	        width: 200px;
+	        overflow: hidden;
         }
-        form {
-            width: 220px;
+        .section-title {
+	        font-family: monospace;
+	        font-size: 14px;
+	        color: white;
+	        text-align: center;
+	        border-top: 1px solid white;
+	        border-bottom: 1px solid white;
+	        padding: 2px 0 2px 0;
         }
-        #commands {
-            width: 99%;
-            height: 100px;
+        .section-title:first-of-type {
+	        border-top: none;
         }
+        .command {
+	        width: 25%;
+	        height: 50px;
+	        border: 1px solid #555;
+	        box-sizing: border-box;
+	        float: left;
+	        cursor: pointer;
+        }
+        .command:hover {
+	        background-color: #555;
+        }
+        .command:nth-of-type(4n) {
+	        border-right: none;
+        }
+        .command:nth-of-type(4n-3) {
+	        border-left: none;
+        }
+        .section {
+	        
+        }
+        #command-chooser {
+	        position: fixed;
+	        top: 10px;
+	        left: 10px;
+	        width: 50%;
+	        height: 200px;
+	        background-color: red;
+	        display: none;
+        }
+		@media only screen 
+		and (min-device-width : 0px) 
+		and (max-device-width : 560px) {
+			div#container {
+				width: 100%;
+				margin: 0;
+			}
+			canvas {
+				width: 60%;
+			}
+			div#command-container {
+				width: 40%;
+			}
+		}
     </style>
 </head>
 
 <body onload="start();">
     <div id="container">
-        <canvas height="460" id="game" width="360"></canvas>
-        <div id="command-container">
-	        <form>
-	            <textarea id="commands"></textarea><br>
-	            <input type="button" value="Go" id="go" />
-	            <input type="button" value="Pause" id="pause" />
-	        </form>
-        </div>
-    </div>
+	    <canvas height="460" id="game" width="360"></canvas>
+	    <div id="command-container">
+		    
+		    <div class="section-title">Main</div>
+		    <div class="section">
+			    <div class="command"></div>
+			    <div class="command"></div>
+			    <div class="command"></div>
+			    <div class="command"></div>
+			    
+			    <div class="command"></div>
+			    <div class="command"></div>
+			    <div class="command"></div>
+			    <div class="command"></div>
+			    
+			    <div class="command"></div>
+			    <div class="command"></div>
+			    <div class="command"></div>
+			    <div class="command"></div>
+			    
+			    <div class="command"></div>
+			    <div class="command"></div>
+			    <div class="command"></div>
+			    <div class="command"></div>
+			    
+			    <div style="clear: both;"></div>
+			</div>
+		    <div class="section-title">Sub1</div>
+		    <div class="section">
+			    <div class="command"></div>
+			    <div class="command"></div>
+			    <div class="command"></div>
+			    <div class="command"></div>
+			    
+			    <div class="command"></div>
+			    <div class="command"></div>
+			    <div class="command"></div>
+			    <div class="command"></div>
+			    
+			    <div style="clear: both;"></div>
+		    </div>
+		    <div class="section-title">Sub2</div>
+		    <div class="section">
+			    <div class="command"></div>
+			    <div class="command"></div>
+			    <div class="command"></div>
+			    <div class="command"></div>
+			    
+			    <div class="command"></div>
+			    <div class="command"></div>
+			    <div class="command"></div>
+			    <div class="command"></div>
+			    
+			    <div style="clear: both;"></div>
+		    </div>
+		    
+		    <input type="button" value="Go" id="go" />
+		    <input type="button" value="Pause" id="pause" />
+		</div>
+		<div style="clear: both;"></div>
+		
+		<div id="command-chooser">
+	    
+    	</div>
+	</div>
+    
 </body>
 
 </html>
