@@ -888,16 +888,19 @@
         canvas {
 	        float: left;
 	        width: 360px;
+	        position: fixed;
         }
         div#command-container {
 	        float: right;
 	        width: 200px;
+	        height: 460px;
 	        overflow: hidden;
 	        position: relative;
 	        border: 1px solid #555;
 	        box-sizing: border-box;
         }
         .section-title {
+	        height: 18px;
 	        font-size: 14px;
 	        color: white;
 	        text-align: center;
@@ -905,24 +908,15 @@
 	        border-bottom: 1px solid white;
 	        padding: 2px 0 2px 0;
         }
-        .section-title:first-of-type {
-	        border-top: none;
-        }
         .command {
 	        width: 25%;
-	        height: 50px;
+	        height: 45px;
 	        border: 1px solid #555;
 	        box-sizing: border-box;
 	        float: left;
 	        cursor: pointer;
 	        color: white;
 	        text-align: center;
-        }
-        .command:nth-of-type(4n) {
-	        border-right: none;
-        }
-        .command:nth-of-type(4n-3) {
-	        border-left: none;
         }
         .section {
 	        
@@ -973,6 +967,7 @@
 			}
 			div#command-container {
 				width: 40%;
+				
 			}
 		}
 		
@@ -1057,8 +1052,9 @@
 	    <canvas height="460" id="game" width="360"></canvas>
 	    <div id="command-container">
 		    
-		    <div class="section-title">Main</div>
-		    <div class="section">
+		    
+		    <div class="section" id="main">
+			    <div class="section-title">Main</div>
 			    <div class="command" data-part="main" data-index="0" data-command="" draggable="true"></div>
 			    <div class="command" data-part="main" data-index="1" data-command="" draggable="true"></div>
 			    <div class="command" data-part="main" data-index="2" data-command="" draggable="true"></div>
@@ -1081,8 +1077,9 @@
 			    
 			    <div style="clear: both;"></div>
 			</div>
-		    <div class="section-title">Sub1</div>
-		    <div class="section">
+		    
+		    <div class="section" id="sub1">
+		    	<div class="section-title">Sub1</div>
 			    <div class="command" data-part="sub1" data-index="0" data-command="" draggable="true"></div>
 			    <div class="command" data-part="sub1" data-index="1" data-command="" draggable="true"></div>
 			    <div class="command" data-part="sub1" data-index="2" data-command="" draggable="true"></div>
@@ -1095,8 +1092,9 @@
 			    
 			    <div style="clear: both;"></div>
 		    </div>
-		    <div class="section-title">Sub2</div>
-		    <div class="section">
+		    
+		    <div class="section" id="sub2">
+		    	<div class="section-title">Sub2</div>
 			    <div class="command" data-part="sub2" data-index="0" data-command="" draggable="true"></div>
 			    <div class="command" data-part="sub2" data-index="1" data-command="" draggable="true"></div>
 			    <div class="command" data-part="sub2" data-index="2" data-command="" draggable="true"></div>
