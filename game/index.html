@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -8,63 +9,40 @@
     <title>Game</title>
     <script type="text/javascript">
         var ENTITIES = [];
+
+        var LEVEL = {"tileset":"tileset1", "layer0":[0,0,0,24,25,26,0,0,0,0,0,0,0,4,5,6,0,0,0,0,0,0,0,0,75,0,76,0,0,0,0,75,0,75,0,0,0,0,75,0,92,102,70,70,104,92,0,102,70,70,104,86,88,88,85,0,0,86,84,88,69,71,84,84,85,0,0,86,88,88,88,88,88,88,69,103,103,71,88,88,84,88,88,88,88,84,88,88,88,88,88,88,88,88,88,88,88,88,88,88], "layer1":[-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,"PS",-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1], "layer2":[1,1,1,0,0,0,1,1,1,1,1,1,1,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,1,1,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]};
         
-        // G = Grass
-        // R = Road
-        var MAP = [
-        'R','R','W','W','W','W','W','W','W','W',
-        'W','W','W','W','W','W','W','W','W','W',
-        'R','W','W','W','R','W','W','W','W','W',
-        'R','W','W','W','W','W','W','W','W','W',
-        'R','R','R','W','R','W','W','W','W','W',
-        'W','W','R','R','R','W','W','W','W','W',
-        'R','W','R','W','W','W','W','W','W','W',
-        'R','W','W','W','W','W','W','W','W','W',
-        'R','W','W','W','W','W','W','W','W','W',
-        'R','W','W','W','W','R','W','W','W','W'];
-        
-        var MAP_PICKUPS = [
-        '0','0','0','0','0','0','0','0','0','0',
-        '0','0','0','0','0','0','0','0','0','0',
-        '0','0','0','0','KR','0','0','0','0','0',
-        '0','0','0','0','0','0','0','0','0','0',
-        '0','0','0','0','0','0','0','0','0','0',
-        '0','0','0','0','0','0','0','0','0','0',
-        '0','0','DR','0','0','0','0','0','0','0',
-        '0','0','0','0','0','0','0','0','0','0',
-        '0','0','0','0','0','0','0','0','0','0',
-        '0','0','0','0','0','0','0','0','0','0'];
-        
+        LEVEL = {"tileset":"tileset0", "layer0":[100,100,100,100,97,97,100,100,100,100,100,97,110,86,111,100,97,97,100,100,97,100,98,89,99,100,110,111,100,100,100,100,98,35,99,100,98,85,111,100,86,86,87,35,85,86,87,54,85,86,0,0,0,35,0,0,0,0,0,0,44,88,44,35,63,0,0,101,75,0,37,37,38,26,42,42,42,42,42,42,56,68,56,67,91,0,102,0,0,0,56,58,69,57,0,104,0,0,0,0], "layer1":[-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,"PW",-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1], "layer2":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,0,1,0,1,0,1,1,1,1,1,0,0,0,1,1,1,1,1,1,1,0,0,0,0,0,1,1,1,1,1,0,0,0,0,1,0,1,1,1,1]};
+
         var IMAGES;
         if (window.devicePixelRatio == 2) {
-	        IMAGES = {
-		        'player':'player@2x.png',
-	        	'KR':'key_red.png'
-        	}
-	    } else if (window.devicePixelRatio == 1) {
-		    IMAGES = {
-			    'player':'player.png',
-	        	'KR':'key_red.png'
-        	}
-	    }
-        for (var key in IMAGES) {
-			if (IMAGES.hasOwnProperty(key)) {
-				var path = IMAGES[key];
-				IMAGES[key] = new Image();
-				IMAGES[key].src = 'img/' + path;
-	    	}
-		}	
+            IMAGES = {
+                'player': 'player0-64.png',
+                'tileset0': 'tileset0-64.png',
+                'tileset1': 'tileset1-64.png',
+                'tileset2': 'tileset2-64.png'
+            }
+        } else if (window.devicePixelRatio == 1) {
+            IMAGES = {
+                'player': 'player0-32.png',
+                'tileset0': 'tileset0-32.png',
+                'tileset1': 'tileset1-32.png',
+                'tileset2': 'tileset2-32.png'
+            }
+        }
+        var NUMBER_OF_IMAGES = 4;
+        var NUMBER_OF_LOADED_IMAGES = 0;
         
+
         // Cells that cannot be walked on
         var MAP_WALLS = ['W'];
-        
-        var CELL_WIDTH = 36;
-        var CELL_HEIGHT = 46;
+
+        var CELL_WIDTH = 32;
+        var CELL_HEIGHT = 32;
         var MAP_WIDTH = 10;
         var MAP_HEIGHT = 10;
-        var TRANSITION_WIDTH = 3;
-        var TIMER_SPEED = 25;
-        
+        var TRANSITION_WIDTH = 5;
+
         var EdgeTransitions = {
             NSWEEdgeTransition: 0,
             SWEEdgeTransition: 2,
@@ -83,7 +61,7 @@
             NEdgeTransition: 28,
             NoEdgeTransition: 30
         }
-        
+
         var CornerTransitions = {
             NoCornerTransition: 0,
             NWCornerTransition: 2,
@@ -102,21 +80,32 @@
             NESWSECornerTransition: 28,
             NWNESWSECornerTransition: 30
         }
-        
+
         var EDGE_TRANSITIONS = [];
         var CORNER_TRANSITIONS = [];
-        calculateEdgeTransitions();
-        calculateCornerTransitions();
+        //calculateEdgeTransitions();
+        //calculateCornerTransitions();
 
+		var PLAYER;
         var GAME_TIMER;
+        var TIMER_SPEED = 25;
         var GAME_CANVAS;
         var GAME_CONTEXT;
         var GAME_COUNT;
         var IS_EXE = false;
-        var COMMANDS = {'main':[], 'sub1':[], 'sub2':[]};
+        // When choosing commands
         var CLICKED_PART;
         var CLICKED_INDEX;
-        
+        // When executing commands
+        var COMMANDS = {
+            'main': [],
+            'sub1': [],
+            'sub2': []
+        };
+        var EXE_PART = 'main';
+        var EXE_INDEX = -1;
+        var COMMAND_SPEED = 800;
+
         function cellAboveCell(n) {
             if (n === -1) {
                 return -1;
@@ -127,16 +116,18 @@
                 return -1;
             }
         }
+
         function cellBelowCell(n) {
             if (n === -1) {
                 return -1;
             }
-            if (n + MAP_WIDTH < MAP_WIDTH*MAP_HEIGHT) {
+            if (n + MAP_WIDTH < MAP_WIDTH * MAP_HEIGHT) {
                 return n + MAP_WIDTH;
             } else {
                 return -1;
             }
         }
+
         function cellLeftOfCell(n) {
             if (n === -1) {
                 return -1;
@@ -150,6 +141,7 @@
                 return newPos;
             }
         }
+
         function cellRightOfCell(n) {
             if (n === -1) {
                 return -1;
@@ -163,9 +155,10 @@
                 return newPos;
             }
         }
+
         function cellIsBlocked(n) {
             var isBlocked = false;
-            if (n === -1) {
+            /*if (n === -1) {
                 isBlocked = true;
             } else {
                 var nextCell = MAP[n];
@@ -175,32 +168,66 @@
                         break;
                     }
                 }
-            }
+            }*/
             return isBlocked;
         }
+
         function Player() {
             this.source = IMAGES['player'];
-            
+            this.xPos = 0;
+            this.yPos = 0;
+            this.width = 32;
+            this.height = 32;
+            this.direction = 's';
+            this.reset();
+        }
+        Player.prototype.reset = function() {
             this.current_frame = 0;
             this.start_frame = 0;
             this.end_frame = 0;
             this.total_frames = 9;
-            this.width = CELL_WIDTH;
-            this.height = CELL_HEIGHT;
             this.skip = 6; // lower is faster
             this.isMoving = false;
             this.isJumping = false;
             this.requestStop = false;
 
-            this.xPos = 0;
-            this.yPos = 0;
             this.xSpeed = 0;
             this.ySpeed = 0;
             this.speed = 2;
             this.distance = 0;
             this.scale = 1;
-            
-            this.direction = 's';
+
+
+
+
+            for (var i = 0; i < LEVEL['layer1'].length; i++) {
+                if (LEVEL['layer1'][i] == 'PN' || LEVEL['layer1'][i] == 'PE' || LEVEL['layer1'][i] == 'PS' || LEVEL['layer1'][i] == 'PW') {
+                    var x = (i % MAP_WIDTH) * CELL_WIDTH;
+                    var y = Math.floor(i / MAP_WIDTH) * CELL_HEIGHT;
+                    this.xPos = x;
+                    this.yPos = y;
+                    switch (LEVEL['layer1'][i]) {
+                        case 'PN':
+                            this.faceNorth();
+                            break;
+                        case 'PE':
+                            this.faceEast();
+                            break;
+                        case 'PS':
+                            this.faceSouth();
+                            break;
+                        case 'PW':
+                            this.faceWest();
+                            break;
+                        default:
+                            break;
+                    }
+                    break;
+                }
+            }
+
+
+
         }
         Player.prototype.stop = function() {
             if (this.direction === 'n') {
@@ -217,16 +244,16 @@
         Player.prototype.faceNorth = function() {
             this.isMoving = false;
             this.direction = 'n';
-            this.current_frame = 3;
-            this.start_frame = 3;
-            this.end_frame = 5;
+            this.current_frame = 6;
+            this.start_frame = 6;
+            this.end_frame = 8;
         }
         Player.prototype.faceEast = function() {
             this.isMoving = false;
             this.direction = 'e';
-            this.current_frame = 6;
-            this.start_frame = 6;
-            this.end_frame = 8;
+            this.current_frame = 3;
+            this.start_frame = 3;
+            this.end_frame = 5;
         }
         Player.prototype.faceSouth = function() {
             this.isMoving = false;
@@ -324,7 +351,7 @@
         Player.prototype.jump = function() {
             var nextNextPos = this.nextNextPos();
             if (cellIsBlocked(nextNextPos)) {
-                return;
+                //return;
             }
             this.isJumping = true;
             this.requestStop = false;
@@ -332,24 +359,34 @@
             this.scale = 1;
             if (this.direction === 'n') {
                 this.xSpeed = 0;
-                this.ySpeed = -this.speed*2;
+                this.ySpeed = -this.speed * 2;
             } else if (this.direction === 'e') {
-                this.xSpeed = this.speed*2;
+                this.xSpeed = this.speed * 2;
                 this.ySpeed = 0;
             } else if (this.direction === 's') {
                 this.xSpeed = 0;
-                this.ySpeed = this.speed*2;
+                this.ySpeed = this.speed * 2;
             } else if (this.direction === 'w') {
-                this.xSpeed = -this.speed*2;
+                this.xSpeed = -this.speed * 2;
                 this.ySpeed = 0;
             }
         }
         Player.prototype.update = function(c, count) {
             // Draw current frame
-            var xOffset = this.xPos-0.5*(this.width*this.scale-this.width);
-            var yOffset = this.yPos-0.5*(this.height*this.scale-this.height);
-            c.drawImage(this.source, this.current_frame * (this.width * window.devicePixelRatio), 0, this.width*window.devicePixelRatio, this.height*window.devicePixelRatio, xOffset, yOffset, this.width*this.scale, this.height*this.scale);
-            
+
+            var wRatio = CELL_WIDTH / this.width;
+            var hRatio = CELL_HEIGHT / this.height;
+            var ratio = Math.min(wRatio, hRatio);
+            var newWidth = Math.floor(this.width * ratio);
+            var newHeight = Math.floor(this.height * ratio);
+
+            var pr = window.devicePixelRatio;
+
+            var xOffset = this.xPos - 0.5 * (newWidth * this.scale - newWidth);
+            var yOffset = this.yPos - 0.5 * (newHeight * this.scale - newHeight);
+
+            c.drawImage(this.source, this.current_frame * this.width * pr, 0, this.width * pr, this.height * pr, xOffset, yOffset, newWidth * this.scale, newHeight * this.scale);
+
             if (this.requestStop) {
                 // Stop is requested -- cycle through animation until first frame is reached, then set isMoving to false.
                 if (this.current_frame !== this.start_frame) {
@@ -368,7 +405,7 @@
                     this.current_frame = this.current_frame + 1 > this.end_frame ? this.start_frame : this.current_frame + 1;
                 }
                 // Move the position if max distance hasn't been reached for last move
-                var maxDistance = (this.direction === 'n' || this.direction === 's') ? this.height : this.width;
+                var maxDistance = (this.direction === 'n' || this.direction === 's') ? CELL_WIDTH : CELL_HEIGHT;
                 if (this.distance < maxDistance) {
                     this.xPos += this.xSpeed;
                     this.yPos += this.ySpeed;
@@ -378,54 +415,69 @@
                 }
 
             } else if (this.isJumping) {
-	            
-	            this.current_frame = this.start_frame + 1;
-	            
-	            var maxDistance = (this.direction === 'n' || this.direction === 's') ? 2*this.height : 2*this.width;
+
+                this.current_frame = this.start_frame + 1;
+
+                var maxDistance = (this.direction === 'n' || this.direction === 's') ? 2 * CELL_WIDTH : 2 * CELL_HEIGHT;
                 if (this.distance < maxDistance) {
                     this.xPos += this.xSpeed;
                     this.yPos += this.ySpeed;
                     this.distance += (Math.abs(this.xSpeed) + Math.abs(this.ySpeed));
-                    this.scale = -0.0001*Math.pow(this.distance, 2) + 0.0087*(this.distance) + 1;
+                    this.scale = -0.0001 * Math.pow(this.distance, 2) + 0.0083 * (this.distance) + 1;
                 } else {
                     this.requestStop = true;
                 }
             }
-            
+
         }
 
-        var player_obj = new Player();
-        player_obj.faceSouth();
 
-        ENTITIES.push(player_obj);
-        
         function loop() {
+            console.log('loop');
             // clear the canvas for this loop's animation
             GAME_CONTEXT.clearRect(0, 0, GAME_CANVAS.width, GAME_CANVAS.height);
-            
+
             // Draw map
-            for (var i = 0; i < MAP.length; i++) {
-                if (MAP[i] === 'W') {
+            for (var i = 0; i < LEVEL['layer0'].length; i++) {
+
+                var x = (i % MAP_WIDTH) * CELL_WIDTH;
+                var y = Math.floor(i / MAP_WIDTH) * CELL_HEIGHT;
+                var pr = window.devicePixelRatio;
+                
+                GAME_CONTEXT.drawImage(IMAGES[LEVEL.tileset], LEVEL['layer0'][i] * CELL_WIDTH * pr, 0, CELL_WIDTH * pr, CELL_HEIGHT * pr, x, y, CELL_WIDTH, CELL_HEIGHT);
+
+
+                /*if (MAP[i] === 'W') {
                     GAME_CONTEXT.fillStyle = '#9ADFD9';
                 } else if (MAP[i] === 'R') {
                     GAME_CONTEXT.fillStyle = '#EAFB7D';
                 }
-                GAME_CONTEXT.fillRect((i % MAP_WIDTH)*CELL_WIDTH, Math.floor(i / MAP_WIDTH)*CELL_HEIGHT, CELL_WIDTH, CELL_HEIGHT);
-                
+                GAME_CONTEXT.fillRect((i % MAP_WIDTH)*CELL_WIDTH, Math.floor(i / MAP_WIDTH)*CELL_HEIGHT, CELL_WIDTH, CELL_HEIGHT);*/
+
+                /*
                 // Draw extras
                 if (MAP_PICKUPS[i] !== '0') {
 	                var img = IMAGES[MAP_PICKUPS[i]];
 	                var x = (i % MAP_WIDTH)*CELL_WIDTH;
 	                var y = Math.floor(i / MAP_WIDTH)*CELL_HEIGHT;
+	                var midX = Math.floor(x + 0.5*CELL_WIDTH);
+					var midY = Math.floor(y + 0.5*CELL_HEIGHT);
+					var xx = x + CELL_WIDTH;
+					var yy = y + CELL_HEIGHT;
 	                var w, h;
+	                
 	                if (MAP_PICKUPS[i] === 'KR') {
 		                
-		                var scale = (CELL_WIDTH - 2*TRANSITION_WIDTH)/img.width;
-		                w = Math.floor(img.width*scale);
-		                h = Math.floor(img.height*scale);
-		                x = x + TRANSITION_WIDTH;
-		                y = Math.floor(y + TRANSITION_WIDTH + 0.5*(CELL_HEIGHT - 2*TRANSITION_WIDTH - h));
-		                GAME_CONTEXT.drawImage(img, 0, 0, img.width, img.height, x, y, w, h);
+
+		                
+		                var keyThickness = 5;
+		                GAME_CONTEXT.fillStyle = '#F00';
+		                GAME_CONTEXT.fillRect(x, midY, CELL_WIDTH, keyThickness);
+		                GAME_CONTEXT.fillRect(x+TRANSITION_WIDTH, midY-keyThickness+2, keyThickness, 12);
+		                
+		                GAME_CONTEXT.fillRect(xx-TRANSITION_WIDTH-keyThickness, midY, keyThickness, 8);
+		                GAME_CONTEXT.fillRect(xx-TRANSITION_WIDTH-2*keyThickness, midY, keyThickness, 10);
+		                
 	                } else if (MAP_PICKUPS[i] === 'DR') {
 		                GAME_CONTEXT.fillStyle = '#F75A00';
 		                GAME_CONTEXT.fillRect(x, y, CELL_WIDTH, CELL_HEIGHT);
@@ -436,8 +488,7 @@
 		                
 		                GAME_CONTEXT.beginPath();
 		                
-		                var midX = Math.floor(x + 0.5*CELL_WIDTH);
-						var midY = Math.floor(y + 0.5*CELL_HEIGHT);
+		                
 	                
 		                GAME_CONTEXT.arc(midX, midY-2, 4, 0, 2*Math.PI);
 		                GAME_CONTEXT.moveTo(midX, midY-4);
@@ -445,19 +496,21 @@
 		                GAME_CONTEXT.lineTo(midX-4, midY+8);
 		                GAME_CONTEXT.fill();
 		                
-		                
-		                /*var scale = (CELL_WIDTH - 2*TRANSITION_WIDTH)/img.width;
-		                w = Math.floor(img.width*scale);
-		                h = Math.floor(img.height*scale);
-		                x = x + TRANSITION_WIDTH;
-		                y = Math.floor(y + TRANSITION_WIDTH + 0.5*(CELL_HEIGHT - 2*TRANSITION_WIDTH - h));
-		                
-		                GAME_CONTEXT.drawImage(img, 0, 0, img.width, img.height, x, y, img.width, img.height);*/
 		            }
 	                
-                }
+                }*/
             }
-            
+
+            // Draw grid
+            GAME_CONTEXT.fillStyle = '#DDD';
+            for (var i = 1; i < MAP_WIDTH; i++) {
+                //GAME_CONTEXT.fillRect(i*CELL_WIDTH, 0, 1, GAME_CANVAS.height);
+            }
+            for (var i = 1; i < MAP_HEIGHT; i++) {
+                //GAME_CONTEXT.fillRect(0, i*CELL_HEIGHT, GAME_CANVAS.width, 1);
+            }
+
+            /*
             // Draw transitions
             for (var i = 0; i < MAP.length; i++) {
                 if (MAP[i] === 'W') {
@@ -665,16 +718,7 @@
                     default:
                         break;
                 }
-            }
-            
-            // Draw grid
-            GAME_CONTEXT.fillStyle = '#DDD';
-            for (var i = 1; i < 10; i++) {
-                //GAME_CONTEXT.fillRect(i*CELL_WIDTH, 0, 1, GAME_CANVAS.height);
-            }
-            for (var i = 1; i < 10; i++) {
-                //GAME_CONTEXT.fillRect(0, i*CELL_HEIGHT, GAME_CANVAS.width, 1);
-            }
+            }*/
 
             for (var i = 0; i < ENTITIES.length; i++) {
                 var e = ENTITIES[i];
@@ -683,86 +727,146 @@
 
             GAME_COUNT = GAME_COUNT + 1 > 999 ? 0 : GAME_COUNT + 1;
         }
+
+        function executeNextCommand() {
+            if (EXE_INDEX >= COMMANDS[EXE_PART].length || COMMANDS[EXE_PART][EXE_INDEX] === '') {
+                IS_EXE = false;
+                clearInterval(GAME_TIMER);
+            } else {
+                var command = COMMANDS[EXE_PART][EXE_INDEX];
+                switch (command) {
+                    case 'm':
+                        PLAYER.move();
+                        break;
+                    case 'cw':
+                        PLAYER.turnClockwise();
+                        break;
+                    case 'ccw':
+                        PLAYER.turnCounterClockwise();
+                        break;
+                    case 'j':
+                        PLAYER.jump();
+                        break;
+                    default:
+                        break;
+                }
+                EXE_INDEX++;
+                setTimeout(executeNextCommand, COMMAND_SPEED);
+            }
+        }
         function start() {
-            document.getElementById('pause').onclick = function() {
-                if (GAME_TIMER != null) {
-                    clearTimeout(GAME_TIMER);
-                    GAME_TIMER = null;
-                    document.getElementById('pause').value = 'Start';
-                } else {
-                    GAME_TIMER = setInterval(loop, TIMER_SPEED);
-                    document.getElementById('pause').value = 'Pause';
-                }
-            }
-            document.getElementById('go').onclick = function() {
-	            if (IS_EXE) {
-		            return;
-	            }
-	            IS_EXE = true;
-                var commandsString = document.getElementById('commands').value;
-                var commands = commandsString.split(" ");
-                
-                var speed = 800;
-                for (var i = 0; i < commands.length; i++) {
-                    var command = commands[i];
-                    if (command === 'c') {
-                        setTimeout(function(){player_obj.turnClockwise();}, speed*i);
-                    }
-                    if (command === 'cc') {
-                        setTimeout(function(){player_obj.turnCounterClockwise();}, speed*i);
-                    }
-                    if (command === 'm') {
-                        setTimeout(function(){player_obj.move();}, speed*i);
-                    }
-                    if (command === 'j') {
-	                    setTimeout(function(){player_obj.jump();}, speed*i);
-                    }
-                    if (i === commands.length-1) setTimeout(function(){IS_EXE = false;}, speed*i);
-                }
-            }
-            document.getElementById('command-chooser-close').onclick = function() {
-	            document.getElementById('command-chooser').style.display = 'none';
-            }
-            
-            // Command blank
-            var commandEvent = function() {
-	            CLICKED_PART = this.dataset.part;
-	            CLICKED_INDEX = this.dataset.index;
-	            document.getElementById('command-chooser').style.display = 'block';
-            }
-            var list = document.getElementsByClassName('command');
-            for (var i = 0; i < list.length; i++) {
-	            list.item(i).onclick = commandEvent;
-	            //list.item(i).touchstart = commandEvent;
-            }
-            
-            // Command choose
-            var commandChooseEvent = function() {
-	            COMMANDS[CLICKED_PART][CLICKED_INDEX] = this.dataset.command;
-	            document.querySelector('.command[data-part="' + CLICKED_PART + '"][data-index="' + CLICKED_INDEX + '"]').dataset.command = this.dataset.command;
-	            document.getElementById('command-chooser').style.display = 'none';
-	            
-            }
-            list = document.getElementsByClassName('command-choose');
-            for (var i = 0; i < list.length; i++) {
-	            list.item(i).onclick = commandChooseEvent;
-	            //list.item(i).touchstart = commandEvent;
-            }
-            
+	        console.log(IMAGES);
+            // Setup game canvas
             GAME_CANVAS = document.getElementById('game');
             if (GAME_CANVAS.getContext) {
                 GAME_CONTEXT = GAME_CANVAS.getContext('2d');
-                
+
                 if (window.devicePixelRatio == 2) {
-					GAME_CANVAS.setAttribute('width', 720);
-					GAME_CANVAS.setAttribute('height', 920);
-					GAME_CONTEXT.scale(2, 2);
-				}
-                
+                    GAME_CANVAS.setAttribute('width', 720);
+                    GAME_CANVAS.setAttribute('height', 920);
+                    GAME_CONTEXT.scale(2, 2);
+                }
+
                 GAME_COUNT = 0;
-                GAME_TIMER = setInterval(loop, TIMER_SPEED);
+                
+                loop();
             }
         }
+        function ready() {
+            document.getElementById('game').width = CELL_WIDTH * MAP_WIDTH;
+            document.getElementById('game').height = CELL_HEIGHT * MAP_HEIGHT;
+
+			// Load images
+            for (var key in IMAGES) {
+                if (IMAGES.hasOwnProperty(key)) {
+                    var path = IMAGES[key];
+                    IMAGES[key] = new Image();
+                    IMAGES[key].onload = function() {
+                        NUMBER_OF_LOADED_IMAGES++;
+                        if (NUMBER_OF_LOADED_IMAGES === NUMBER_OF_IMAGES) {
+                            start();
+                        }
+                    };
+                    IMAGES[key].src = 'img/' + path;
+                }
+            }
+            
+            // Add player object
+            PLAYER = new Player();
+			ENTITIES.push(PLAYER);
+
+            document.getElementById('go').onclick = function() {
+                if (IS_EXE) {
+                    return;
+                }
+                IS_EXE = true;
+
+                COMMANDS = {
+                    'main': [],
+                    'sub1': [],
+                    'sub2': []
+                };
+                var mainList = document.querySelectorAll('#main > .command');
+                for (var i = 0; i < mainList.length; i++) {
+                    var e = mainList.item(i);
+                    COMMANDS['main'].push(e.dataset.command);
+                }
+                var sub1List = document.querySelectorAll('#sub1 > .command');
+                for (var i = 0; i < sub1List.length; i++) {
+                    var e = sub1List.item(i);
+                    COMMANDS['sub1'].push(e.dataset.command);
+                }
+                var sub2List = document.querySelectorAll('#sub2 > .command');
+                for (var i = 0; i < sub2List.length; i++) {
+                    var e = sub2List.item(i);
+                    COMMANDS['sub2'].push(e.dataset.command);
+                }
+
+                PLAYER.reset();
+                GAME_COUNT = 0;
+                EXE_PART = 'main';
+                EXE_INDEX = 0;
+
+                GAME_TIMER = setInterval(loop, TIMER_SPEED);
+
+                setTimeout(executeNextCommand, COMMAND_SPEED/2);
+            }
+
+            document.getElementById('command-chooser-close').onclick = function() {
+                document.getElementById('command-chooser').style.display = 'none';
+            }
+
+            // Command blank
+            var commandEvent = function() {
+                if (this.dataset.command == '') {
+                    CLICKED_PART = this.dataset.part;
+                    CLICKED_INDEX = this.dataset.index;
+                    document.getElementById('command-chooser').style.display = 'block';
+                } else {
+                    this.dataset.command = '';
+                }
+            }
+            var list = document.getElementsByClassName('command');
+            for (var i = 0; i < list.length; i++) {
+                list.item(i).onclick = commandEvent;
+                //list.item(i).touchstart = commandEvent;
+            }
+
+            // Command choose
+            var commandChooseEvent = function() {
+                document.querySelector('.command[data-part="' + CLICKED_PART + '"][data-index="' + CLICKED_INDEX + '"]').dataset.command = this.dataset.command;
+                document.getElementById('command-chooser').style.display = 'none';
+
+            }
+            list = document.getElementsByClassName('command-choose');
+            for (var i = 0; i < list.length; i++) {
+                list.item(i).onclick = commandChooseEvent;
+                //list.item(i).touchstart = commandEvent;
+            }
+
+
+        }
+
         function cellHasTopEdgeTransition(n) {
             if (EDGE_TRANSITIONS[n] === EdgeTransitions.NSWEEdgeTransition ||
                 EDGE_TRANSITIONS[n] === EdgeTransitions.NWEEdgeTransition ||
@@ -772,11 +876,12 @@
                 EDGE_TRANSITIONS[n] === EdgeTransitions.NWEdgeTransition ||
                 EDGE_TRANSITIONS[n] === EdgeTransitions.NSEdgeTransition ||
                 EDGE_TRANSITIONS[n] === EdgeTransitions.NEdgeTransition) {
-                    return true;
-                } else {
-                    return false;
-                }
+                return true;
+            } else {
+                return false;
+            }
         }
+
         function cellHasBottomEdgeTransition(n) {
             if (EDGE_TRANSITIONS[n] === EdgeTransitions.NSWEEdgeTransition ||
                 EDGE_TRANSITIONS[n] === EdgeTransitions.SWEEdgeTransition ||
@@ -786,11 +891,12 @@
                 EDGE_TRANSITIONS[n] === EdgeTransitions.SWEdgeTransition ||
                 EDGE_TRANSITIONS[n] === EdgeTransitions.NSEdgeTransition ||
                 EDGE_TRANSITIONS[n] === EdgeTransitions.SEdgeTransition) {
-                    return true;
-                } else {
-                    return false;
-                }
+                return true;
+            } else {
+                return false;
+            }
         }
+
         function cellHasLeftEdgeTransition(n) {
             if (EDGE_TRANSITIONS[n] === EdgeTransitions.NSWEEdgeTransition ||
                 EDGE_TRANSITIONS[n] === EdgeTransitions.SWEEdgeTransition ||
@@ -800,11 +906,12 @@
                 EDGE_TRANSITIONS[n] === EdgeTransitions.SWEdgeTransition ||
                 EDGE_TRANSITIONS[n] === EdgeTransitions.NWEdgeTransition ||
                 EDGE_TRANSITIONS[n] === EdgeTransitions.WEdgeTransition) {
-                    return true;
-                } else {
-                    return false;
-                }
+                return true;
+            } else {
+                return false;
+            }
         }
+
         function cellHasRightEdgeTransition(n) {
             if (EDGE_TRANSITIONS[n] === EdgeTransitions.NSWEEdgeTransition ||
                 EDGE_TRANSITIONS[n] === EdgeTransitions.SWEEdgeTransition ||
@@ -814,11 +921,12 @@
                 EDGE_TRANSITIONS[n] === EdgeTransitions.SEEdgeTransition ||
                 EDGE_TRANSITIONS[n] === EdgeTransitions.NEEdgeTransition ||
                 EDGE_TRANSITIONS[n] === EdgeTransitions.EEdgeTransition) {
-                    return true;
-                } else {
-                    return false;
-                }
+                return true;
+            } else {
+                return false;
+            }
         }
+
         function calculateEdgeTransitions() {
             for (var i = 0; i < MAP.length; i++) {
                 var edgeTransition = 0;
@@ -845,6 +953,7 @@
                 EDGE_TRANSITIONS.push(edgeTransition);
             }
         }
+
         function calculateCornerTransitions() {
             for (var i = 0; i < MAP.length; i++) {
                 var cornerTransition = 0;
@@ -874,254 +983,255 @@
     </script>
     <style type="text/css">
         body {
-	        font-family: 'Geo', sans-serif;
+            font-family: 'Geo', sans-serif;
             padding: 0;
             margin: 0;
             background-color: #333;
         }
         div#container {
-			width: 560px;
-			height: 100%;
-			margin: 0 auto 0 auto;
-			padding: 0;
-		}
+            width: 520px;
+            height: 100%;
+            margin: 0 auto 0 auto;
+            padding: 0;
+        }
         canvas {
-	        float: left;
-	        width: 360px;
-	        position: fixed;
+            float: left;
         }
         div#command-container {
-	        float: right;
-	        width: 200px;
-	        height: 460px;
-	        overflow: hidden;
-	        position: relative;
-	        border: 1px solid #555;
-	        box-sizing: border-box;
+            float: right;
+            width: 200px;
+            height: 460px;
+            overflow: hidden;
+            position: relative;
+            border: 1px solid #555;
+            box-sizing: border-box;
         }
         .section-title {
-	        height: 18px;
-	        font-size: 14px;
-	        color: white;
-	        text-align: center;
-	        border-top: 1px solid white;
-	        border-bottom: 1px solid white;
-	        padding: 2px 0 2px 0;
+            height: 18px;
+            font-size: 14px;
+            color: white;
+            text-align: center;
+            border-top: 1px solid white;
+            border-bottom: 1px solid white;
+            padding: 2px 0 2px 0;
         }
         .command {
-	        width: 25%;
-	        height: 45px;
-	        border: 1px solid #555;
-	        box-sizing: border-box;
-	        float: left;
-	        cursor: pointer;
-	        color: white;
-	        text-align: center;
+            width: 25%;
+            height: 45px;
+            border: 1px solid #555;
+            box-sizing: border-box;
+            float: left;
+            cursor: pointer;
+            color: white;
+            text-align: center;
         }
-        .section {
-	        
-        }
-        #command-chooser {
-	        position: absolute;
-	        top: 0;
-	        left: 0;
-	        width: 100%;
-	        height: 100%;
-	        background-color: #333;
-	        display: none;
+        .section {} #command-chooser {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #333;
+            display: none;
         }
         .command[data-command="m"] {
-	        background-image: url('img/forward@2x.png');
-	        background-repeat: no-repeat;
-	        background-position: center center;
-	        background-size: 32px 32px;
+            background-image: url('img/forward@2x.png');
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-size: 32px 32px;
         }
         .command[data-command="cw"] {
-	        background-image: url('img/turnLeft@2x.png');
-	        background-repeat: no-repeat;
-	        background-position: center center;
-	        background-size: 32px 32px;
+            background-image: url('img/turnLeft@2x.png');
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-size: 32px 32px;
         }
         .command[data-command="ccw"] {
-	        background-image: url('img/turnRight@2x.png');
-	        background-repeat: no-repeat;
-	        background-position: center center;
-	        background-size: 32px 32px;
+            background-image: url('img/turnRight@2x.png');
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-size: 32px 32px;
         }
         .command[data-command="j"] {
-	        background-image: url('img/jump@2x.png');
-	        background-repeat: no-repeat;
-	        background-position: center center;
-	        background-size: 32px 32px;
+            background-image: url('img/jump@2x.png');
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-size: 32px 32px;
+        }
+        input[type="button"] {
+            height: 26px;
+            min-width: 50px;
+            padding: 3px;
+            background-color: #CCC;
+            font-family: 'Geo', sans-serif;
+            font-size: 14px;
+            border: 3px solid #AAA;
+            cursor: pointer;
         }
         /* Small screen < 560px */
-		@media only screen 
-		and (min-device-width: 0px) 
-		and (max-device-width: 560px) {
-			div#container {
-				width: 100%;
-				margin: 0;
-			}
-			canvas {
-				width: 60%;
-			}
-			div#command-container {
-				width: 40%;
-				
-			}
-		}
-		
-		/* < 400 */
-		@media
-		only screen and (max-width: 400px) {
-			.command[data-command="m"] {
-		        background-image: url('img/forward@1x.png');
-		        background-size: 16px 16px;
-	        }
-	        .command[data-command="cw"] {
-		        background-image: url('img/turnLeft@1x.png');
-		        background-size: 16px 16px;
-	        }
-	        .command[data-command="ccw"] {
-		        background-image: url('img/turnRight@1x.png');
-		        background-size: 16px 16px;
-	        }
-	        .command[data-command="j"] {
-		        background-image: url('img/jump@1x.png');
-		        background-size: 16px 16px;
-	        }
-		}
-		
-		/* Retina and > 400 */
-		@media
-		only screen and (-webkit-min-device-pixel-ratio: 2),
-		only screen and (   min--moz-device-pixel-ratio: 2),
-		only screen and (     -o-min-device-pixel-ratio: 2/1),
-		only screen and (        min-device-pixel-ratio: 2),
-		only screen and (                min-resolution: 192dpi),
-		only screen and (                min-resolution: 2dppx) {
-			.command[data-command="m"] {
-		        background-image: url('img/forward@4x.png');
-		        background-size: 32px 32px;
-	        }
-	        .command[data-command="cw"] {
-		        background-image: url('img/turnLeft@4x.png');
-		        background-size: 32px 32px;
-	        }
-	        .command[data-command="ccw"] {
-		        background-image: url('img/turnRight@4x.png');
-		        background-size: 32px 32px;
-	        }
-	        .command[data-command="j"] {
-		        background-image: url('img/jump@4x.png');
-		        background-size: 32px 32px;
-	        }
-		}
-		
-		/* Retina and < 400*/	
-		@media
-		only screen and (-webkit-min-device-pixel-ratio: 2)      and (max-width: 400px),
-		only screen and (   min--moz-device-pixel-ratio: 2)      and (max-width: 400px),
-		only screen and (     -o-min-device-pixel-ratio: 2/1)    and (max-width: 400px),
-		only screen and (        min-device-pixel-ratio: 2)      and (max-width: 400px),
-		only screen and (                min-resolution: 192dpi) and (max-width: 400px),
-		only screen and (                min-resolution: 2dppx)  and (max-width: 400px) {
-			.command[data-command="m"] {
-		        background-image: url('img/forward@2x.png');
-		        background-size: 16px 16px;
-	        }
-	        .command[data-command="cw"] {
-		        background-image: url('img/turnLeft@2x.png');
-		        background-size: 16px 16px;
-	        }
-	        .command[data-command="ccw"] {
-		        background-image: url('img/turnRight@2x.png');
-		        background-size: 16px 16px;
-	        }
-	        .command[data-command="j"] {
-		        background-image: url('img/jump@2x.png');
-		        background-size: 16px 16px;
-	        }
-		}
-		
+        
+        @media only screen and (min-device-width: 0px) and (max-device-width: 560px) {
+            div#container {
+                width: 100%;
+                margin: 0;
+            }
+            canvas {
+                width: 60%;
+                position: fixed;
+            }
+            div#command-container {
+                width: 40%;
+            }
+        }
+        /* < 400 */
+        
+        @media only screen and (max-width: 400px) {
+            .command[data-command="m"] {
+                background-image: url('img/forward@1x.png');
+                background-size: 16px 16px;
+            }
+            .command[data-command="cw"] {
+                background-image: url('img/turnLeft@1x.png');
+                background-size: 16px 16px;
+            }
+            .command[data-command="ccw"] {
+                background-image: url('img/turnRight@1x.png');
+                background-size: 16px 16px;
+            }
+            .command[data-command="j"] {
+                background-image: url('img/jump@1x.png');
+                background-size: 16px 16px;
+            }
+        }
+        /* Retina and > 400 */
+        
+        @media only screen and (-webkit-min-device-pixel-ratio: 2),
+        only screen and ( min--moz-device-pixel-ratio: 2),
+        only screen and ( -o-min-device-pixel-ratio: 2/1),
+        only screen and ( min-device-pixel-ratio: 2),
+        only screen and ( min-resolution: 192dpi),
+        only screen and ( min-resolution: 2dppx) {
+            .command[data-command="m"] {
+                background-image: url('img/forward@4x.png');
+                background-size: 32px 32px;
+            }
+            .command[data-command="cw"] {
+                background-image: url('img/turnLeft@4x.png');
+                background-size: 32px 32px;
+            }
+            .command[data-command="ccw"] {
+                background-image: url('img/turnRight@4x.png');
+                background-size: 32px 32px;
+            }
+            .command[data-command="j"] {
+                background-image: url('img/jump@4x.png');
+                background-size: 32px 32px;
+            }
+        }
+        /* Retina and < 400*/
+        
+        @media only screen and (-webkit-min-device-pixel-ratio: 2) and (max-width: 400px),
+        only screen and ( min--moz-device-pixel-ratio: 2) and (max-width: 400px),
+        only screen and ( -o-min-device-pixel-ratio: 2/1) and (max-width: 400px),
+        only screen and ( min-device-pixel-ratio: 2) and (max-width: 400px),
+        only screen and ( min-resolution: 192dpi) and (max-width: 400px),
+        only screen and ( min-resolution: 2dppx) and (max-width: 400px) {
+            .command[data-command="m"] {
+                background-image: url('img/forward@2x.png');
+                background-size: 16px 16px;
+            }
+            .command[data-command="cw"] {
+                background-image: url('img/turnLeft@2x.png');
+                background-size: 16px 16px;
+            }
+            .command[data-command="ccw"] {
+                background-image: url('img/turnRight@2x.png');
+                background-size: 16px 16px;
+            }
+            .command[data-command="j"] {
+                background-image: url('img/jump@2x.png');
+                background-size: 16px 16px;
+            }
+        }
     </style>
 </head>
 
-<body onload="start();">
+<body onload="ready();">
     <div id="container">
-	    <canvas height="460" id="game" width="360"></canvas>
-	    <div id="command-container">
-		    
-		    
-		    <div class="section" id="main">
-			    <div class="section-title">Main</div>
-			    <div class="command" data-part="main" data-index="0" data-command="" draggable="true"></div>
-			    <div class="command" data-part="main" data-index="1" data-command="" draggable="true"></div>
-			    <div class="command" data-part="main" data-index="2" data-command="" draggable="true"></div>
-			    <div class="command" data-part="main" data-index="3" data-command="" draggable="true"></div>
-			    
-			    <div class="command" data-part="main" data-index="4" data-command="" draggable="true"></div>
-			    <div class="command" data-part="main" data-index="5" data-command="" draggable="true"></div>
-			    <div class="command" data-part="main" data-index="6" data-command="" draggable="true"></div>
-			    <div class="command" data-part="main" data-index="7" data-command="" draggable="true"></div>
-			    
-			    <div class="command" data-part="main" data-index="8" data-command="" draggable="true"></div>
-			    <div class="command" data-part="main" data-index="9" data-command="" draggable="true"></div>
-			    <div class="command" data-part="main" data-index="10" data-command="" draggable="true"></div>
-			    <div class="command" data-part="main" data-index="11" data-command="" draggable="true"></div>
-			    
-			    <div class="command" data-part="main" data-index="12" data-command="" draggable="true"></div>
-			    <div class="command" data-part="main" data-index="13" data-command="" draggable="true"></div>
-			    <div class="command" data-part="main" data-index="14" data-command="" draggable="true"></div>
-			    <div class="command" data-part="main" data-index="15" data-command="" draggable="true"></div>
-			    
-			    <div style="clear: both;"></div>
-			</div>
-		    
-		    <div class="section" id="sub1">
-		    	<div class="section-title">Sub1</div>
-			    <div class="command" data-part="sub1" data-index="0" data-command="" draggable="true"></div>
-			    <div class="command" data-part="sub1" data-index="1" data-command="" draggable="true"></div>
-			    <div class="command" data-part="sub1" data-index="2" data-command="" draggable="true"></div>
-			    <div class="command" data-part="sub1" data-index="3" data-command="" draggable="true"></div>
-			    
-			    <div class="command" data-part="sub1" data-index="4" data-command="" draggable="true"></div>
-			    <div class="command" data-part="sub1" data-index="5" data-command="" draggable="true"></div>
-			    <div class="command" data-part="sub1" data-index="6" data-command="" draggable="true"></div>
-			    <div class="command" data-part="sub1" data-index="7" data-command="" draggable="true"></div>
-			    
-			    <div style="clear: both;"></div>
-		    </div>
-		    
-		    <div class="section" id="sub2">
-		    	<div class="section-title">Sub2</div>
-			    <div class="command" data-part="sub2" data-index="0" data-command="" draggable="true"></div>
-			    <div class="command" data-part="sub2" data-index="1" data-command="" draggable="true"></div>
-			    <div class="command" data-part="sub2" data-index="2" data-command="" draggable="true"></div>
-			    <div class="command" data-part="sub2" data-index="3" data-command="" draggable="true"></div>
-			    
-			    <div class="command" data-part="sub2" data-index="4" data-command="" draggable="true"></div>
-			    <div class="command" data-part="sub2" data-index="5" data-command="" draggable="true"></div>
-			    <div class="command" data-part="sub2" data-index="6" data-command="" draggable="true"></div>
-			    <div class="command" data-part="sub2" data-index="7" data-command="" draggable="true"></div>
-			    
-			    <div style="clear: both;"></div>
-		    </div>
-		    <input type="button" value="Go" id="go" />
-		    <input type="button" value="Pause" id="pause" />
-		    
-		    <div id="command-chooser">
-			    <div class="command command-choose" data-command="m"></div>
-			    <div class="command command-choose" data-command="cw"></div>
-			    <div class="command command-choose" data-command="ccw"></div>
-			    <div class="command command-choose" data-command="j"></div>
-			    <input id="command-chooser-close" type="button" value="OK" />
-		    </div>
-		    
-		</div>
-		<div style="clear: both;"></div>
-	</div>
-    
+        <canvas id="game"></canvas>
+        <div id="command-container">
+
+
+            <div class="section" id="main">
+                <div class="section-title">Main</div>
+                <div class="command" data-part="main" data-index="0" data-command="" draggable="true"></div>
+                <div class="command" data-part="main" data-index="1" data-command="" draggable="true"></div>
+                <div class="command" data-part="main" data-index="2" data-command="" draggable="true"></div>
+                <div class="command" data-part="main" data-index="3" data-command="" draggable="true"></div>
+
+                <div class="command" data-part="main" data-index="4" data-command="" draggable="true"></div>
+                <div class="command" data-part="main" data-index="5" data-command="" draggable="true"></div>
+                <div class="command" data-part="main" data-index="6" data-command="" draggable="true"></div>
+                <div class="command" data-part="main" data-index="7" data-command="" draggable="true"></div>
+
+                <div class="command" data-part="main" data-index="8" data-command="" draggable="true"></div>
+                <div class="command" data-part="main" data-index="9" data-command="" draggable="true"></div>
+                <div class="command" data-part="main" data-index="10" data-command="" draggable="true"></div>
+                <div class="command" data-part="main" data-index="11" data-command="" draggable="true"></div>
+
+                <div class="command" data-part="main" data-index="12" data-command="" draggable="true"></div>
+                <div class="command" data-part="main" data-index="13" data-command="" draggable="true"></div>
+                <div class="command" data-part="main" data-index="14" data-command="" draggable="true"></div>
+                <div class="command" data-part="main" data-index="15" data-command="" draggable="true"></div>
+
+                <div style="clear: both;"></div>
+            </div>
+
+            <div class="section" id="sub1">
+                <div class="section-title">Sub1</div>
+                <div class="command" data-part="sub1" data-index="0" data-command="" draggable="true"></div>
+                <div class="command" data-part="sub1" data-index="1" data-command="" draggable="true"></div>
+                <div class="command" data-part="sub1" data-index="2" data-command="" draggable="true"></div>
+                <div class="command" data-part="sub1" data-index="3" data-command="" draggable="true"></div>
+
+                <div class="command" data-part="sub1" data-index="4" data-command="" draggable="true"></div>
+                <div class="command" data-part="sub1" data-index="5" data-command="" draggable="true"></div>
+                <div class="command" data-part="sub1" data-index="6" data-command="" draggable="true"></div>
+                <div class="command" data-part="sub1" data-index="7" data-command="" draggable="true"></div>
+
+                <div style="clear: both;"></div>
+            </div>
+
+            <div class="section" id="sub2">
+                <div class="section-title">Sub2</div>
+                <div class="command" data-part="sub2" data-index="0" data-command="" draggable="true"></div>
+                <div class="command" data-part="sub2" data-index="1" data-command="" draggable="true"></div>
+                <div class="command" data-part="sub2" data-index="2" data-command="" draggable="true"></div>
+                <div class="command" data-part="sub2" data-index="3" data-command="" draggable="true"></div>
+
+                <div class="command" data-part="sub2" data-index="4" data-command="" draggable="true"></div>
+                <div class="command" data-part="sub2" data-index="5" data-command="" draggable="true"></div>
+                <div class="command" data-part="sub2" data-index="6" data-command="" draggable="true"></div>
+                <div class="command" data-part="sub2" data-index="7" data-command="" draggable="true"></div>
+
+                <div style="clear: both;"></div>
+            </div>
+            <input type="button" value="Go" id="go" />
+            <input type="button" value="Restart" id="restart" />
+
+            <div id="command-chooser">
+                <div class="section-title">Commands</div>
+                <div class="command command-choose" data-command="m"></div>
+                <div class="command command-choose" data-command="cw"></div>
+                <div class="command command-choose" data-command="ccw"></div>
+                <div class="command command-choose" data-command="j"></div>
+                <input id="command-chooser-close" type="button" value="OK" />
+            </div>
+
+        </div>
+        <div style="clear: both;"></div>
+    </div>
+
 </body>
 
 </html>
