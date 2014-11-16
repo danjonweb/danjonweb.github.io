@@ -789,7 +789,13 @@
                 loop();
             }
         }
+        function onDeviceReady() {
+			alert('test');
+			FastClick.attach(document.body);
+		}
         function ready() {
+	        document.addEventListener("deviceready", onDeviceReady, false);
+	        
 			// Load images
             for (var key in IMAGES) {
                 if (IMAGES.hasOwnProperty(key)) {
@@ -808,12 +814,6 @@
             // Add player object
             PLAYER = new Player();
 			ENTITIES.push(PLAYER);
-			
-			// Fastclick
-			window.addEventListener('load', function() {
-				FastClick.attach(document.body);
-				alert('aa');
-			}, false);
 
             document.getElementById('go').onclick = function() {
                 if (IS_EXE) {
