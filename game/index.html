@@ -810,9 +810,7 @@
 			ENTITIES.push(PLAYER);
 			
 			// Fastclick
-			window.addEventListener('load', function() {
-				FastClick.attach(document.body);
-			}, false);
+			FastClick.attach(document.body);
 
             document.getElementById('go').onclick = function() {
                 if (IS_EXE) {
