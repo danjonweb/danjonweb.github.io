@@ -7,6 +7,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <link href='http://fonts.googleapis.com/css?family=Geo' rel='stylesheet' type='text/css'>
     <title>Game</title>
+    <script type='application/javascript' src='js/fastclick.js'></script>
     <script type="text/javascript">
         var ENTITIES = [];
 
@@ -770,21 +771,25 @@
             if (GAME_CANVAS.getContext) {
                 GAME_CONTEXT = GAME_CANVAS.getContext('2d');
 
-                if (window.devicePixelRatio == 2) {
-                    //GAME_CANVAS.setAttribute('width', 720);
-                    //GAME_CANVAS.setAttribute('height', 920);
-                    GAME_CONTEXT.scale(2, 2);
-                }
-
+				if (window.devicePixelRatio == 1) {
+	                GAME_CANVAS.width = CELL_WIDTH * MAP_WIDTH;
+					GAME_CANVAS.height = CELL_HEIGHT * MAP_HEIGHT;
+					GAME_CANVAS.style.width = CELL_WIDTH * MAP_WIDTH;
+					GAME_CANVAS.style.height = CELL_HEIGHT * MAP_HEIGHT;
+	            } else if (window.devicePixelRatio == 2) {
+		            GAME_CANVAS.width = 2*CELL_WIDTH * MAP_WIDTH;
+					GAME_CANVAS.height = 2*CELL_HEIGHT * MAP_HEIGHT;
+					GAME_CANVAS.style.width = CELL_WIDTH * MAP_WIDTH;
+					GAME_CANVAS.style.height = CELL_HEIGHT * MAP_HEIGHT;
+		            GAME_CONTEXT.scale(2, 2);
+	            }
+				
                 GAME_COUNT = 0;
                 
                 loop();
             }
         }
         function ready() {
-            document.getElementById('game').width = CELL_WIDTH * MAP_WIDTH;
-            document.getElementById('game').height = CELL_HEIGHT * MAP_HEIGHT;
-
 			// Load images
             for (var key in IMAGES) {
                 if (IMAGES.hasOwnProperty(key)) {
@@ -803,6 +808,11 @@
             // Add player object
             PLAYER = new Player();
 			ENTITIES.push(PLAYER);
+			
+			// Fastclick
+			window.addEventListener('load', function() {
+				FastClick.attach(document.body);
+			}, false);
 
             document.getElementById('go').onclick = function() {
                 if (IS_EXE) {
