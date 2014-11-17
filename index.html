@@ -1,4 +1,59 @@
-<ul>
-  <li><a href="/ineq">Inequality Generator</a></li>
-  <li><a href="/viseq">Visual Equation Solver</a></li>
-</ul>
+<html>
+<head>
+    <link rel="stylesheet" href="css/font.css" type="text/css" charset="utf-8" />
+    <style>
+    body {
+        font-family: 'aaarghnormal';
+        margin: 0;
+        padding: 0;
+        font-size: 16px;
+        line-height: 24px;
+    }
+    #container {
+        width: 800px;
+        margin: 0 auto 0 auto;
+        padding: 10px 10px 50px 10px;
+        box-sizing: border-box;
+        background-color: #EBF0F1;
+        color: #293E51;
+    }
+    a:link {
+        color: #0696DE;
+        text-decoration: none;
+        border-bottom: 1px solid;
+        display: inline-block;
+    }
+    a:visited { color: #A840B7; }
+    a:hover { color: #0696DE; }
+    a:active { color: #0696DE; }
+    @media only screen and (min-width: 0px) and (max-width: 800px) {
+        #container {
+            width: 100%;
+            margin: 0;
+        }
+    }
+    </style>
+</head>
+<body>
+    <div id="container">
+    <h1>Projects</h1>
+    <p><small>by Daniel Weber</small></p>
+    <p>As a high school math teacher, I often wanted some simple computer-based aid to help my students understand and explore a concept. I usually ended up building these myself using pure JavaScript. This page collects those various demonstrations and might be useful in mathematics education.</p>
+    <ul>
+      <li>
+          <a href="./ineq/index.html">Inequality Generator</a>
+          <p>I've long had an interest in computer-generated math problems. They can be useful when creating highly differentiated software-based education tools. I never wanted to give all of my students the same problems to work on because my students were all at different levels. Instead, it would be best to have the computer adapt to how well a student understands a learning goal based on their previous answers. Some students need heavily scaffolded work, while others can jump ahead to more challenging problems. This is a problem generator for quadratic inequalities with various inputs to increase the difficulty of problems.</p>
+      </li>
+      <li>
+          <a href="./viseq/index.html">Visual Equation Solver</a>
+          <p>Solving basic one-step equations can be hard for students who don't have good number sense. I have found that many students have trouble when subtracting negative numbers from other negative numbers, for example. This is a problem generator for one-step equations in the form <i>x</i> + <i>a</i> = <i>b</i> or <i>a</i> + <i>x</i> = <i>b</i>. Additionally, it provide a visual interface to help students solve the equation.</p>
+      </li>
+      <li>
+          <a href="./parabola/index.html">Graphing Parabolas</a>
+          <p>This was written to introduce quadratics and their graphs. By the time students are in high school, they are usually familiar with what linear equations look like when graphed. They probably also understand how changes in slope and <i>y</i>-intercept affect the graph. However, students may not have a good idea of what a quadratic looks like when graphed, or especially how changes in the constants <i>A</i>, <i>B</i>, and <i>C</i> from the standard form affect the shape of the parabola. This demonstration was created to let students play with the locations of three points that make up a parabola, and let them see how the original equation reflects changes in the graph.
+          </p>
+      </li>
+    </ul>
+    </div>
+</body>
+</html>
