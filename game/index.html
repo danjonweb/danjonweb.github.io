@@ -10,6 +10,11 @@
     <title>Game</title>
     <script type='application/javascript' src='js/fastclick.js'></script>
     <script type="text/javascript">
+        var isRetina = (
+        	window.devicePixelRatio > 1 ||
+        	(window.matchMedia && window.matchMedia("(-webkit-min-device-pixel-ratio: 1.5),(-moz-min-device-pixel-ratio: 1.5),(min-device-pixel-ratio: 1.5)").matches)
+        );
+    
         var ENTITIES = [];
 
         var LEVEL;
@@ -24,7 +29,7 @@
         var COLLECTED_ITEMS = [];
 
         var IMAGES;
-        if (window.devicePixelRatio == 1) {
+        if (!isRetina) {
             IMAGES = {
                 'player-gray': 'gray-player0-64.png',
                 'player-blue': 'blue-player0-64.png',
@@ -33,7 +38,7 @@
                 'tileset2': 'tileset2-64.png',
                 'items': 'items-64.png'
             }
-        } else if (window.devicePixelRatio == 2) {
+        } else {
             IMAGES = {
                 'player-gray': 'gray-player0-128.png',
                 'player-blue': 'blue-player0-128.png',
@@ -533,13 +538,13 @@
                 GAME_CONTEXT = GAME_CANVAS.getContext('2d');
 
                 var bottomWidth = CELL_HEIGHT;
-                if (window.devicePixelRatio == 1) {
+                if (!isRetina) {
                     console.log('pr: 1');
                     GAME_CANVAS.width = CELL_WIDTH * MAP_WIDTH;
                     GAME_CANVAS.height = CELL_HEIGHT * MAP_HEIGHT + bottomWidth;
                     GAME_CANVAS.style.width = CELL_WIDTH * MAP_WIDTH;
                     GAME_CANVAS.style.height = CELL_HEIGHT * MAP_HEIGHT + bottomWidth;
-                } else if (window.devicePixelRatio == 2) {
+                } else {
                     console.log('pr: 2');
                     GAME_CANVAS.width = 2 * CELL_WIDTH * MAP_WIDTH;
                     GAME_CANVAS.height = 2 * CELL_HEIGHT * MAP_HEIGHT + 2 * bottomWidth;
