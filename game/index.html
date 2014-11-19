@@ -584,7 +584,7 @@
 	            			GAME_CONTEXT.font = '32pt early_gameboyregular';
 	            			GAME_CONTEXT.fillStyle = 'rgba(0, 0, 0, ' + step + ')';
 	            			GAME_CONTEXT.textAlign = 'center';
-	            			GAME_CONTEXT.fillText('STOP', GAME_CANVAS.width/2, 300);
+	            			GAME_CONTEXT.fillText('STOP', CELL_WIDTH*MAP_WIDTH/2, 300);
 	            			if (step > 2) {
 	            		        EXE_PART = 'main';
 	            		        EXE_INDEX = 0;
@@ -621,7 +621,7 @@
 	                	GAME_CONTEXT.font = '32pt early_gameboyregular';
 	                	GAME_CONTEXT.fillStyle = 'rgba(0, 0, 0, ' + step + ')';
 	                	GAME_CONTEXT.textAlign = 'center';
-	                	GAME_CONTEXT.fillText('START', GAME_CANVAS.width/2, 300);
+	                	GAME_CONTEXT.fillText('START', CELL_WIDTH*MAP_WIDTH/2, 300);
 	                	if (step > 2) {
         	                GAME_TIMER = setInterval(redraw, TIMER_SPEED);
         	                // First command takes half time to start
