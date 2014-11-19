@@ -8,6 +8,9 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <link rel="stylesheet" href="./css/font.css" type="text/css" charset="utf-8"/>
     <title>Game</title>
+    <script src="./js/jquery-2.1.1.min.js"></script>
+    <script src="./js/jquery-ui.min.js"></script>
+    <script src="./js/jquery.ui.touch-punch.min.js"></script>
     <script type='application/javascript' src='js/fastclick.js'></script>
     <script type="text/javascript">
         function isRetina() {
@@ -568,6 +571,17 @@
             FastClick.attach(document.body);
         }
         function ready() {
+            $('.command').draggable({ revert: true, revertDuration: 100, containment: "parent", zIndex: 100});
+            $('.command').droppable({ accept: ".command", drop: function(event, ui) {
+                this.dataset.command = ui.draggable[0].dataset.command;
+                ui.draggable[0].dataset.command = "";
+                this.style.backgroundColor = '#333';
+            }, over: function(event, ui) {
+                this.style.backgroundColor = '#E3E890';
+            }, out: function(event, ui) {
+                this.style.backgroundColor = '#333';
+            }});
+            
             // Fastclick
             document.addEventListener("deviceready", onDeviceReady, false);
 
@@ -704,6 +718,7 @@
             box-sizing: border-box;
             float: left;
             cursor: pointer;
+            background-color: #333;
         }
 
         #command-chooser {
