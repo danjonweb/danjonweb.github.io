@@ -10,7 +10,7 @@
     <title>Game</title>
     <script src="./js/jquery-2.1.1.min.js"></script>
     <script src="./js/jquery-ui.min.js"></script>
-    //<script src="./js/jquery.ui.touch-punch.min.js"></script>
+    <script src="./js/jquery.ui.touch-punch.min.js"></script>
     <script type='application/javascript' src='js/fastclick.js'></script>
     <script type="text/javascript">
         function isRetina() {
@@ -596,30 +596,9 @@
         function onDeviceReady() {
             FastClick.attach(document.body);
         }
-        function touchHandler(event) {
-            var touch = event.changedTouches[0];
-
-            var simulatedEvent = document.createEvent("MouseEvent");
-                simulatedEvent.initMouseEvent({
-                touchstart: "mousedown",
-                touchmove: "mousemove",
-                touchend: "mouseup"
-            }[event.type], true, true, window, 1,
-                touch.screenX, touch.screenY,
-                touch.clientX, touch.clientY, false,
-                false, false, false, 0, null);
-
-            touch.target.dispatchEvent(simulatedEvent);
-        }
-        function init() {
-            document.addEventListener("touchstart", touchHandler, true);
-            document.addEventListener("touchmove", touchHandler, true);
-            document.addEventListener("touchend", touchHandler, true);
-            document.addEventListener("touchcancel", touchHandler, true);
-        }
         function ready() {
             // Make commans draggable
-            $('.command').draggable({ revert: true, revertDuration: 100, distance: 10, delay: 300, containment: "parent", zIndex: 100});
+            $('.command').draggable({ revert: true, revertDuration: 100, distance: 30, containment: "parent", zIndex: 100});
             $('.command').droppable({ accept: ".command", drop: function(event, ui) {
                 this.dataset.command = ui.draggable[0].dataset.command;
                 this.dataset.color = ui.draggable[0].dataset.color;
@@ -631,8 +610,6 @@
             }, out: function(event, ui) {
                 this.style.backgroundColor = '#333';
             }});
-            
-            init();
             
             // Window resize
             $(window).resize(function() {
@@ -766,7 +743,7 @@
             color: white;
             text-align: center;
             border: 1px solid #FEFFFD;
-            padding: 2px 0 2px 0;
+            padding: 10px 0 10px 0;
             box-sizing: border-box;
         }
 
