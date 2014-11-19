@@ -75,6 +75,9 @@
         var EXE_CALLER_INDEXES = []; // stack of indexes
         var EXE_TIMER;
         var COMMAND_SPEED = 600;
+        
+        // When displaying text
+        var DISPLAY_TIMER
 
         function cellAboveCell(n) {
             if (n === -1) {
@@ -478,7 +481,11 @@
                 }
                 if (allItemsCollected) {
                     alert('Finished!');
-                    stop();
+                    clearInterval(GAME_TIMER);
+                    clearTimeout(EXE_TIMER);
+                    IS_EXE = true;
+                    resetCommandBackgroundColors();
+                    redraw();
                     return;
                 }
             }
@@ -536,6 +543,7 @@
         function start() {
             // Setup game canvas
             GAME_CANVAS = document.getElementById('game');
+            
             if (GAME_CANVAS.getContext) {
                 GAME_CONTEXT = GAME_CANVAS.getContext('2d');
 
@@ -559,14 +567,72 @@
                 GAME_COUNT = 0;
 
                 redraw();
-            }
-        }
-        function stop() {
-            clearInterval(GAME_TIMER);
-            clearTimeout(EXE_TIMER);
-            IS_EXE = true;
-            resetCommandBackgroundColors();
-            redraw();
+                
+                GAME_CANVAS.addEventListener('mouseup', function(e) {
+                	if (DISPLAY_TIMER) {
+                		return;
+                	}
+	            	if (IS_EXE) {
+	            		clearInterval(GAME_TIMER);
+	            		clearTimeout(EXE_TIMER);
+	            		
+	            		var step = 0;
+	            		displayStop();
+	            		function displayStop() {
+	            			redraw();
+	            			step += 0.05;
+	            			GAME_CONTEXT.font = '32pt early_gameboyregular';
+	            			GAME_CONTEXT.fillStyle = 'rgba(0, 0, 0, ' + step + ')';
+	            			GAME_CONTEXT.textAlign = 'center';
+	            			GAME_CONTEXT.fillText('STOP', GAME_CANVAS.width/2, 300);
+	            			if (step > 2) {
+	            		        EXE_PART = 'main';
+	            		        EXE_INDEX = 0;
+	            		        EXE_CALLER_PARTS = [];
+	            		        EXE_CALLER_INDEXES = [];
+	            		        IS_EXE = false;
+	            		        PLAYER.reset();
+	            		        COLLECTED_ITEMS = [];
+	            		        GAME_COUNT = 0;
+	            		        resetCommandBackgroundColors();
+	            		        redraw();
+	            		        DISPLAY_TIMER = null;
+	            			} else {
+	            				DISPLAY_TIMER = setTimeout(displayStop, 25);
+	            			}
+	            		};
+	                    return;
+	                }
+	                IS_EXE = true;
+	                
+	                PLAYER.reset();
+	                COLLECTED_ITEMS = [];
+	                GAME_COUNT = 0;
+	                EXE_PART = 'main';
+	                EXE_INDEX = 0;
+	                EXE_CALLER_PARTS = [];
+	                EXE_CALLER_INDEXES = [];
+	                
+	                var step = 0;
+	                displayStart();
+	                function displayStart() {
+	                	redraw();
+	                	step += 0.05;
+	                	GAME_CONTEXT.font = '32pt early_gameboyregular';
+	                	GAME_CONTEXT.fillStyle = 'rgba(0, 0, 0, ' + step + ')';
+	                	GAME_CONTEXT.textAlign = 'center';
+	                	GAME_CONTEXT.fillText('START', GAME_CANVAS.width/2, 300);
+	                	if (step > 2) {
+        	                GAME_TIMER = setInterval(redraw, TIMER_SPEED);
+        	                // First command takes half time to start
+        	                EXE_TIMER = setTimeout(executeNextCommand, COMMAND_SPEED / 2);
+        	                DISPLAY_TIMER = null;
+	                	} else {
+	                		DISPLAY_TIMER = setTimeout(displayStart, 25);
+	                	}
+	                };
+	            });
+			}
         }
         function doWindowResize() {
             if (window.innerHeight > window.innerWidth) {
@@ -576,7 +642,7 @@
                 
                 document.getElementById('command-container').style.float = 'none';
                 document.getElementById('command-container').style.width = '100%';
-                $('div#command-container').height($(window).height() - Math.ceil($(GAME_CANVAS).height()/11));
+                //$('div#command-container').height($(window).height() - Math.ceil($(GAME_CANVAS).height()/11));
                 
                 document.getElementById('game').style.position = 'static';
             } else {
@@ -586,7 +652,7 @@
                 
                 document.getElementById('command-container').style.float = 'right';
                 $('div#command-container').width($(window).width() - $(GAME_CANVAS).width());
-                $('div#command-container').height($(window).height() - Math.ceil($(GAME_CANVAS).height()/11));
+                //$('div#command-container').height($(window).height() - Math.ceil($(GAME_CANVAS).height()/11));
                 
                 
                 document.getElementById('game').style.position = 'fixed';
@@ -600,7 +666,8 @@
             FastClick.attach(document.body);
         }
         function ready() {
-            // Make commans draggable
+            // Make commands draggable
+            /*
             $('.command').draggable({ revert: true, revertDuration: 100, distance: 30, containment: "parent", zIndex: 100});
             $('.command').droppable({ accept: ".command", drop: function(event, ui) {
                 this.dataset.command = ui.draggable[0].dataset.command;
@@ -613,6 +680,7 @@
             }, out: function(event, ui) {
                 this.style.backgroundColor = 'black';
             }});
+            */
             
             // Window resize
             $(window).resize(function() {
@@ -624,7 +692,7 @@
             
             // Fastclick
             document.addEventListener("deviceready", onDeviceReady, false);
-
+            
             // Load images
             for (var key in IMAGES) {
                 if (IMAGES.hasOwnProperty(key)) {
@@ -633,49 +701,15 @@
                     IMAGES[key].onload = function () {
                         NUMBER_OF_LOADED_IMAGES++;
                         if (NUMBER_OF_LOADED_IMAGES === NUMBER_OF_IMAGES) {
+                            // Add player object
+                            PLAYER = new Player();
+                            ENTITIES.push(PLAYER);
+                            
                             start();
                         }
                     };
                     IMAGES[key].src = './img/' + path;
                 }
-            }
-
-            // Add player object
-            PLAYER = new Player();
-            ENTITIES.push(PLAYER);
-
-            document.getElementById('go').onclick = function () {
-                if (IS_EXE) {
-                    return;
-                }
-                IS_EXE = true;
-
-                PLAYER.reset();
-                COLLECTED_ITEMS = [];
-                GAME_COUNT = 0;
-                EXE_PART = 'main';
-                EXE_INDEX = 0;
-                EXE_CALLER_PARTS = [];
-                EXE_CALLER_INDEXES = [];
-
-                GAME_TIMER = setInterval(redraw, TIMER_SPEED);
-
-                // First command takes half time to start
-                EXE_TIMER = setTimeout(executeNextCommand, COMMAND_SPEED / 2);
-            }
-            document.getElementById('restart').onclick = function () {
-                EXE_PART = 'main';
-                EXE_INDEX = 0;
-                EXE_CALLER_PARTS = [];
-                EXE_CALLER_INDEXES = [];
-                clearInterval(GAME_TIMER);
-                clearTimeout(EXE_TIMER);
-                IS_EXE = false;
-                PLAYER.reset();
-                COLLECTED_ITEMS = [];
-                GAME_COUNT = 0;
-                resetCommandBackgroundColors();
-                redraw();
             }
 
             document.getElementById('command-chooser-close').onclick = function () {
@@ -736,12 +770,12 @@
         div#command-container {
             position: relative;
             box-sizing: border-box;
-            overflow: scroll;
         }
 
         .section-title {
             font-size: 8px;
             color: white;
+            background: black;
             text-align: center;
             border: 1px solid #FEFFFD;
             padding: 16px 0 16px 0;
@@ -767,7 +801,7 @@
             display: none;
         }
 
-        input[type="button"] {
+        button {
             height: 24px;
             border-radius: 0;
             min-width: 50px;
@@ -780,9 +814,7 @@
         }
         
         #buttons {
-            position: fixed;
-            bottom: 0;
-            right: 0;
+        	display: none;
         }
 
         .command[data-command="m"][data-color="gray"] {
@@ -902,7 +934,12 @@
 <body onload="ready();">
 <div id="container">
     <canvas id="game"></canvas>
-
+    
+    <div id="buttons">
+        <button id="go">Go</button>
+        <button id="restart">Restart</button>
+    </div>
+    
     <div id="command-container">
 
         <div class="section" id="main">
@@ -982,11 +1019,6 @@
             <input id="command-chooser-close" type="button" value="OK"/>
         </div>
 
-    </div>
-    
-    <div id="buttons">
-        <input type="button" value="Go" id="go"/>
-        <input type="button" value="Restart" id="restart"/>
     </div>
     
     <div style="clear: both;"></div>
