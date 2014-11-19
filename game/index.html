@@ -553,9 +553,8 @@
                     GAME_CONTEXT.scale(2, 2);
                 }
                 
-                GAME_CANVAS.style.height = '100%';
-                $('div#command-container').width($(window).width() - $(GAME_CANVAS).width());
-                
+                // Initial canvas resize
+                doWindowResize();
 
                 GAME_COUNT = 0;
 
@@ -569,10 +568,36 @@
             resetCommandBackgroundColors();
             redraw();
         }
+        function doWindowResize() {
+            if (window.innerHeight > window.innerWidth) {
+                // Portrait
+                GAME_CANVAS.style.width = '100%';
+                GAME_CANVAS.style.height = '';
+                
+                document.getElementById('command-container').style.float = 'none';
+                document.getElementById('command-container').style.width = '100%';
+                
+                document.getElementById('game').style.position = 'static';
+            } else {
+                // Landscape
+                GAME_CANVAS.style.height = '100%';
+                GAME_CANVAS.style.width = '';
+                
+                document.getElementById('command-container').style.float = 'right';
+                $('div#command-container').width($(window).width() - $(GAME_CANVAS).width());
+                
+                document.getElementById('game').style.position = 'fixed';
+            }
+        }
+        function doOrientationChange() {
+            console.log('orientation changed');
+            doWindowResize();
+          }
         function onDeviceReady() {
             FastClick.attach(document.body);
         }
         function ready() {
+            // Make commans draggable
             $('.command').draggable({ revert: true, revertDuration: 100, distance: 10, delay: 300, containment: "parent", zIndex: 100});
             $('.command').droppable({ accept: ".command", drop: function(event, ui) {
                 this.dataset.command = ui.draggable[0].dataset.command;
@@ -585,6 +610,14 @@
             }, out: function(event, ui) {
                 this.style.backgroundColor = '#333';
             }});
+            
+            // Window resize
+            $(window).resize(function() {
+                doWindowResize();
+            });
+            
+            // Orientation change
+            //window.addEventListener('orientationchange', doOrientationChange);
             
             // Fastclick
             document.addEventListener("deviceready", onDeviceReady, false);
@@ -694,7 +727,7 @@
         }
 
         canvas {
-            float: left;
+            display: block;
         }
 
         div#command-container {
