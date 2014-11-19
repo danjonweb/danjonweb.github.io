@@ -571,7 +571,7 @@
             FastClick.attach(document.body);
         }
         function ready() {
-            $('.command').draggable({ revert: true, revertDuration: 100, distance: 10, containment: "parent", zIndex: 100});
+            $('.command').draggable({ revert: true, revertDuration: 100, distance: 10, delay: 300, containment: "parent", zIndex: 100});
             $('.command').droppable({ accept: ".command", drop: function(event, ui) {
                 this.dataset.command = ui.draggable[0].dataset.command;
                 this.dataset.color = ui.draggable[0].dataset.color;
