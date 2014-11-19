@@ -568,6 +568,7 @@
             FastClick.attach(document.body);
         }
         function ready() {
+            // Fastclick
             document.addEventListener("deviceready", onDeviceReady, false);
 
             // Load images
@@ -578,10 +579,11 @@
                     IMAGES[key].onload = function () {
                         NUMBER_OF_LOADED_IMAGES++;
                         if (NUMBER_OF_LOADED_IMAGES === NUMBER_OF_IMAGES) {
+                            console.log(NUMBER_OF_LOADED_IMAGES)
                             start();
                         }
                     };
-                    IMAGES[key].src = 'img/' + path;
+                    IMAGES[key].src = './img/' + path;
                 }
             }
 
