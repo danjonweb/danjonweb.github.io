@@ -663,9 +663,13 @@
             doWindowResize();
           }
         function onDeviceReady() {
+        	console.log('device ready');
             FastClick.attach(document.body);
         }
         function ready() {
+        	// Fastclick
+        	document.addEventListener("deviceready", onDeviceReady, false);
+        	
             // Make commands draggable
             /*
             $('.command').draggable({ revert: true, revertDuration: 100, distance: 30, containment: "parent", zIndex: 100});
@@ -689,9 +693,6 @@
             
             // Orientation change
             window.addEventListener('orientationchange', doOrientationChange);
-            
-            // Fastclick
-            document.addEventListener("deviceready", onDeviceReady, false);
             
             // Load images
             for (var key in IMAGES) {
