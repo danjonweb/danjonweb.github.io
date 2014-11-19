@@ -3,22 +3,31 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <link href='http://fonts.googleapis.com/css?family=Geo' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="./css/font.css" type="text/css" charset="utf-8"/>
     <title>Game</title>
     <script type='application/javascript' src='js/fastclick.js'></script>
     <script type="text/javascript">
         var ENTITIES = [];
 
         var LEVEL;
-        
-        LEVEL = {"tileset":"tileset0", "layer0":[100,97,97,100,100,97,100,100,100,100,100,100,100,100,100,100,100,97,100,100,86,86,86,86,86,86,86,86,86,86,0,41,42,42,42,42,42,42,43,0,0,35,0,0,102,0,0,0,34,0,0,35,0,101,0,0,0,0,34,0,0,35,0,0,0,0,102,0,34,0,0,39,27,27,27,27,27,27,28,0,0,63,89,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0], "layer1":[-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,1003,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,2,-1,22,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1], "layer2":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]};
+
+        LEVEL = {
+            "tileset": "tileset0",
+            "layer0": [100, 110, 86, 111, 100, 97, 100, 100, 100, 100, 100, 98, 54, 99, 110, 111, 100, 97, 100, 100, 86, 87, 0, 85, 87, 85, 86, 86, 86, 86, 0, 0, 39, 27, 27, 43, 0, 0, 36, 37, 88, 0, 0, 0, 102, 35, 0, 0, 45, 46, 0, 0, 0, 101, 0, 35, 0, 44, 0, 0, 0, 0, 41, 27, 27, 28, 0, 0, 44, 0, 88, 0, 34, 0, 102, 0, 0, 0, 0, 0, 0, 76, 34, 0, 89, 0, 0, 0, 0, 0, 0, 0, 26, 27, 27, 63, 0, 0, 0, 0],
+            "layer1": [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 1002, -1, -1, 18, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 1, -1, -1, 18, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 1, -1, -1, 1005, -1, -1, -1, -1],
+            "layer2": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0]
+        };
+
+        var COLLECTED_ITEMS = [];
 
         var IMAGES;
         if (window.devicePixelRatio == 2) {
             IMAGES = {
-                'player': 'player1-64.png',
+                'player-gray': 'gray-player0-64.png',
+                'player-blue': 'blue-player0-64.png',
                 'tileset0': 'tileset0-64.png',
                 'tileset1': 'tileset1-64.png',
                 'tileset2': 'tileset2-64.png',
@@ -26,72 +35,25 @@
             }
         } else if (window.devicePixelRatio == 1) {
             IMAGES = {
-                'player': 'player1-32.png',
+                'player-gray': 'gray-player0-32.png',
+                'player-blue': 'blue-player0-32.png',
                 'tileset0': 'tileset0-32.png',
                 'tileset1': 'tileset1-32.png',
                 'tileset2': 'tileset2-32.png',
                 'items': 'items-32.png'
             }
         }
-        var NUMBER_OF_IMAGES = 5;
+        var NUMBER_OF_IMAGES = 6;
         var NUMBER_OF_LOADED_IMAGES = 0;
-        
-
-        // Cells that cannot be walked on
-        var MAP_WALLS = ['W'];
 
         var CELL_WIDTH = 32;
         var CELL_HEIGHT = 32;
         var MAP_WIDTH = 10;
         var MAP_HEIGHT = 10;
-        var TRANSITION_WIDTH = 5;
 
-        var EdgeTransitions = {
-            NSWEEdgeTransition: 0,
-            SWEEdgeTransition: 2,
-            NWEEdgeTransition: 4,
-            WEEdgeTransition: 6,
-            NSEEdgeTransition: 8,
-            SEEdgeTransition: 10,
-            NEEdgeTransition: 12,
-            EEdgeTransition: 14,
-            NSWEdgeTransition: 16,
-            SWEdgeTransition: 18,
-            NWEdgeTransition: 20,
-            WEdgeTransition: 22,
-            NSEdgeTransition: 24,
-            SEdgeTransition: 26,
-            NEdgeTransition: 28,
-            NoEdgeTransition: 30
-        }
-
-        var CornerTransitions = {
-            NoCornerTransition: 0,
-            NWCornerTransition: 2,
-            NECornerTransition: 4,
-            NWNECornerTransition: 6,
-            SWCornerTransition: 8,
-            NWSWCornerTransition: 10,
-            NESWCornerTransition: 12,
-            NWNESWCornerTransition: 14,
-            SECornerTransition: 16,
-            NWSECornerTransition: 18,
-            NESECornerTransition: 20,
-            NWNESECornerTransition: 22,
-            SWSECornerTransition: 24,
-            NWSWSECornerTransition: 26,
-            NESWSECornerTransition: 28,
-            NWNESWSECornerTransition: 30
-        }
-
-        var EDGE_TRANSITIONS = [];
-        var CORNER_TRANSITIONS = [];
-        //calculateEdgeTransitions();
-        //calculateCornerTransitions();
-
-		var PLAYER;
+        var PLAYER;
         var GAME_TIMER;
-        var TIMER_SPEED = 25;
+        var TIMER_SPEED = 20;
         var GAME_CANVAS;
         var GAME_CONTEXT;
         var GAME_COUNT;
@@ -100,14 +62,12 @@
         var CLICKED_PART;
         var CLICKED_INDEX;
         // When executing commands
-        var COMMANDS = {
-            'main': [],
-            'sub1': [],
-            'sub2': []
-        };
         var EXE_PART = 'main';
         var EXE_INDEX = -1;
-        var COMMAND_SPEED = 800;
+        var EXE_CALLER_PARTS = []; // stack of callers
+        var EXE_CALLER_INDEXES = []; // stack of indexes
+        var EXE_TIMER;
+        var COMMAND_SPEED = 500;
 
         function cellAboveCell(n) {
             if (n === -1) {
@@ -158,25 +118,7 @@
                 return newPos;
             }
         }
-
-        function cellIsBlocked(n) {
-            var isBlocked = false;
-            /*if (n === -1) {
-                isBlocked = true;
-            } else {
-                var nextCell = MAP[n];
-                for (var i = 0; i < MAP_WALLS.length; i++) {
-                    if (nextCell === MAP_WALLS[i]) {
-                        isBlocked = true;
-                        break;
-                    }
-                }
-            }*/
-            return isBlocked;
-        }
-
         function Player() {
-            this.source = IMAGES['player'];
             this.xPos = 0;
             this.yPos = 0;
             this.width = 32;
@@ -184,11 +126,10 @@
             this.direction = 's';
             this.reset();
         }
-        Player.prototype.reset = function() {
+        Player.prototype.reset = function () {
             this.current_frame = 0;
             this.start_frame = 0;
             this.end_frame = 0;
-            this.total_frames = 9;
             this.skip = 6; // lower is faster
             this.isMoving = false;
             this.isJumping = false;
@@ -200,12 +141,14 @@
             this.distance = 0;
             this.scale = 1;
 
+            this.color = 'gray';
+            this.source = IMAGES['player-' + this.color];
 
-			// Determine starting position from layer1
-			// 1001 = player facing north
-			// 1002 = player facing east
-			// 1003 = player facing south
-			// 1004 = player facing west
+            // Determine starting position from layer1
+            // 1001 = player facing north
+            // 1002 = player facing east
+            // 1003 = player facing south
+            // 1004 = player facing west
             for (var i = 0; i < LEVEL['layer1'].length; i++) {
                 if (LEVEL['layer1'][i] == 1001 || LEVEL['layer1'][i] == 1002 || LEVEL['layer1'][i] == 1003 || LEVEL['layer1'][i] == 1004) {
                     var x = (i % MAP_WIDTH) * CELL_WIDTH;
@@ -231,11 +174,12 @@
                     break;
                 }
             }
-
-
-
         }
-        Player.prototype.stop = function() {
+        Player.prototype.changeColor = function (color) {
+            this.color = color;
+            this.source = IMAGES['player-' + color];
+        }
+        Player.prototype.stop = function () {
             if (this.direction === 'n') {
                 this.faceNorth();
             } else if (this.direction === 'e') {
@@ -247,35 +191,46 @@
             }
             console.log(this.distance);
         }
-        Player.prototype.faceNorth = function() {
+        Player.prototype.faceNorth = function () {
             this.isMoving = false;
             this.direction = 'n';
             this.current_frame = 6;
             this.start_frame = 6;
             this.end_frame = 8;
         }
-        Player.prototype.faceEast = function() {
+        Player.prototype.faceEast = function () {
             this.isMoving = false;
             this.direction = 'e';
             this.current_frame = 3;
             this.start_frame = 3;
             this.end_frame = 5;
         }
-        Player.prototype.faceSouth = function() {
+        Player.prototype.faceSouth = function () {
             this.isMoving = false;
             this.direction = 's';
             this.current_frame = 0;
             this.start_frame = 0;
             this.end_frame = 2;
         }
-        Player.prototype.faceWest = function() {
+        Player.prototype.faceWest = function () {
             this.isMoving = false;
             this.direction = 'w';
             this.current_frame = 9;
             this.start_frame = 9;
             this.end_frame = 11;
         }
-        Player.prototype.turnClockwise = function() {
+        function cellIsBlocked(n) {
+            var isBlocked = false;
+            if (n === -1) {
+                isBlocked = true;
+            } else {
+                if (LEVEL['layer2'][n] === 0) {
+                    isBlocked = true;
+                }
+            }
+            return isBlocked;
+        }
+        Player.prototype.turnClockwise = function () {
             if (this.direction === 'n') {
                 this.faceEast();
             } else if (this.direction === 'e') {
@@ -286,7 +241,7 @@
                 this.faceNorth();
             }
         }
-        Player.prototype.turnCounterClockwise = function() {
+        Player.prototype.turnCounterClockwise = function () {
             if (this.direction === 'n') {
                 this.faceWest();
             } else if (this.direction === 'e') {
@@ -297,11 +252,15 @@
                 this.faceSouth();
             }
         }
-        Player.prototype.nextPos = function() {
-            // Returns next position based on currect direction
+        Player.prototype.pos = function () {
             var row = this.yPos / this.height;
             var col = this.xPos / this.width;
             var pos = row * MAP_WIDTH + col;
+            return pos;
+        }
+        Player.prototype.nextPos = function () {
+            // Returns next position based on current direction
+            var pos = this.pos();
             var nextPos = -1;
             if (this.direction === 'n') {
                 nextPos = cellAboveCell(pos);
@@ -314,10 +273,8 @@
             }
             return nextPos;
         }
-        Player.prototype.nextNextPos = function() {
-            var row = this.yPos / this.height;
-            var col = this.xPos / this.width;
-            var pos = row * MAP_WIDTH + col;
+        Player.prototype.nextNextPos = function () {
+            var pos = this.pos();
             var nextPos = -1;
             if (this.direction === 'n') {
                 nextPos = cellAboveCell(pos);
@@ -334,30 +291,30 @@
             }
             return nextPos;
         }
-        Player.prototype.move = function() {
-            if (cellIsBlocked(this.nextPos()) === false) {
-                this.isMoving = true;
-                this.requestStop = false;
-                this.distance = 0;
-                if (this.direction === 'n') {
-                    this.xSpeed = 0;
-                    this.ySpeed = -this.speed;
-                } else if (this.direction === 'e') {
-                    this.xSpeed = this.speed;
-                    this.ySpeed = 0;
-                } else if (this.direction === 's') {
-                    this.xSpeed = 0;
-                    this.ySpeed = this.speed;
-                } else if (this.direction === 'w') {
-                    this.xSpeed = -this.speed;
-                    this.ySpeed = 0;
-                }
+        Player.prototype.move = function () {
+            if (cellIsBlocked(this.nextPos())) {
+                return;
+            }
+            this.isMoving = true;
+            this.requestStop = false;
+            this.distance = 0;
+            if (this.direction === 'n') {
+                this.xSpeed = 0;
+                this.ySpeed = -this.speed;
+            } else if (this.direction === 'e') {
+                this.xSpeed = this.speed;
+                this.ySpeed = 0;
+            } else if (this.direction === 's') {
+                this.xSpeed = 0;
+                this.ySpeed = this.speed;
+            } else if (this.direction === 'w') {
+                this.xSpeed = -this.speed;
+                this.ySpeed = 0;
             }
         }
-        Player.prototype.jump = function() {
-            var nextNextPos = this.nextNextPos();
-            if (cellIsBlocked(nextNextPos)) {
-                //return;
+        Player.prototype.jump = function () {
+            if (cellIsBlocked(this.nextNextPos())) {
+                return;
             }
             this.isJumping = true;
             this.requestStop = false;
@@ -377,7 +334,21 @@
                 this.ySpeed = 0;
             }
         }
-        Player.prototype.update = function(c, count) {
+        Player.prototype.action = function () {
+            //console.log(LEVEL['layer1'][this.pos()]);
+            var item = LEVEL['layer1'][this.pos()];
+            if (item >= 0 && item < 1000) {
+                if (item === 1) {
+                    // blue
+                    this.changeColor('blue');
+                } else if (item === 18) {
+                    // gray
+                    this.changeColor('gray');
+                }
+                COLLECTED_ITEMS.push(this.pos());
+            }
+        }
+        Player.prototype.update = function (c, count) {
             // Draw current frame
 
             var wRatio = CELL_WIDTH / this.width;
@@ -438,8 +409,7 @@
         }
 
 
-        function loop() {
-            console.log('loop');
+        function redraw() {
             // clear the canvas for this loop's animation
             GAME_CONTEXT.clearRect(0, 0, GAME_CANVAS.width, GAME_CANVAS.height);
 
@@ -451,64 +421,16 @@
                 var pr = window.devicePixelRatio;
 
                 GAME_CONTEXT.drawImage(IMAGES[LEVEL.tileset], LEVEL['layer0'][i] * CELL_WIDTH * pr, 0, CELL_WIDTH * pr, CELL_HEIGHT * pr, x, y, CELL_WIDTH, CELL_HEIGHT);
-                
-                if (LEVEL['layer1'][i] !== -1) {
-                	GAME_CONTEXT.drawImage(IMAGES['items'], LEVEL['layer1'][i] * CELL_WIDTH * pr, 0, CELL_WIDTH * pr, CELL_HEIGHT * pr, x, y, CELL_WIDTH, CELL_HEIGHT);
+
+                if (LEVEL['layer1'][i] !== -1 && COLLECTED_ITEMS.indexOf(i) === -1) {
+                    GAME_CONTEXT.drawImage(IMAGES['items'], LEVEL['layer1'][i] * CELL_WIDTH * pr, 0, CELL_WIDTH * pr, CELL_HEIGHT * pr, x, y, CELL_WIDTH, CELL_HEIGHT);
                 }
+            }
 
-
-                /*if (MAP[i] === 'W') {
-                    GAME_CONTEXT.fillStyle = '#9ADFD9';
-                } else if (MAP[i] === 'R') {
-                    GAME_CONTEXT.fillStyle = '#EAFB7D';
-                }
-                GAME_CONTEXT.fillRect((i % MAP_WIDTH)*CELL_WIDTH, Math.floor(i / MAP_WIDTH)*CELL_HEIGHT, CELL_WIDTH, CELL_HEIGHT);*/
-
-                /*
-                // Draw extras
-                if (MAP_PICKUPS[i] !== '0') {
-	                var img = IMAGES[MAP_PICKUPS[i]];
-	                var x = (i % MAP_WIDTH)*CELL_WIDTH;
-	                var y = Math.floor(i / MAP_WIDTH)*CELL_HEIGHT;
-	                var midX = Math.floor(x + 0.5*CELL_WIDTH);
-					var midY = Math.floor(y + 0.5*CELL_HEIGHT);
-					var xx = x + CELL_WIDTH;
-					var yy = y + CELL_HEIGHT;
-	                var w, h;
-	                
-	                if (MAP_PICKUPS[i] === 'KR') {
-		                
-
-		                
-		                var keyThickness = 5;
-		                GAME_CONTEXT.fillStyle = '#F00';
-		                GAME_CONTEXT.fillRect(x, midY, CELL_WIDTH, keyThickness);
-		                GAME_CONTEXT.fillRect(x+TRANSITION_WIDTH, midY-keyThickness+2, keyThickness, 12);
-		                
-		                GAME_CONTEXT.fillRect(xx-TRANSITION_WIDTH-keyThickness, midY, keyThickness, 8);
-		                GAME_CONTEXT.fillRect(xx-TRANSITION_WIDTH-2*keyThickness, midY, keyThickness, 10);
-		                
-	                } else if (MAP_PICKUPS[i] === 'DR') {
-		                GAME_CONTEXT.fillStyle = '#F75A00';
-		                GAME_CONTEXT.fillRect(x, y, CELL_WIDTH, CELL_HEIGHT);
-		                GAME_CONTEXT.fillStyle = '#FA9050';
-		                GAME_CONTEXT.fillRect(x, y, CELL_WIDTH, TRANSITION_WIDTH);
-		                
-		                GAME_CONTEXT.fillStyle = '#444';
-		                
-		                GAME_CONTEXT.beginPath();
-		                
-		                
-	                
-		                GAME_CONTEXT.arc(midX, midY-2, 4, 0, 2*Math.PI);
-		                GAME_CONTEXT.moveTo(midX, midY-4);
-		                GAME_CONTEXT.lineTo(midX+4, midY+8);
-		                GAME_CONTEXT.lineTo(midX-4, midY+8);
-		                GAME_CONTEXT.fill();
-		                
-		            }
-	                
-                }*/
+            // Draw items
+            for (var i = 0; i < COLLECTED_ITEMS.length; i++) {
+                var item = parseInt(LEVEL['layer1'][COLLECTED_ITEMS[i]]);
+                GAME_CONTEXT.drawImage(IMAGES['items'], item * CELL_WIDTH * pr, 0, CELL_WIDTH * pr, CELL_HEIGHT * pr, i * CELL_WIDTH, CELL_HEIGHT * MAP_HEIGHT, CELL_WIDTH, CELL_HEIGHT);
             }
 
             // Draw grid
@@ -520,216 +442,6 @@
                 //GAME_CONTEXT.fillRect(0, i*CELL_HEIGHT, GAME_CANVAS.width, 1);
             }
 
-            /*
-            // Draw transitions
-            for (var i = 0; i < MAP.length; i++) {
-                if (MAP[i] === 'W') {
-                    GAME_CONTEXT.fillStyle = '#8AC8C3';
-                } else if (MAP[i] === 'R') {
-                    GAME_CONTEXT.fillStyle = '#D2E170';
-                }
-                var x = (i % MAP_WIDTH)*CELL_WIDTH;
-                var xx = x+CELL_WIDTH-TRANSITION_WIDTH;
-                var y = Math.floor(i / MAP_WIDTH)*CELL_HEIGHT;
-                var yy = y+CELL_HEIGHT-TRANSITION_WIDTH;
-                switch (EDGE_TRANSITIONS[i]) {
-                    case EdgeTransitions.NSWEEdgeTransition:
-                        // top
-                        GAME_CONTEXT.fillRect(x, y, CELL_WIDTH, TRANSITION_WIDTH);
-                        // bottom
-                        GAME_CONTEXT.fillRect(x, yy, CELL_WIDTH, TRANSITION_WIDTH);
-                        // left
-                        GAME_CONTEXT.fillRect(x, y, TRANSITION_WIDTH, CELL_HEIGHT);
-                        // right
-                        GAME_CONTEXT.fillRect(xx, y, TRANSITION_WIDTH, CELL_HEIGHT);
-                        break;
-                    case EdgeTransitions.SWEEdgeTransition:
-                        // bottom
-                        GAME_CONTEXT.fillRect(x, yy, CELL_WIDTH, TRANSITION_WIDTH);
-                        // left
-                        GAME_CONTEXT.fillRect(x, y, TRANSITION_WIDTH, CELL_HEIGHT);
-                        // right
-                        GAME_CONTEXT.fillRect(xx, y, TRANSITION_WIDTH, CELL_HEIGHT);
-                        break;
-                    case EdgeTransitions.NWEEdgeTransition:
-                        // top
-                        GAME_CONTEXT.fillRect(x, y, CELL_WIDTH, TRANSITION_WIDTH);
-                        // left
-                        GAME_CONTEXT.fillRect(x, y, TRANSITION_WIDTH, CELL_HEIGHT);
-                        // right
-                        GAME_CONTEXT.fillRect(xx, y, TRANSITION_WIDTH, CELL_HEIGHT);
-                        break;
-                    case EdgeTransitions.WEEdgeTransition:
-                        // left
-                        GAME_CONTEXT.fillRect(x, y, TRANSITION_WIDTH, CELL_HEIGHT);
-                        // right
-                        GAME_CONTEXT.fillRect(xx, y, TRANSITION_WIDTH, CELL_HEIGHT);
-                        break;
-                    case EdgeTransitions.NSEEdgeTransition:
-                        // top
-                        GAME_CONTEXT.fillRect(x, y, CELL_WIDTH, TRANSITION_WIDTH);
-                        // bottom
-                        GAME_CONTEXT.fillRect(x, yy, CELL_WIDTH, TRANSITION_WIDTH);
-                        // right
-                        GAME_CONTEXT.fillRect(xx, y, TRANSITION_WIDTH, CELL_HEIGHT);
-                        break;
-                    case EdgeTransitions.SEEdgeTransition:
-                        // bottom
-                        GAME_CONTEXT.fillRect(x, yy, CELL_WIDTH, TRANSITION_WIDTH);
-                        // right
-                        GAME_CONTEXT.fillRect(xx, y, TRANSITION_WIDTH, CELL_HEIGHT);
-                        break;
-                    case EdgeTransitions.NEEdgeTransition:
-                        // top
-                        GAME_CONTEXT.fillRect(x, y, CELL_WIDTH, TRANSITION_WIDTH);
-                        // right
-                        GAME_CONTEXT.fillRect(xx, y, TRANSITION_WIDTH, CELL_HEIGHT);
-                        break;
-                    case EdgeTransitions.EEdgeTransition:
-                        // right
-                        GAME_CONTEXT.fillRect(xx, y, TRANSITION_WIDTH, CELL_HEIGHT);
-                        break;
-                    case EdgeTransitions.NSWEdgeTransition:
-                        // top
-                        GAME_CONTEXT.fillRect(x, y, CELL_WIDTH, TRANSITION_WIDTH);
-                        // bottom
-                        GAME_CONTEXT.fillRect(x, yy, CELL_WIDTH, TRANSITION_WIDTH);
-                        // left
-                        GAME_CONTEXT.fillRect(x, y, TRANSITION_WIDTH, CELL_HEIGHT);
-                        break;
-                    case EdgeTransitions.SWEdgeTransition:
-                        // bottom
-                        GAME_CONTEXT.fillRect(x, yy, CELL_WIDTH, TRANSITION_WIDTH);
-                        // left
-                        GAME_CONTEXT.fillRect(x, y, TRANSITION_WIDTH, CELL_HEIGHT);
-                        break;
-                    case EdgeTransitions.NWEdgeTransition:
-                        // top
-                        GAME_CONTEXT.fillRect(x, y, CELL_WIDTH, TRANSITION_WIDTH);
-                        // left
-                        GAME_CONTEXT.fillRect(x, y, TRANSITION_WIDTH, CELL_HEIGHT);
-                        break;
-                    case EdgeTransitions.WEdgeTransition:
-                        // left
-                        GAME_CONTEXT.fillRect(x, y, TRANSITION_WIDTH, CELL_HEIGHT);
-                        break;
-                    case EdgeTransitions.NSEdgeTransition:
-                        // top
-                        GAME_CONTEXT.fillRect(x, y, CELL_WIDTH, TRANSITION_WIDTH);
-                        // bottom
-                        GAME_CONTEXT.fillRect(x, yy, CELL_WIDTH, TRANSITION_WIDTH);
-                        break;
-                    case EdgeTransitions.SEdgeTransition:
-                        // bottom
-                        GAME_CONTEXT.fillRect(x, yy, CELL_WIDTH, TRANSITION_WIDTH);
-                        break;
-                    case EdgeTransitions.NEdgeTransition:
-                        // top
-                        GAME_CONTEXT.fillRect(x, y, CELL_WIDTH, TRANSITION_WIDTH);
-                        break;
-                    default:
-                        break;
-                }
-                switch (CORNER_TRANSITIONS[i]) {
-                    case CornerTransitions.NWCornerTransition:
-                        // NW Corner
-                        GAME_CONTEXT.fillRect(x, y, TRANSITION_WIDTH, TRANSITION_WIDTH);
-                        break;
-                    case CornerTransitions.NECornerTransition:
-                        // NE Corner
-                        GAME_CONTEXT.fillRect(xx, y, TRANSITION_WIDTH, TRANSITION_WIDTH);
-                        break;
-                    case CornerTransitions.NWNECornerTransition:
-                        // NW Corner
-                        GAME_CONTEXT.fillRect(x, y, TRANSITION_WIDTH, TRANSITION_WIDTH);
-                        // NE Corner
-                        GAME_CONTEXT.fillRect(xx, y, TRANSITION_WIDTH, TRANSITION_WIDTH);
-                        break;
-                    case CornerTransitions.SWCornerTransition:
-                        // SW Corner
-                        GAME_CONTEXT.fillRect(x, yy, TRANSITION_WIDTH, TRANSITION_WIDTH);
-                        break;
-                    case CornerTransitions.NWSWCornerTransition:
-                        // NW Corner
-                        GAME_CONTEXT.fillRect(x, y, TRANSITION_WIDTH, TRANSITION_WIDTH);
-                        // SW Corner
-                        GAME_CONTEXT.fillRect(x, yy, TRANSITION_WIDTH, TRANSITION_WIDTH);
-                        break;
-                    case CornerTransitions.NESWCornerTransition:
-                        // NE Corner
-                        GAME_CONTEXT.fillRect(xx, y, TRANSITION_WIDTH, TRANSITION_WIDTH);
-                        // SW Corner
-                        GAME_CONTEXT.fillRect(x, yy, TRANSITION_WIDTH, TRANSITION_WIDTH);
-                        break;
-                    case CornerTransitions.NWNESWCornerTransition:
-                        // NW Corner
-                        GAME_CONTEXT.fillRect(x, y, TRANSITION_WIDTH, TRANSITION_WIDTH);
-                        // NE Corner
-                        GAME_CONTEXT.fillRect(xx, y, TRANSITION_WIDTH, TRANSITION_WIDTH);
-                        // SW Corner
-                        GAME_CONTEXT.fillRect(x, yy, TRANSITION_WIDTH, TRANSITION_WIDTH);
-                        break;
-                    case CornerTransitions.SECornerTransition:
-                        // SE Corner
-                        GAME_CONTEXT.fillRect(xx, yy, TRANSITION_WIDTH, TRANSITION_WIDTH);
-                        break;
-                    case CornerTransitions.NWSECornerTransition:
-                        // NW Corner
-                        GAME_CONTEXT.fillRect(x, y, TRANSITION_WIDTH, TRANSITION_WIDTH);
-                        // SE Corner
-                        GAME_CONTEXT.fillRect(xx, yy, TRANSITION_WIDTH, TRANSITION_WIDTH);
-                        break;
-                    case CornerTransitions.NESECornerTransition:
-                        // NE Corner
-                        GAME_CONTEXT.fillRect(xx, y, TRANSITION_WIDTH, TRANSITION_WIDTH);
-                        // SE Corner
-                        GAME_CONTEXT.fillRect(xx, yy, TRANSITION_WIDTH, TRANSITION_WIDTH);
-                        break;
-                    case CornerTransitions.NWNESECornerTransition:
-                        // NW Corner
-                        GAME_CONTEXT.fillRect(x, y, TRANSITION_WIDTH, TRANSITION_WIDTH);
-                        // NE Corner
-                        GAME_CONTEXT.fillRect(xx, y, TRANSITION_WIDTH, TRANSITION_WIDTH);
-                        // SE Corner
-                        GAME_CONTEXT.fillRect(xx, yy, TRANSITION_WIDTH, TRANSITION_WIDTH);
-                        break;
-                    case CornerTransitions.SWSECornerTransition:
-                        // SW Corner
-                        GAME_CONTEXT.fillRect(x, yy, TRANSITION_WIDTH, TRANSITION_WIDTH);
-                        // SE Corner
-                        GAME_CONTEXT.fillRect(xx, yy, TRANSITION_WIDTH, TRANSITION_WIDTH);
-                        break;
-                    case CornerTransitions.NWSWSECornerTransition:
-                        // NW Corner
-                        GAME_CONTEXT.fillRect(x, y, TRANSITION_WIDTH, TRANSITION_WIDTH);
-                        // SW Corner
-                        GAME_CONTEXT.fillRect(x, yy, TRANSITION_WIDTH, TRANSITION_WIDTH);
-                        // SE Corner
-                        GAME_CONTEXT.fillRect(xx, yy, TRANSITION_WIDTH, TRANSITION_WIDTH);
-                        break;
-                    case CornerTransitions.NESWSECornerTransition:
-                        // NE Corner
-                        GAME_CONTEXT.fillRect(xx, y, TRANSITION_WIDTH, TRANSITION_WIDTH);
-                        // SW Corner
-                        GAME_CONTEXT.fillRect(x, yy, TRANSITION_WIDTH, TRANSITION_WIDTH);
-                        // SE Corner
-                        GAME_CONTEXT.fillRect(xx, yy, TRANSITION_WIDTH, TRANSITION_WIDTH);
-                        break;
-                    case CornerTransitions.NWNESWSECornerTransition:
-                        // NW Corner
-                        GAME_CONTEXT.fillRect(x, y, TRANSITION_WIDTH, TRANSITION_WIDTH);
-                        // NE Corner
-                        GAME_CONTEXT.fillRect(xx, y, TRANSITION_WIDTH, TRANSITION_WIDTH);
-                        // SW Corner
-                        GAME_CONTEXT.fillRect(x, yy, TRANSITION_WIDTH, TRANSITION_WIDTH);
-                        // SE Corner
-                        GAME_CONTEXT.fillRect(xx, yy, TRANSITION_WIDTH, TRANSITION_WIDTH);
-                        break;
-                    default:
-                        break;
-                }
-            }*/
-
             for (var i = 0; i < ENTITIES.length; i++) {
                 var e = ENTITIES[i];
                 e.update(GAME_CONTEXT, GAME_COUNT);
@@ -737,70 +449,127 @@
 
             GAME_COUNT = GAME_COUNT + 1 > 999 ? 0 : GAME_COUNT + 1;
         }
-
+        function resetCommandBackgroundColors() {
+            // Un-highlight all commands
+            var allCommands = document.querySelectorAll('#main .command, #sub1 .command, #sub2 .command');
+            for (var i = 0; i < allCommands.length; i++) {
+                allCommands.item(i).style.backgroundColor = '#333';
+            }
+        }
         function executeNextCommand() {
-            if (EXE_INDEX >= COMMANDS[EXE_PART].length || COMMANDS[EXE_PART][EXE_INDEX] === '') {
-                IS_EXE = false;
-                clearInterval(GAME_TIMER);
+            resetCommandBackgroundColors();
+
+            var commands = document.querySelectorAll('#' + EXE_PART + ' .command');
+
+            if (LEVEL['layer1'][PLAYER.pos()] === 1005) {
+                // Arrived at end -- check that all items picked up
+                var allItemsCollected = true;
+                for (var i = 0; i < LEVEL['layer1'].length; i++) {
+                    if (LEVEL['layer1'][i] >= 0 && LEVEL['layer1'][i] < 1000 && COLLECTED_ITEMS.indexOf(i) === -1) {
+                        allItemsCollected = false;
+                    }
+                }
+                if (allItemsCollected) {
+                    alert('Finished!');
+                    stop();
+                    return;
+                }
+            }
+            if (EXE_INDEX >= commands.length || commands.item(EXE_INDEX).dataset.command === '') {
+                if (EXE_PART === 'sub1' || EXE_PART === 'sub2') {
+                    EXE_PART = EXE_CALLER_PARTS.pop();
+                    EXE_INDEX = EXE_CALLER_INDEXES.pop();
+                    EXE_TIMER = setTimeout(executeNextCommand, 0);
+                } else if (EXE_PART === 'main') {
+                    IS_EXE = false;
+                    clearInterval(GAME_TIMER);
+                }
             } else {
-                var command = COMMANDS[EXE_PART][EXE_INDEX];
-                switch (command) {
-                    case 'm':
-                        PLAYER.move();
-                        break;
-                    case 'cw':
-                        PLAYER.turnClockwise();
-                        break;
-                    case 'ccw':
-                        PLAYER.turnCounterClockwise();
-                        break;
-                    case 'j':
-                        PLAYER.jump();
-                        break;
-                    default:
-                        break;
+                commands.item(EXE_INDEX).style.backgroundColor = '#E3E890';
+                var command = commands.item(EXE_INDEX).dataset.command;
+                var commandColor = commands.item(EXE_INDEX).dataset.color;
+                // Always execute gray commands, or execute if command color = player color
+                if (commandColor === 'gray' || commandColor === PLAYER.color) {
+                    switch (command) {
+                        case 'm':
+                            PLAYER.move();
+                            break;
+                        case 'cw':
+                            PLAYER.turnClockwise();
+                            break;
+                        case 'ccw':
+                            PLAYER.turnCounterClockwise();
+                            break;
+                        case 'j':
+                            PLAYER.jump();
+                            break;
+                        case 'a':
+                            PLAYER.action();
+                            break;
+                        case 's1':
+                            EXE_CALLER_PARTS.push(EXE_PART);
+                            EXE_CALLER_INDEXES.push(++EXE_INDEX);
+                            EXE_PART = 'sub1';
+                            EXE_INDEX = -1;
+                            break;
+                        case 's2':
+                            EXE_CALLER_PARTS.push(EXE_PART);
+                            EXE_CALLER_INDEXES.push(++EXE_INDEX);
+                            EXE_PART = 'sub2';
+                            EXE_INDEX = -1;
+                            break;
+                        default:
+                            break;
+                    }
                 }
                 EXE_INDEX++;
-                setTimeout(executeNextCommand, COMMAND_SPEED);
+                EXE_TIMER = setTimeout(executeNextCommand, COMMAND_SPEED);
             }
         }
         function start() {
-	        console.log(IMAGES);
             // Setup game canvas
             GAME_CANVAS = document.getElementById('game');
             if (GAME_CANVAS.getContext) {
                 GAME_CONTEXT = GAME_CANVAS.getContext('2d');
 
-				if (window.devicePixelRatio == 1) {
-	                GAME_CANVAS.width = CELL_WIDTH * MAP_WIDTH;
-					GAME_CANVAS.height = CELL_HEIGHT * MAP_HEIGHT;
-					GAME_CANVAS.style.width = CELL_WIDTH * MAP_WIDTH;
-					GAME_CANVAS.style.height = CELL_HEIGHT * MAP_HEIGHT;
-	            } else if (window.devicePixelRatio == 2) {
-		            GAME_CANVAS.width = 2*CELL_WIDTH * MAP_WIDTH;
-					GAME_CANVAS.height = 2*CELL_HEIGHT * MAP_HEIGHT;
-					GAME_CANVAS.style.width = CELL_WIDTH * MAP_WIDTH;
-					GAME_CANVAS.style.height = CELL_HEIGHT * MAP_HEIGHT;
-		            GAME_CONTEXT.scale(2, 2);
-	            }
-				
+                var bottomWidth = CELL_HEIGHT;
+                if (window.devicePixelRatio == 1) {
+                    GAME_CANVAS.width = CELL_WIDTH * MAP_WIDTH;
+                    GAME_CANVAS.height = CELL_HEIGHT * MAP_HEIGHT + bottomWidth;
+                    GAME_CANVAS.style.width = CELL_WIDTH * MAP_WIDTH;
+                    GAME_CANVAS.style.height = CELL_HEIGHT * MAP_HEIGHT + bottomWidth;
+                } else if (window.devicePixelRatio == 2) {
+                    GAME_CANVAS.width = 2 * CELL_WIDTH * MAP_WIDTH;
+                    GAME_CANVAS.height = 2 * CELL_HEIGHT * MAP_HEIGHT + 2 * bottomWidth;
+                    GAME_CANVAS.style.width = CELL_WIDTH * MAP_WIDTH;
+                    GAME_CANVAS.style.height = CELL_HEIGHT * MAP_HEIGHT + bottomWidth;
+                    GAME_CONTEXT.scale(2, 2);
+                }
+
                 GAME_COUNT = 0;
-                
-                loop();
+
+                redraw();
             }
         }
+        function stop() {
+            clearInterval(GAME_TIMER);
+            clearTimeout(EXE_TIMER);
+            IS_EXE = true;
+            resetCommandBackgroundColors();
+            redraw();
+        }
         function onDeviceReady() {
-			FastClick.attach(document.body);
-		}
+            FastClick.attach(document.body);
+        }
         function ready() {
-	        document.addEventListener("deviceready", onDeviceReady, false);
-	        
-			// Load images
+            document.addEventListener("deviceready", onDeviceReady, false);
+
+            // Load images
             for (var key in IMAGES) {
                 if (IMAGES.hasOwnProperty(key)) {
                     var path = IMAGES[key];
                     IMAGES[key] = new Image();
-                    IMAGES[key].onload = function() {
+                    IMAGES[key].onload = function () {
                         NUMBER_OF_LOADED_IMAGES++;
                         if (NUMBER_OF_LOADED_IMAGES === NUMBER_OF_IMAGES) {
                             start();
@@ -809,54 +578,51 @@
                     IMAGES[key].src = 'img/' + path;
                 }
             }
-            
+
             // Add player object
             PLAYER = new Player();
-			ENTITIES.push(PLAYER);
+            ENTITIES.push(PLAYER);
 
-            document.getElementById('go').onclick = function() {
+            document.getElementById('go').onclick = function () {
                 if (IS_EXE) {
                     return;
                 }
                 IS_EXE = true;
 
-                COMMANDS = {
-                    'main': [],
-                    'sub1': [],
-                    'sub2': []
-                };
-                var mainList = document.querySelectorAll('#main > .command');
-                for (var i = 0; i < mainList.length; i++) {
-                    var e = mainList.item(i);
-                    COMMANDS['main'].push(e.dataset.command);
-                }
-                var sub1List = document.querySelectorAll('#sub1 > .command');
-                for (var i = 0; i < sub1List.length; i++) {
-                    var e = sub1List.item(i);
-                    COMMANDS['sub1'].push(e.dataset.command);
-                }
-                var sub2List = document.querySelectorAll('#sub2 > .command');
-                for (var i = 0; i < sub2List.length; i++) {
-                    var e = sub2List.item(i);
-                    COMMANDS['sub2'].push(e.dataset.command);
-                }
-
                 PLAYER.reset();
+                COLLECTED_ITEMS = [];
                 GAME_COUNT = 0;
                 EXE_PART = 'main';
                 EXE_INDEX = 0;
+                EXE_CALLER_PARTS = [];
+                EXE_CALLER_INDEXES = [];
 
-                GAME_TIMER = setInterval(loop, TIMER_SPEED);
+                GAME_TIMER = setInterval(redraw, TIMER_SPEED);
 
-                setTimeout(executeNextCommand, COMMAND_SPEED/2);
+                // First command takes half time to start
+                EXE_TIMER = setTimeout(executeNextCommand, COMMAND_SPEED / 2);
+            }
+            document.getElementById('restart').onclick = function () {
+                EXE_PART = 'main';
+                EXE_INDEX = 0;
+                EXE_CALLER_PARTS = [];
+                EXE_CALLER_INDEXES = [];
+                clearInterval(GAME_TIMER);
+                clearTimeout(EXE_TIMER);
+                IS_EXE = false;
+                PLAYER.reset();
+                COLLECTED_ITEMS = [];
+                GAME_COUNT = 0;
+                resetCommandBackgroundColors();
+                redraw();
             }
 
-            document.getElementById('command-chooser-close').onclick = function() {
+            document.getElementById('command-chooser-close').onclick = function () {
                 document.getElementById('command-chooser').style.display = 'none';
             }
 
             // Command blank
-            var commandEvent = function() {
+            var commandEvent = function () {
                 if (this.dataset.command == '') {
                     CLICKED_PART = this.dataset.part;
                     CLICKED_INDEX = this.dataset.index;
@@ -872,8 +638,9 @@
             }
 
             // Command choose
-            var commandChooseEvent = function() {
+            var commandChooseEvent = function () {
                 document.querySelector('.command[data-part="' + CLICKED_PART + '"][data-index="' + CLICKED_INDEX + '"]').dataset.command = this.dataset.command;
+                document.querySelector('.command[data-part="' + CLICKED_PART + '"][data-index="' + CLICKED_INDEX + '"]').dataset.color = this.dataset.color;
                 document.getElementById('command-chooser').style.display = 'none';
 
             }
@@ -885,155 +652,43 @@
 
 
         }
-
-        function cellHasTopEdgeTransition(n) {
-            if (EDGE_TRANSITIONS[n] === EdgeTransitions.NSWEEdgeTransition ||
-                EDGE_TRANSITIONS[n] === EdgeTransitions.NWEEdgeTransition ||
-                EDGE_TRANSITIONS[n] === EdgeTransitions.NSEEdgeTransition ||
-                EDGE_TRANSITIONS[n] === EdgeTransitions.NEEdgeTransition ||
-                EDGE_TRANSITIONS[n] === EdgeTransitions.NSWEdgeTransition ||
-                EDGE_TRANSITIONS[n] === EdgeTransitions.NWEdgeTransition ||
-                EDGE_TRANSITIONS[n] === EdgeTransitions.NSEdgeTransition ||
-                EDGE_TRANSITIONS[n] === EdgeTransitions.NEdgeTransition) {
-                return true;
-            } else {
-                return false;
-            }
-        }
-
-        function cellHasBottomEdgeTransition(n) {
-            if (EDGE_TRANSITIONS[n] === EdgeTransitions.NSWEEdgeTransition ||
-                EDGE_TRANSITIONS[n] === EdgeTransitions.SWEEdgeTransition ||
-                EDGE_TRANSITIONS[n] === EdgeTransitions.NSEEdgeTransition ||
-                EDGE_TRANSITIONS[n] === EdgeTransitions.SEEdgeTransition ||
-                EDGE_TRANSITIONS[n] === EdgeTransitions.NSWEdgeTransition ||
-                EDGE_TRANSITIONS[n] === EdgeTransitions.SWEdgeTransition ||
-                EDGE_TRANSITIONS[n] === EdgeTransitions.NSEdgeTransition ||
-                EDGE_TRANSITIONS[n] === EdgeTransitions.SEdgeTransition) {
-                return true;
-            } else {
-                return false;
-            }
-        }
-
-        function cellHasLeftEdgeTransition(n) {
-            if (EDGE_TRANSITIONS[n] === EdgeTransitions.NSWEEdgeTransition ||
-                EDGE_TRANSITIONS[n] === EdgeTransitions.SWEEdgeTransition ||
-                EDGE_TRANSITIONS[n] === EdgeTransitions.NWEEdgeTransition ||
-                EDGE_TRANSITIONS[n] === EdgeTransitions.WEEdgeTransition ||
-                EDGE_TRANSITIONS[n] === EdgeTransitions.NSWEdgeTransition ||
-                EDGE_TRANSITIONS[n] === EdgeTransitions.SWEdgeTransition ||
-                EDGE_TRANSITIONS[n] === EdgeTransitions.NWEdgeTransition ||
-                EDGE_TRANSITIONS[n] === EdgeTransitions.WEdgeTransition) {
-                return true;
-            } else {
-                return false;
-            }
-        }
-
-        function cellHasRightEdgeTransition(n) {
-            if (EDGE_TRANSITIONS[n] === EdgeTransitions.NSWEEdgeTransition ||
-                EDGE_TRANSITIONS[n] === EdgeTransitions.SWEEdgeTransition ||
-                EDGE_TRANSITIONS[n] === EdgeTransitions.NWEEdgeTransition ||
-                EDGE_TRANSITIONS[n] === EdgeTransitions.WEEdgeTransition ||
-                EDGE_TRANSITIONS[n] === EdgeTransitions.NSEEdgeTransition ||
-                EDGE_TRANSITIONS[n] === EdgeTransitions.SEEdgeTransition ||
-                EDGE_TRANSITIONS[n] === EdgeTransitions.NEEdgeTransition ||
-                EDGE_TRANSITIONS[n] === EdgeTransitions.EEdgeTransition) {
-                return true;
-            } else {
-                return false;
-            }
-        }
-
-        function calculateEdgeTransitions() {
-            for (var i = 0; i < MAP.length; i++) {
-                var edgeTransition = 0;
-                if (true) {
-                    var top = cellAboveCell(i);
-                    var bottom = cellBelowCell(i);
-                    var left = cellLeftOfCell(i);
-                    var right = cellRightOfCell(i);
-                    if (top !== -1 && MAP[top] === MAP[i]) {
-                        edgeTransition = 2;
-                    }
-                    if (bottom !== -1 && MAP[bottom] === MAP[i]) {
-                        edgeTransition = edgeTransition | 4;
-                    }
-                    if (left !== -1 && MAP[left] === MAP[i]) {
-                        edgeTransition = edgeTransition | 8;
-                    }
-                    if (right !== -1 && MAP[right] === MAP[i]) {
-                        edgeTransition = edgeTransition | 16;
-                    }
-                } else {
-                    edgeTransition = -1;
-                }
-                EDGE_TRANSITIONS.push(edgeTransition);
-            }
-        }
-
-        function calculateCornerTransitions() {
-            for (var i = 0; i < MAP.length; i++) {
-                var cornerTransition = 0;
-                if (true) {
-                    var top = cellAboveCell(i);
-                    var bottom = cellBelowCell(i);
-                    var left = cellLeftOfCell(i);
-                    var right = cellRightOfCell(i);
-                    if (top !== -1 && left !== -1 && MAP[top] === MAP[i] && MAP[left] === MAP[i] && cellHasLeftEdgeTransition(top) && cellHasTopEdgeTransition(left)) {
-                        cornerTransition = 2;
-                    }
-                    if (top !== -1 && right !== -1 && MAP[top] === MAP[i] && MAP[right] === MAP[i] && cellHasRightEdgeTransition(top) && cellHasTopEdgeTransition(right)) {
-                        cornerTransition = cornerTransition | 4;
-                    }
-                    if (bottom !== -1 && left !== -1 && MAP[bottom] === MAP[i] && MAP[left] === MAP[i] && cellHasLeftEdgeTransition(bottom) && cellHasBottomEdgeTransition(left)) {
-                        cornerTransition = cornerTransition | 8;
-                    }
-                    if (bottom !== -1 && right !== -1 && MAP[bottom] === MAP[i] && MAP[right] === MAP[i] && cellHasRightEdgeTransition(bottom) && cellHasBottomEdgeTransition(right)) {
-                        cornerTransition = cornerTransition | 16;
-                    }
-                } else {
-                    cornerTransition = -1;
-                }
-                CORNER_TRANSITIONS.push(cornerTransition);
-            }
-        }
     </script>
     <style type="text/css">
         body {
-            font-family: 'Geo', sans-serif;
+            font-family: 'early_gameboyregular', sans-serif;
             padding: 0;
             margin: 0;
             background-color: #333;
         }
+
         div#container {
             width: 520px;
             height: 100%;
             margin: 0 auto 0 auto;
             padding: 0;
         }
+
         canvas {
             float: left;
         }
+
         div#command-container {
-            float: right;
             width: 200px;
             height: 460px;
             overflow: hidden;
             position: relative;
-            border: 1px solid #555;
             box-sizing: border-box;
         }
+
         .section-title {
-            height: 18px;
-            font-size: 14px;
+            font-size: 8px;
             color: white;
             text-align: center;
-            border-top: 1px solid white;
-            border-bottom: 1px solid white;
+            border: 1px solid #FEFFFD;
             padding: 2px 0 2px 0;
+            box-sizing: border-box;
         }
+
         .command {
             width: 25%;
             height: 45px;
@@ -1041,216 +696,206 @@
             box-sizing: border-box;
             float: left;
             cursor: pointer;
-            color: white;
-            text-align: center;
         }
-        .section {} #command-chooser {
+
+        #command-chooser {
             position: absolute;
             top: 0;
             left: 0;
-            width: 100%;
+            width: 200px;
             height: 100%;
             background-color: #333;
             display: none;
         }
-        .command[data-command="m"] {
-            background-image: url('img/forward@2x.png');
-            background-repeat: no-repeat;
-            background-position: center center;
-            background-size: 32px 32px;
-        }
-        .command[data-command="cw"] {
-            background-image: url('img/turnLeft@2x.png');
-            background-repeat: no-repeat;
-            background-position: center center;
-            background-size: 32px 32px;
-        }
-        .command[data-command="ccw"] {
-            background-image: url('img/turnRight@2x.png');
-            background-repeat: no-repeat;
-            background-position: center center;
-            background-size: 32px 32px;
-        }
-        .command[data-command="j"] {
-            background-image: url('img/jump@2x.png');
-            background-repeat: no-repeat;
-            background-position: center center;
-            background-size: 32px 32px;
-        }
+
         input[type="button"] {
-            height: 26px;
+            height: 24px;
+            border-radius: 0;
             min-width: 50px;
             padding: 3px;
-            background-color: #CCC;
-            font-family: 'Geo', sans-serif;
-            font-size: 14px;
-            border: 3px solid #AAA;
+            background-color: #FEFFFD;
+            font-family: 'early_gameboyregular', sans-serif;
+            font-size: 8px;
+            border: 3px solid #AFB5A8;
             cursor: pointer;
         }
-        /* Small screen < 560px */
-        
-        @media only screen and (min-device-width: 0px) and (max-device-width: 560px) {
-            div#container {
-                width: 100%;
-                margin: 0;
-            }
-            canvas {
-                width: 60%;
-                position: fixed;
-            }
-            div#command-container {
-                width: 40%;
-            }
+
+        .command[data-command="m"][data-color="gray"] {
+            background-image: url('img/gray-forward@2x.png');
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-size: 32px 32px;
         }
-        /* < 400 */
-        
-        @media only screen and (max-width: 400px) {
-            .command[data-command="m"] {
-                background-image: url('img/forward@1x.png');
-                background-size: 16px 16px;
-            }
-            .command[data-command="cw"] {
-                background-image: url('img/turnLeft@1x.png');
-                background-size: 16px 16px;
-            }
-            .command[data-command="ccw"] {
-                background-image: url('img/turnRight@1x.png');
-                background-size: 16px 16px;
-            }
-            .command[data-command="j"] {
-                background-image: url('img/jump@1x.png');
-                background-size: 16px 16px;
-            }
+
+        .command[data-command="cw"][data-color="gray"] {
+            background-image: url('img/gray-turnLeft@2x.png');
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-size: 32px 32px;
         }
-        /* Retina and > 400 */
-        
-        @media only screen and (-webkit-min-device-pixel-ratio: 2),
-        only screen and ( min--moz-device-pixel-ratio: 2),
-        only screen and ( -o-min-device-pixel-ratio: 2/1),
-        only screen and ( min-device-pixel-ratio: 2),
-        only screen and ( min-resolution: 192dpi),
-        only screen and ( min-resolution: 2dppx) {
-            .command[data-command="m"] {
-                background-image: url('img/forward@4x.png');
-                background-size: 32px 32px;
-            }
-            .command[data-command="cw"] {
-                background-image: url('img/turnLeft@4x.png');
-                background-size: 32px 32px;
-            }
-            .command[data-command="ccw"] {
-                background-image: url('img/turnRight@4x.png');
-                background-size: 32px 32px;
-            }
-            .command[data-command="j"] {
-                background-image: url('img/jump@4x.png');
-                background-size: 32px 32px;
-            }
+
+        .command[data-command="ccw"][data-color="gray"] {
+            background-image: url('img/gray-turnRight@2x.png');
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-size: 32px 32px;
         }
-        /* Retina and < 400*/
-        
-        @media only screen and (-webkit-min-device-pixel-ratio: 2) and (max-width: 400px),
-        only screen and ( min--moz-device-pixel-ratio: 2) and (max-width: 400px),
-        only screen and ( -o-min-device-pixel-ratio: 2/1) and (max-width: 400px),
-        only screen and ( min-device-pixel-ratio: 2) and (max-width: 400px),
-        only screen and ( min-resolution: 192dpi) and (max-width: 400px),
-        only screen and ( min-resolution: 2dppx) and (max-width: 400px) {
-            .command[data-command="m"] {
-                background-image: url('img/forward@2x.png');
-                background-size: 16px 16px;
-            }
-            .command[data-command="cw"] {
-                background-image: url('img/turnLeft@2x.png');
-                background-size: 16px 16px;
-            }
-            .command[data-command="ccw"] {
-                background-image: url('img/turnRight@2x.png');
-                background-size: 16px 16px;
-            }
-            .command[data-command="j"] {
-                background-image: url('img/jump@2x.png');
-                background-size: 16px 16px;
-            }
+
+        .command[data-command="j"][data-color="gray"] {
+            background-image: url('img/gray-jump@2x.png');
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-size: 32px 32px;
+        }
+
+        .command[data-command="a"][data-color="gray"] {
+            background-image: url('img/gray-scream@2x.png');
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-size: 32px 32px;
+        }
+
+        .command[data-command="s1"][data-color="gray"] {
+            background: center center/32px 32px no-repeat url('img/gray-S1@2x.png');
+        }
+
+        .command[data-command="s2"][data-color="gray"] {
+            background: center center/32px 32px no-repeat url('img/gray-S2@2x.png');
+        }
+
+        .command[data-command="m"][data-color="blue"] {
+            background-image: url('img/blue-forward@2x.png');
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-size: 32px 32px;
+        }
+
+        .command[data-command="cw"][data-color="blue"] {
+            background-image: url('img/blue-turnLeft@2x.png');
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-size: 32px 32px;
+        }
+
+        .command[data-command="ccw"][data-color="blue"] {
+            background-image: url('img/blue-turnRight@2x.png');
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-size: 32px 32px;
+        }
+
+        .command[data-command="j"][data-color="blue"] {
+            background-image: url('img/blue-jump@2x.png');
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-size: 32px 32px;
+        }
+
+        .command[data-command="a"][data-color="blue"] {
+            background-image: url('img/blue-scream@2x.png');
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-size: 32px 32px;
+        }
+
+        .command[data-command="s1"][data-color="blue"] {
+            background: center center/32px 32px no-repeat url('img/blue-S1@2x.png');
+        }
+
+        .command[data-command="s2"][data-color="blue"] {
+            background: center center/32px 32px no-repeat url('img/blue-S2@2x.png');
         }
     </style>
 </head>
 
 <body onload="ready();">
-    <div id="container">
-        <canvas id="game"></canvas>
-        <div id="command-container">
+<div id="container">
+    <canvas id="game"></canvas>
 
+    <div id="command-container">
 
-            <div class="section" id="main">
-                <div class="section-title">Main</div>
-                <div class="command" data-part="main" data-index="0" data-command="" draggable="true"></div>
-                <div class="command" data-part="main" data-index="1" data-command="" draggable="true"></div>
-                <div class="command" data-part="main" data-index="2" data-command="" draggable="true"></div>
-                <div class="command" data-part="main" data-index="3" data-command="" draggable="true"></div>
+        <div class="section" id="main">
+            <div class="section-title">Main</div>
+            <div class="command" data-part="main" data-index="0" data-command=""></div>
+            <div class="command" data-part="main" data-index="1" data-command=""></div>
+            <div class="command" data-part="main" data-index="2" data-command=""></div>
+            <div class="command" data-part="main" data-index="3" data-command=""></div>
 
-                <div class="command" data-part="main" data-index="4" data-command="" draggable="true"></div>
-                <div class="command" data-part="main" data-index="5" data-command="" draggable="true"></div>
-                <div class="command" data-part="main" data-index="6" data-command="" draggable="true"></div>
-                <div class="command" data-part="main" data-index="7" data-command="" draggable="true"></div>
+            <div class="command" data-part="main" data-index="4" data-command=""></div>
+            <div class="command" data-part="main" data-index="5" data-command=""></div>
+            <div class="command" data-part="main" data-index="6" data-command=""></div>
+            <div class="command" data-part="main" data-index="7" data-command=""></div>
 
-                <div class="command" data-part="main" data-index="8" data-command="" draggable="true"></div>
-                <div class="command" data-part="main" data-index="9" data-command="" draggable="true"></div>
-                <div class="command" data-part="main" data-index="10" data-command="" draggable="true"></div>
-                <div class="command" data-part="main" data-index="11" data-command="" draggable="true"></div>
+            <div class="command" data-part="main" data-index="8" data-command=""></div>
+            <div class="command" data-part="main" data-index="9" data-command=""></div>
+            <div class="command" data-part="main" data-index="10" data-command=""></div>
+            <div class="command" data-part="main" data-index="11" data-command=""></div>
 
-                <div class="command" data-part="main" data-index="12" data-command="" draggable="true"></div>
-                <div class="command" data-part="main" data-index="13" data-command="" draggable="true"></div>
-                <div class="command" data-part="main" data-index="14" data-command="" draggable="true"></div>
-                <div class="command" data-part="main" data-index="15" data-command="" draggable="true"></div>
+            <div class="command" data-part="main" data-index="12" data-command=""></div>
+            <div class="command" data-part="main" data-index="13" data-command=""></div>
+            <div class="command" data-part="main" data-index="14" data-command=""></div>
+            <div class="command" data-part="main" data-index="15" data-command=""></div>
 
-                <div style="clear: both;"></div>
-            </div>
-
-            <div class="section" id="sub1">
-                <div class="section-title">Sub1</div>
-                <div class="command" data-part="sub1" data-index="0" data-command="" draggable="true"></div>
-                <div class="command" data-part="sub1" data-index="1" data-command="" draggable="true"></div>
-                <div class="command" data-part="sub1" data-index="2" data-command="" draggable="true"></div>
-                <div class="command" data-part="sub1" data-index="3" data-command="" draggable="true"></div>
-
-                <div class="command" data-part="sub1" data-index="4" data-command="" draggable="true"></div>
-                <div class="command" data-part="sub1" data-index="5" data-command="" draggable="true"></div>
-                <div class="command" data-part="sub1" data-index="6" data-command="" draggable="true"></div>
-                <div class="command" data-part="sub1" data-index="7" data-command="" draggable="true"></div>
-
-                <div style="clear: both;"></div>
-            </div>
-
-            <div class="section" id="sub2">
-                <div class="section-title">Sub2</div>
-                <div class="command" data-part="sub2" data-index="0" data-command="" draggable="true"></div>
-                <div class="command" data-part="sub2" data-index="1" data-command="" draggable="true"></div>
-                <div class="command" data-part="sub2" data-index="2" data-command="" draggable="true"></div>
-                <div class="command" data-part="sub2" data-index="3" data-command="" draggable="true"></div>
-
-                <div class="command" data-part="sub2" data-index="4" data-command="" draggable="true"></div>
-                <div class="command" data-part="sub2" data-index="5" data-command="" draggable="true"></div>
-                <div class="command" data-part="sub2" data-index="6" data-command="" draggable="true"></div>
-                <div class="command" data-part="sub2" data-index="7" data-command="" draggable="true"></div>
-
-                <div style="clear: both;"></div>
-            </div>
-            <input type="button" value="Go" id="go" />
-            <input type="button" value="Restart" id="restart" />
-
-            <div id="command-chooser">
-                <div class="section-title">Commands</div>
-                <div class="command command-choose" data-command="m"></div>
-                <div class="command command-choose" data-command="cw"></div>
-                <div class="command command-choose" data-command="ccw"></div>
-                <div class="command command-choose" data-command="j"></div>
-                <input id="command-chooser-close" type="button" value="OK" />
-            </div>
-
+            <div style="clear: both;"></div>
         </div>
-        <div style="clear: both;"></div>
-    </div>
 
+        <div class="section" id="sub1">
+            <div class="section-title">Sub1</div>
+            <div class="command" data-part="sub1" data-index="0" data-command=""></div>
+            <div class="command" data-part="sub1" data-index="1" data-command=""></div>
+            <div class="command" data-part="sub1" data-index="2" data-command=""></div>
+            <div class="command" data-part="sub1" data-index="3" data-command=""></div>
+
+            <div class="command" data-part="sub1" data-index="4" data-command=""></div>
+            <div class="command" data-part="sub1" data-index="5" data-command=""></div>
+            <div class="command" data-part="sub1" data-index="6" data-command=""></div>
+            <div class="command" data-part="sub1" data-index="7" data-command=""></div>
+
+            <div style="clear: both;"></div>
+        </div>
+
+        <div class="section" id="sub2">
+            <div class="section-title">Sub2</div>
+            <div class="command" data-part="sub2" data-index="0" data-command=""></div>
+            <div class="command" data-part="sub2" data-index="1" data-command=""></div>
+            <div class="command" data-part="sub2" data-index="2" data-command=""></div>
+            <div class="command" data-part="sub2" data-index="3" data-command=""></div>
+
+            <div class="command" data-part="sub2" data-index="4" data-command=""></div>
+            <div class="command" data-part="sub2" data-index="5" data-command=""></div>
+            <div class="command" data-part="sub2" data-index="6" data-command=""></div>
+            <div class="command" data-part="sub2" data-index="7" data-command=""></div>
+
+            <div style="clear: both;"></div>
+        </div>
+        <input type="button" value="Go" id="go"/>
+        <input type="button" value="Restart" id="restart"/>
+
+
+        <div id="command-chooser">
+            <div class="section-title">Commands</div>
+            <div class="command command-choose" data-command="m" data-color="gray"></div>
+            <div class="command command-choose" data-command="cw" data-color="gray"></div>
+            <div class="command command-choose" data-command="ccw" data-color="gray"></div>
+            <div class="command command-choose" data-command="j" data-color="gray"></div>
+            <div class="command command-choose" data-command="a" data-color="gray"></div>
+            <div class="command command-choose" data-command="s1" data-color="gray"></div>
+            <div class="command command-choose" data-command="s2" data-color="gray"></div>
+            <div style="clear: both;"></div>
+            <div class="command command-choose" data-command="m" data-color="blue"></div>
+            <div class="command command-choose" data-command="cw" data-color="blue"></div>
+            <div class="command command-choose" data-command="ccw" data-color="blue"></div>
+            <div class="command command-choose" data-command="j" data-color="blue"></div>
+            <div class="command command-choose" data-command="a" data-color="blue"></div>
+            <div class="command command-choose" data-command="s1" data-color="blue"></div>
+            <div class="command command-choose" data-command="s2" data-color="blue"></div>
+            <div style="clear: both;"></div>
+            <input id="command-chooser-close" type="button" value="OK"/>
+        </div>
+
+    </div>
+    <div style="clear: both;"></div>
+</div>
 </body>
 
 </html>
