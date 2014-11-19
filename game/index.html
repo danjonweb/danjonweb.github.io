@@ -640,7 +640,9 @@
                 GAME_CANVAS.style.width = '100%';
                 GAME_CANVAS.style.height = '';
                 
-                document.getElementById('command-container').style.float = 'none';
+                document.getElementById('command-container').style.visibility = 'hidden';
+                
+                /*document.getElementById('command-container').style.float = 'none';
                 document.getElementById('command-container').style.width = '100%';
                 
                 document.getElementById('command-chooser').style.top = $(GAME_CANVAS).height() + 'px';
@@ -649,12 +651,13 @@
                 
                 //$('div#command-container').height($(window).height() - Math.ceil($(GAME_CANVAS).height()/11));
                 
-                //document.getElementById('game').style.position = 'fix';
+                //document.getElementById('game').style.position = 'fix';*/
             } else {
                 // Landscape
                 GAME_CANVAS.style.height = '100%';
                 GAME_CANVAS.style.width = '';
                 
+                document.getElementById('command-container').style.visibility = 'visible';
                 document.getElementById('command-container').style.float = 'right';
                 $('div#command-container').width($(window).width() - $(GAME_CANVAS).width());
                 //$('div#command-container').height($(window).height() - Math.ceil($(GAME_CANVAS).height()/11));
@@ -776,7 +779,7 @@
             background: black;
             text-align: center;
             border: 1px solid #FEFFFD;
-            padding: 16px 0 16px 0;
+            padding: 10px 0 10px 0;
             box-sizing: border-box;
         }
 
@@ -793,7 +796,7 @@
             box-sizing: border-box;
         }
         
-        #command-chooser {
+        #chooser {
         	position: fixed;
         	width: inherit;
         	background-color: black;
@@ -803,7 +806,7 @@
 
         #commands {
         	position: relative;
-        	top: 248px;
+        	top: 136px;
         }
 
         button {
@@ -938,27 +941,17 @@
 
     
     <div id="command-container">
-    	<div id="command-chooser">
-	    	<div class="section" id="chooser">
-				<div class="section-title">Commands</div>
-				<div class="command command-choose" data-command="m" data-color="gray"></div>
-				<div class="command command-choose" data-command="cw" data-color="gray"></div>
-				<div class="command command-choose" data-command="ccw" data-color="gray"></div>
-				<div class="command command-choose" data-command="j" data-color="gray"></div>
-				<div class="command command-choose" data-command="a" data-color="gray"></div>
-				<div class="command command-choose" data-command="s1" data-color="gray"></div>
-				<div class="command command-choose" data-command="s2" data-color="gray"></div>
-				<div style="clear: both;"></div>
-				<div class="command command-choose" data-command="m" data-color="blue"></div>
-				<div class="command command-choose" data-command="cw" data-color="blue"></div>
-				<div class="command command-choose" data-command="ccw" data-color="blue"></div>
-				<div class="command command-choose" data-command="j" data-color="blue"></div>
-				<div class="command command-choose" data-command="a" data-color="blue"></div>
-				<div class="command command-choose" data-command="s1" data-color="blue"></div>
-				<div class="command command-choose" data-command="s2" data-color="blue"></div>
-				<div style="clear: both;"></div>
-			</div>
-		</div>
+    	<div class="section" id="chooser">
+    		<div class="section-title">Commands</div>
+    		<div class="command command-choose" data-command="m" data-color="gray"></div>
+    		<div class="command command-choose" data-command="cw" data-color="gray"></div>
+    		<div class="command command-choose" data-command="ccw" data-color="gray"></div>
+    		<div class="command command-choose" data-command="j" data-color="gray"></div>
+    		<div class="command command-choose" data-command="a" data-color="gray"></div>
+    		<div class="command command-choose" data-command="s1" data-color="gray"></div>
+    		<div class="command command-choose" data-command="s2" data-color="gray"></div>
+    		<div style="clear: both;"></div>
+    	</div>
 
 		<div id="commands">
 	        <div class="section" id="main">
