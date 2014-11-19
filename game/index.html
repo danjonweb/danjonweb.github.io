@@ -541,19 +541,21 @@
 
                 var bottomWidth = CELL_HEIGHT;
                 if (!isRetina()) {
-                    console.log('pr: 1');
                     GAME_CANVAS.width = CELL_WIDTH * MAP_WIDTH;
                     GAME_CANVAS.height = CELL_HEIGHT * MAP_HEIGHT + bottomWidth;
                     GAME_CANVAS.style.width = CELL_WIDTH * MAP_WIDTH;
                     GAME_CANVAS.style.height = CELL_HEIGHT * MAP_HEIGHT + bottomWidth;
                 } else {
-                    console.log('pr: 2');
                     GAME_CANVAS.width = 2 * CELL_WIDTH * MAP_WIDTH;
                     GAME_CANVAS.height = 2 * CELL_HEIGHT * MAP_HEIGHT + 2 * bottomWidth;
                     GAME_CANVAS.style.width = CELL_WIDTH * MAP_WIDTH;
                     GAME_CANVAS.style.height = CELL_HEIGHT * MAP_HEIGHT + bottomWidth;
                     GAME_CONTEXT.scale(2, 2);
                 }
+                
+                GAME_CANVAS.style.height = '100%';
+                $('div#command-container').width($(window).width() - $(GAME_CANVAS).width());
+                
 
                 GAME_COUNT = 0;
 
@@ -595,7 +597,6 @@
                     IMAGES[key].onload = function () {
                         NUMBER_OF_LOADED_IMAGES++;
                         if (NUMBER_OF_LOADED_IMAGES === NUMBER_OF_IMAGES) {
-                            console.log(NUMBER_OF_LOADED_IMAGES)
                             start();
                         }
                     };
@@ -682,7 +683,7 @@
             font-family: 'early_gameboyregular', sans-serif;
             padding: 0;
             margin: 0;
-            background-color: #333;
+            background-color: black;
         }
 
         div#container {
@@ -836,11 +837,10 @@
                 width: 100%;
             }
             canvas {
-                width: 70%;
                 position: fixed;
             }
             div#command-container {
-                width: 30%;
+                
                 float: right;
             }
         }
@@ -850,7 +850,6 @@
                 width: 100%;
             }
             canvas {
-                width: 60%;
                 position: fixed;
             }
             div#command-container {
