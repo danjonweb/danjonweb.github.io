@@ -888,12 +888,12 @@
             }
         }*/
         
-        @media  only screen and (min-device-pixel-ratio: 2),   
-                only screen and (min-resolution: 192dpi) {
-                
-            body {
-            	background-color: red;
-            }
+        @media only screen and (-webkit-min-device-pixel-ratio: 2),
+        only screen and ( min--moz-device-pixel-ratio: 2),
+        only screen and ( -o-min-device-pixel-ratio: 2/1),
+        only screen and ( min-device-pixel-ratio: 2),
+        only screen and ( min-resolution: 192dpi),
+        only screen and ( min-resolution: 2dppx) {
 	        .command[data-command="m"][data-color="gray"] {
 	            background: center center/32px 32px no-repeat url('img/gray-forward@4x.png');
 	        }
