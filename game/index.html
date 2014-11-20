@@ -873,24 +873,14 @@
         .command[data-command="s2"][data-color="blue"] {
             background: black center center/32px 32px no-repeat url('img/blue-S2@2x.png');
         }
-        /* @media only screen and (min-width: 0px) and (max-width: 840px) {
-            div#container {
-                width: 100%;
-            }
-            canvas {
-                position: fixed;
-            }
-            div#command-container {
-                
-                float: right;
-            }
-        }*/
         
         // Retina
-        @media only screen and (-moz-min-device-pixel-ratio: 1.5),
-        only screen and (-o-min-device-pixel-ratio: 3/2),
-        only screen and (-webkit-min-device-pixel-ratio: 1.5),
-        only screen and (min-device-pixel-ratio: 1.5) {
+        @media only screen and (-webkit-min-device-pixel-ratio: 2),
+        only screen and ( min--moz-device-pixel-ratio: 2),
+        only screen and ( -o-min-device-pixel-ratio: 2/1),
+        only screen and ( min-device-pixel-ratio: 2),
+        only screen and ( min-resolution: 192dpi),
+        only screen and ( min-resolution: 2dppx) {
             body {
                 background-color: red;
             }
