@@ -677,7 +677,7 @@
         function ready() {
         	// Fastclick
         	//document.addEventListener("deviceready", onDeviceReady, false);
-        	//setTimeout(loadFastClick, 500);
+        	setTimeout(loadFastClick, 500);
         	
             // Make commands draggable
             $('#chooser .command').draggable({ revert: true, revertDuration: 0, distance: 30, zIndex: 100});
@@ -891,12 +891,9 @@
         }*/
         
         // Retina
-        @media only screen and (-webkit-min-device-pixel-ratio: 2),
-        only screen and ( min--moz-device-pixel-ratio: 2),
-        only screen and ( -o-min-device-pixel-ratio: 2/1),
-        only screen and ( min-device-pixel-ratio: 2),
-        only screen and ( min-resolution: 192dpi),
-        only screen and ( min-resolution: 2dppx) {
+        @media
+        only screen and (-webkit-min-device-pixel-ratio: 2),
+        only screen and (min-resolution: 192dpi) {
 	        body {
 	        	background-color: red;
 	        }
