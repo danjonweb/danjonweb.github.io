@@ -639,6 +639,8 @@
                 // Portrait
                 GAME_CANVAS.style.width = '100%';
                 GAME_CANVAS.style.height = '';
+                
+                document.getElementById('command-container').style.visibility = 'hidden';
                                 
                 /*document.getElementById('command-container').style.float = 'none';
                 document.getElementById('command-container').style.width = '100%';
@@ -895,10 +897,9 @@
         only screen and ( min-device-pixel-ratio: 2),
         only screen and ( min-resolution: 192dpi),
         only screen and ( min-resolution: 2dppx) {
-        body {
-        	
-        	background-color: red;
-        }
+	        body {
+	        	background-color: red;
+	        }
 	        .command[data-command="m"][data-color="gray"] {
 	            background: black center center/32px 32px no-repeat url('img/gray-forward@4x.png');
 	        }
