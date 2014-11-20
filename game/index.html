@@ -461,7 +461,7 @@
         }
         function resetCommandBackgroundColors() {
             // Un-highlight all commands
-            var allCommands = document.querySelectorAll('#main .command, #sub1 .command, #sub2 .command');
+            var allCommands = document.querySelectorAll('#commands .command');
             for (var i = 0; i < allCommands.length; i++) {
                 allCommands.item(i).style.backgroundColor = 'black';
             }
@@ -677,22 +677,7 @@
         	document.addEventListener("deviceready", onDeviceReady, false);
         	
             // Make commands draggable
-            /*
-            $('.command').draggable({ revert: true, revertDuration: 100, distance: 30, containment: "parent", zIndex: 100});
-            $('.command').droppable({ accept: ".command", drop: function(event, ui) {
-                this.dataset.command = ui.draggable[0].dataset.command;
-                this.dataset.color = ui.draggable[0].dataset.color;
-                ui.draggable[0].dataset.command = "";
-                ui.draggable[0].dataset.color = "";
-                this.style.backgroundColor = 'black';
-            }, over: function(event, ui) {
-                this.style.backgroundColor = '#E3E890';
-            }, out: function(event, ui) {
-                this.style.backgroundColor = 'black';
-            }});
-            */
-            
-            $('#chooser .command').draggable({ revert: true, revertDuration: 100, distance: 30, zIndex: 100});
+            $('#chooser .command').draggable({ revert: true, revertDuration: 0, distance: 30, zIndex: 100});
             $('#commands .command').droppable({ accept: "#chooser .command", drop: function(event, ui) {
                 this.dataset.command = ui.draggable[0].dataset.command;
                 this.dataset.color = ui.draggable[0].dataset.color;
@@ -732,30 +717,31 @@
 
             // Command blank
             var commandEvent = function () {
-                if (this.dataset.command == '') {
-                    CLICKED_PART = this.dataset.part;
-                    CLICKED_INDEX = this.dataset.index;
-                    document.getElementById('command-chooser').style.display = 'block';
-                } else {
-                    this.dataset.command = '';
-                }
+                this.dataset.command = '';
+                this.dataset.color = '';
             }
-            var list = document.getElementsByClassName('command');
+            var list = document.querySelectorAll('#commands .command');
             for (var i = 0; i < list.length; i++) {
                 list.item(i).onclick = commandEvent;
                 //list.item(i).touchstart = commandEvent;
             }
 
             // Command choose
-            var commandChooseEvent = function () {
-                document.querySelector('.command[data-part="' + CLICKED_PART + '"][data-index="' + CLICKED_INDEX + '"]').dataset.command = this.dataset.command;
-                document.querySelector('.command[data-part="' + CLICKED_PART + '"][data-index="' + CLICKED_INDEX + '"]').dataset.color = this.dataset.color;
-                document.getElementById('command-chooser').style.display = 'none';
-
+            var changeCommandColor = function () {
+            	var newColor;
+                if (this.dataset.color === 'gray') {
+                	newColor = 'blue';
+                } else if (this.dataset.color === 'blue') {
+                	newColor = 'gray';
+                }
+                var list = document.querySelectorAll('#chooser .command');
+                for (var i = 0; i < list.length; i++) {
+                	list.item(i).dataset.color = newColor;
+                }
             }
-            list = document.getElementsByClassName('command-choose');
+            list = document.querySelectorAll('#chooser .command');
             for (var i = 0; i < list.length; i++) {
-                list.item(i).onclick = commandChooseEvent;
+                list.item(i).onclick = changeCommandColor;
                 //list.item(i).touchstart = commandEvent;
             }
 
@@ -869,11 +855,11 @@
         }
 
         .command[data-command="s1"][data-color="gray"] {
-            background: center center/32px 32px no-repeat url('img/gray-S1@2x.png');
+            background: black center center/32px 32px no-repeat url('img/gray-S1@2x.png');
         }
 
         .command[data-command="s2"][data-color="gray"] {
-            background: center center/32px 32px no-repeat url('img/gray-S2@2x.png');
+            background: black center center/32px 32px no-repeat url('img/gray-S2@2x.png');
         }
 
         .command[data-command="m"][data-color="blue"] {
@@ -968,55 +954,55 @@
 		<div id="commands">
 	        <div class="section" id="main">
 	            <div class="section-title">Main</div>
-	            <div class="command" data-part="main" data-index="0" data-command=""></div>
-	            <div class="command" data-part="main" data-index="1" data-command=""></div>
-	            <div class="command" data-part="main" data-index="2" data-command=""></div>
-	            <div class="command" data-part="main" data-index="3" data-command=""></div>
+	            <div class="command" data-part="main" data-index="0"></div>
+	            <div class="command" data-part="main" data-index="1"></div>
+	            <div class="command" data-part="main" data-index="2"></div>
+	            <div class="command" data-part="main" data-index="3"></div>
 	
-	            <div class="command" data-part="main" data-index="4" data-command=""></div>
-	            <div class="command" data-part="main" data-index="5" data-command=""></div>
-	            <div class="command" data-part="main" data-index="6" data-command=""></div>
-	            <div class="command" data-part="main" data-index="7" data-command=""></div>
+	            <div class="command" data-part="main" data-index="4"></div>
+	            <div class="command" data-part="main" data-index="5"></div>
+	            <div class="command" data-part="main" data-index="6"></div>
+	            <div class="command" data-part="main" data-index="7"></div>
 	
-	            <div class="command" data-part="main" data-index="8" data-command=""></div>
-	            <div class="command" data-part="main" data-index="9" data-command=""></div>
-	            <div class="command" data-part="main" data-index="10" data-command=""></div>
-	            <div class="command" data-part="main" data-index="11" data-command=""></div>
+	            <div class="command" data-part="main" data-index="8"></div>
+	            <div class="command" data-part="main" data-index="9"></div>
+	            <div class="command" data-part="main" data-index="10"></div>
+	            <div class="command" data-part="main" data-index="11"></div>
 	
-	            <div class="command" data-part="main" data-index="12" data-command=""></div>
-	            <div class="command" data-part="main" data-index="13" data-command=""></div>
-	            <div class="command" data-part="main" data-index="14" data-command=""></div>
-	            <div class="command" data-part="main" data-index="15" data-command=""></div>
+	            <div class="command" data-part="main" data-index="12"></div>
+	            <div class="command" data-part="main" data-index="13"></div>
+	            <div class="command" data-part="main" data-index="14"></div>
+	            <div class="command" data-part="main" data-index="15"></div>
 	
 	            <div style="clear: both;"></div>
 	        </div>
 	
 	        <div class="section" id="sub1">
 	            <div class="section-title">Sub1</div>
-	            <div class="command" data-part="sub1" data-index="0" data-command=""></div>
-	            <div class="command" data-part="sub1" data-index="1" data-command=""></div>
-	            <div class="command" data-part="sub1" data-index="2" data-command=""></div>
-	            <div class="command" data-part="sub1" data-index="3" data-command=""></div>
+	            <div class="command" data-part="sub1" data-index="0"></div>
+	            <div class="command" data-part="sub1" data-index="1"></div>
+	            <div class="command" data-part="sub1" data-index="2"></div>
+	            <div class="command" data-part="sub1" data-index="3"></div>
 	
-	            <div class="command" data-part="sub1" data-index="4" data-command=""></div>
-	            <div class="command" data-part="sub1" data-index="5" data-command=""></div>
-	            <div class="command" data-part="sub1" data-index="6" data-command=""></div>
-	            <div class="command" data-part="sub1" data-index="7" data-command=""></div>
+	            <div class="command" data-part="sub1" data-index="4"></div>
+	            <div class="command" data-part="sub1" data-index="5"></div>
+	            <div class="command" data-part="sub1" data-index="6"></div>
+	            <div class="command" data-part="sub1" data-index="7"></div>
 	
 	            <div style="clear: both;"></div>
 	        </div>
 	
 	        <div class="section" id="sub2">
 	            <div class="section-title">Sub2</div>
-	            <div class="command" data-part="sub2" data-index="0" data-command=""></div>
-	            <div class="command" data-part="sub2" data-index="1" data-command=""></div>
-	            <div class="command" data-part="sub2" data-index="2" data-command=""></div>
-	            <div class="command" data-part="sub2" data-index="3" data-command=""></div>
+	            <div class="command" data-part="sub2" data-index="0"></div>
+	            <div class="command" data-part="sub2" data-index="1"></div>
+	            <div class="command" data-part="sub2" data-index="2"></div>
+	            <div class="command" data-part="sub2" data-index="3"></div>
 	
-	            <div class="command" data-part="sub2" data-index="4" data-command=""></div>
-	            <div class="command" data-part="sub2" data-index="5" data-command=""></div>
-	            <div class="command" data-part="sub2" data-index="6" data-command=""></div>
-	            <div class="command" data-part="sub2" data-index="7" data-command=""></div>
+	            <div class="command" data-part="sub2" data-index="4"></div>
+	            <div class="command" data-part="sub2" data-index="5"></div>
+	            <div class="command" data-part="sub2" data-index="6"></div>
+	            <div class="command" data-part="sub2" data-index="7"></div>
 	
 	            <div style="clear: both;"></div>
 	        </div>
