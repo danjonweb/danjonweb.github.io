@@ -3,10 +3,9 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <link rel="stylesheet" href="./css/font.css" type="text/css" charset="utf-8"/>
+    <link rel="stylesheet" href="./css/font.css" type="text/css" charset="utf-8" />
     <title>Game</title>
     <script src="./js/jquery-2.1.1.min.js"></script>
     <script src="./js/jquery-ui.min.js"></script>
@@ -16,7 +15,7 @@
         function isRetina() {
             return ((window.matchMedia && (window.matchMedia('only screen and (min-resolution: 124dpi), only screen and (min-resolution: 1.3dppx), only screen and (min-resolution: 48.8dpcm)').matches || window.matchMedia('only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (-o-min-device-pixel-ratio: 2.6/2), only screen and (min--moz-device-pixel-ratio: 1.3), only screen and (min-device-pixel-ratio: 1.3)').matches)) || (window.devicePixelRatio && window.devicePixelRatio > 1.3));
         }
-    
+
         var ENTITIES = [];
 
         var LEVEL;
@@ -75,7 +74,7 @@
         var EXE_CALLER_INDEXES = []; // stack of indexes
         var EXE_TIMER;
         var COMMAND_SPEED = 600;
-        
+
         // When displaying text
         var DISPLAY_TIMER
 
@@ -128,6 +127,7 @@
                 return newPos;
             }
         }
+
         function Player() {
             this.xPos = 0;
             this.yPos = 0;
@@ -136,7 +136,7 @@
             this.direction = 's';
             this.reset();
         }
-        Player.prototype.reset = function () {
+        Player.prototype.reset = function() {
             this.current_frame = 0;
             this.start_frame = 0;
             this.end_frame = 0;
@@ -185,11 +185,11 @@
                 }
             }
         }
-        Player.prototype.changeColor = function (color) {
+        Player.prototype.changeColor = function(color) {
             this.color = color;
             this.source = IMAGES['player-' + color];
         }
-        Player.prototype.stop = function () {
+        Player.prototype.stop = function() {
             if (this.direction === 'n') {
                 this.faceNorth();
             } else if (this.direction === 'e') {
@@ -201,34 +201,35 @@
             }
             console.log(this.distance);
         }
-        Player.prototype.faceNorth = function () {
+        Player.prototype.faceNorth = function() {
             this.isMoving = false;
             this.direction = 'n';
             this.current_frame = 6;
             this.start_frame = 6;
             this.end_frame = 8;
         }
-        Player.prototype.faceEast = function () {
+        Player.prototype.faceEast = function() {
             this.isMoving = false;
             this.direction = 'e';
             this.current_frame = 3;
             this.start_frame = 3;
             this.end_frame = 5;
         }
-        Player.prototype.faceSouth = function () {
+        Player.prototype.faceSouth = function() {
             this.isMoving = false;
             this.direction = 's';
             this.current_frame = 0;
             this.start_frame = 0;
             this.end_frame = 2;
         }
-        Player.prototype.faceWest = function () {
+        Player.prototype.faceWest = function() {
             this.isMoving = false;
             this.direction = 'w';
             this.current_frame = 9;
             this.start_frame = 9;
             this.end_frame = 11;
         }
+
         function cellIsBlocked(n) {
             var isBlocked = false;
             if (n === -1) {
@@ -240,7 +241,7 @@
             }
             return isBlocked;
         }
-        Player.prototype.turnClockwise = function () {
+        Player.prototype.turnClockwise = function() {
             if (this.direction === 'n') {
                 this.faceEast();
             } else if (this.direction === 'e') {
@@ -251,7 +252,7 @@
                 this.faceNorth();
             }
         }
-        Player.prototype.turnCounterClockwise = function () {
+        Player.prototype.turnCounterClockwise = function() {
             if (this.direction === 'n') {
                 this.faceWest();
             } else if (this.direction === 'e') {
@@ -262,13 +263,13 @@
                 this.faceSouth();
             }
         }
-        Player.prototype.pos = function () {
+        Player.prototype.pos = function() {
             var row = this.yPos / this.height;
             var col = this.xPos / this.width;
             var pos = row * MAP_WIDTH + col;
             return pos;
         }
-        Player.prototype.nextPos = function () {
+        Player.prototype.nextPos = function() {
             // Returns next position based on current direction
             var pos = this.pos();
             var nextPos = -1;
@@ -283,7 +284,7 @@
             }
             return nextPos;
         }
-        Player.prototype.nextNextPos = function () {
+        Player.prototype.nextNextPos = function() {
             var pos = this.pos();
             var nextPos = -1;
             if (this.direction === 'n') {
@@ -301,7 +302,7 @@
             }
             return nextPos;
         }
-        Player.prototype.move = function () {
+        Player.prototype.move = function() {
             if (cellIsBlocked(this.nextPos())) {
                 return;
             }
@@ -322,7 +323,7 @@
                 this.ySpeed = 0;
             }
         }
-        Player.prototype.jump = function () {
+        Player.prototype.jump = function() {
             if (cellIsBlocked(this.nextNextPos())) {
                 return;
             }
@@ -344,7 +345,7 @@
                 this.ySpeed = 0;
             }
         }
-        Player.prototype.action = function () {
+        Player.prototype.action = function() {
             //console.log(LEVEL['layer1'][this.pos()]);
             var item = LEVEL['layer1'][this.pos()];
             if (item >= 0 && item < 1000) {
@@ -358,7 +359,7 @@
                 COLLECTED_ITEMS.push(this.pos());
             }
         }
-        Player.prototype.update = function (c, count) {
+        Player.prototype.update = function(c, count) {
             // Draw current frame
 
             var wRatio = CELL_WIDTH / this.width;
@@ -459,6 +460,7 @@
 
             GAME_COUNT = GAME_COUNT + 1 > 999 ? 0 : GAME_COUNT + 1;
         }
+
         function resetCommandBackgroundColors() {
             // Un-highlight all commands
             var allCommands = document.querySelectorAll('#commands .command');
@@ -466,6 +468,7 @@
                 allCommands.item(i).style.backgroundColor = 'black';
             }
         }
+
         function executeNextCommand() {
             resetCommandBackgroundColors();
 
@@ -540,10 +543,11 @@
                 EXE_TIMER = setTimeout(executeNextCommand, COMMAND_SPEED);
             }
         }
+
         function start() {
             // Setup game canvas
             GAME_CANVAS = document.getElementById('game');
-            
+
             if (GAME_CANVAS.getContext) {
                 GAME_CONTEXT = GAME_CANVAS.getContext('2d');
 
@@ -560,88 +564,91 @@
                     GAME_CANVAS.style.height = CELL_HEIGHT * MAP_HEIGHT + bottomWidth;
                     GAME_CONTEXT.scale(2, 2);
                 }
-                
+
                 // Initial canvas resize
                 doWindowResize();
 
                 GAME_COUNT = 0;
 
                 redraw();
-                
+
                 GAME_CANVAS.addEventListener('mouseup', function(e) {
-                	if (DISPLAY_TIMER) {
-                		return;
-                	}
-	            	if (IS_EXE) {
-	            		clearInterval(GAME_TIMER);
-	            		clearTimeout(EXE_TIMER);
-	            		
-	            		var step = 0;
-	            		displayStop();
-	            		function displayStop() {
-	            			redraw();
-	            			step += 0.05;
-	            			GAME_CONTEXT.font = '32pt early_gameboyregular';
-	            			GAME_CONTEXT.fillStyle = 'rgba(0, 0, 0, ' + step + ')';
-	            			GAME_CONTEXT.textAlign = 'center';
-	            			GAME_CONTEXT.fillText('STOP', CELL_WIDTH*MAP_WIDTH/2, 300);
-	            			if (step > 2) {
-	            		        EXE_PART = 'main';
-	            		        EXE_INDEX = 0;
-	            		        EXE_CALLER_PARTS = [];
-	            		        EXE_CALLER_INDEXES = [];
-	            		        IS_EXE = false;
-	            		        PLAYER.reset();
-	            		        COLLECTED_ITEMS = [];
-	            		        GAME_COUNT = 0;
-	            		        resetCommandBackgroundColors();
-	            		        redraw();
-	            		        DISPLAY_TIMER = null;
-	            			} else {
-	            				DISPLAY_TIMER = setTimeout(displayStop, 25);
-	            			}
-	            		};
-	                    return;
-	                }
-	                IS_EXE = true;
-	                
-	                PLAYER.reset();
-	                COLLECTED_ITEMS = [];
-	                GAME_COUNT = 0;
-	                EXE_PART = 'main';
-	                EXE_INDEX = 0;
-	                EXE_CALLER_PARTS = [];
-	                EXE_CALLER_INDEXES = [];
-	                
-	                var step = 0;
-	                displayStart();
-	                function displayStart() {
-	                	redraw();
-	                	step += 0.05;
-	                	GAME_CONTEXT.font = '32pt early_gameboyregular';
-	                	GAME_CONTEXT.fillStyle = 'rgba(0, 0, 0, ' + step + ')';
-	                	GAME_CONTEXT.textAlign = 'center';
-	                	GAME_CONTEXT.fillText('START', CELL_WIDTH*MAP_WIDTH/2, 300);
-	                	if (step > 2) {
-        	                GAME_TIMER = setInterval(redraw, TIMER_SPEED);
-        	                // First command takes half time to start
-        	                EXE_TIMER = setTimeout(executeNextCommand, COMMAND_SPEED / 2);
-        	                DISPLAY_TIMER = null;
-	                	} else {
-	                		DISPLAY_TIMER = setTimeout(displayStart, 25);
-	                	}
-	                };
-	            });
-			}
+                    if (DISPLAY_TIMER) {
+                        return;
+                    }
+                    if (IS_EXE) {
+                        clearInterval(GAME_TIMER);
+                        clearTimeout(EXE_TIMER);
+
+                        var step = 0;
+                        displayStop();
+
+                        function displayStop() {
+                            redraw();
+                            step += 0.05;
+                            GAME_CONTEXT.font = '32pt early_gameboyregular';
+                            GAME_CONTEXT.fillStyle = 'rgba(0, 0, 0, ' + step + ')';
+                            GAME_CONTEXT.textAlign = 'center';
+                            GAME_CONTEXT.fillText('STOP', CELL_WIDTH * MAP_WIDTH / 2, 300);
+                            if (step > 2) {
+                                EXE_PART = 'main';
+                                EXE_INDEX = 0;
+                                EXE_CALLER_PARTS = [];
+                                EXE_CALLER_INDEXES = [];
+                                IS_EXE = false;
+                                PLAYER.reset();
+                                COLLECTED_ITEMS = [];
+                                GAME_COUNT = 0;
+                                resetCommandBackgroundColors();
+                                redraw();
+                                DISPLAY_TIMER = null;
+                            } else {
+                                DISPLAY_TIMER = setTimeout(displayStop, 25);
+                            }
+                        };
+                        return;
+                    }
+                    IS_EXE = true;
+
+                    PLAYER.reset();
+                    COLLECTED_ITEMS = [];
+                    GAME_COUNT = 0;
+                    EXE_PART = 'main';
+                    EXE_INDEX = 0;
+                    EXE_CALLER_PARTS = [];
+                    EXE_CALLER_INDEXES = [];
+
+                    var step = 0;
+                    displayStart();
+
+                    function displayStart() {
+                        redraw();
+                        step += 0.05;
+                        GAME_CONTEXT.font = '32pt early_gameboyregular';
+                        GAME_CONTEXT.fillStyle = 'rgba(0, 0, 0, ' + step + ')';
+                        GAME_CONTEXT.textAlign = 'center';
+                        GAME_CONTEXT.fillText('START', CELL_WIDTH * MAP_WIDTH / 2, 300);
+                        if (step > 2) {
+                            GAME_TIMER = setInterval(redraw, TIMER_SPEED);
+                            // First command takes half time to start
+                            EXE_TIMER = setTimeout(executeNextCommand, COMMAND_SPEED / 2);
+                            DISPLAY_TIMER = null;
+                        } else {
+                            DISPLAY_TIMER = setTimeout(displayStart, 25);
+                        }
+                    };
+                });
+            }
         }
+
         function doWindowResize() {
             if (window.innerHeight > window.innerWidth) {
                 // Portrait
                 GAME_CANVAS.style.width = '100%';
                 GAME_CANVAS.style.height = '';
-                
+
                 document.getElementById('command-container').style.visibility = 'hidden';
-                                
+
                 /*document.getElementById('command-container').style.float = 'none';
                 document.getElementById('command-container').style.width = '100%';
                 
@@ -656,61 +663,74 @@
                 // Landscape
                 GAME_CANVAS.style.height = '100%';
                 GAME_CANVAS.style.width = '';
-                
+
                 document.getElementById('command-container').style.visibility = 'visible';
                 document.getElementById('command-container').style.float = 'right';
                 $('div#command-container').width($(window).width() - $(GAME_CANVAS).width());
                 //$('div#command-container').height($(window).height() - Math.ceil($(GAME_CANVAS).height()/11));
-                
-                
+
+
                 //document.getElementById('game').style.position = 'fixed';
             }
         }
+
         function doOrientationChange() {
             console.log('orientation changed');
             doWindowResize();
-          }
+        }
+
         function loadFastClick() {
-        	console.log('load fast click');
+            console.log('load fast click');
             FastClick.attach(document.body);
         }
+
         function ready() {
-        	// Fastclick
-        	//document.addEventListener("deviceready", onDeviceReady, false);
-        	setTimeout(loadFastClick, 500);
-        	
+            // Fastclick
+            //document.addEventListener("deviceready", onDeviceReady, false);
+            setTimeout(loadFastClick, 500);
+
             // Make commands draggable
-            $('#chooser .command').draggable({ revert: true, revertDuration: 0, distance: 30, zIndex: 100});
-            $('#commands .command').droppable({ accept: "#chooser .command", drop: function(event, ui) {
-                this.dataset.command = ui.draggable[0].dataset.command;
-                this.dataset.color = ui.draggable[0].dataset.color;
-                this.style.backgroundColor = 'black';
-            }, over: function(event, ui) {
-                this.style.backgroundColor = '#E3E890';
-            }, out: function(event, ui) {
-                this.style.backgroundColor = 'black';
-            }});
-            
+            $('#chooser .command').draggable({
+                revert: true,
+                revertDuration: 0,
+                distance: 30,
+                zIndex: 100
+            });
+            $('#commands .command').droppable({
+                accept: "#chooser .command",
+                drop: function(event, ui) {
+                    this.dataset.command = ui.draggable[0].dataset.command;
+                    this.dataset.color = ui.draggable[0].dataset.color;
+                    this.style.backgroundColor = 'black';
+                },
+                over: function(event, ui) {
+                    this.style.backgroundColor = '#E3E890';
+                },
+                out: function(event, ui) {
+                    this.style.backgroundColor = 'black';
+                }
+            });
+
             // Window resize
             $(window).resize(function() {
                 doWindowResize();
             });
-            
+
             // Orientation change
             window.addEventListener('orientationchange', doOrientationChange);
-            
+
             // Load images
             for (var key in IMAGES) {
                 if (IMAGES.hasOwnProperty(key)) {
                     var path = IMAGES[key];
                     IMAGES[key] = new Image();
-                    IMAGES[key].onload = function () {
+                    IMAGES[key].onload = function() {
                         NUMBER_OF_LOADED_IMAGES++;
                         if (NUMBER_OF_LOADED_IMAGES === NUMBER_OF_IMAGES) {
                             // Add player object
                             PLAYER = new Player();
                             ENTITIES.push(PLAYER);
-                            
+
                             start();
                         }
                     };
@@ -719,7 +739,7 @@
             }
 
             // Command blank
-            var commandEvent = function () {
+            var commandEvent = function() {
                 this.dataset.command = '';
                 this.dataset.color = '';
             }
@@ -730,16 +750,16 @@
             }
 
             // Command choose
-            var changeCommandColor = function () {
-            	var newColor;
+            var changeCommandColor = function() {
+                var newColor;
                 if (this.dataset.color === 'gray') {
-                	newColor = 'blue';
+                    newColor = 'blue';
                 } else if (this.dataset.color === 'blue') {
-                	newColor = 'gray';
+                    newColor = 'gray';
                 }
                 var list = document.querySelectorAll('#chooser .command');
                 for (var i = 0; i < list.length; i++) {
-                	list.item(i).dataset.color = newColor;
+                    list.item(i).dataset.color = newColor;
                 }
             }
             list = document.querySelectorAll('#chooser .command');
@@ -752,26 +772,22 @@
         }
     </script>
     <style type="text/css">
-    
         body {
             font-family: 'early_gameboyregular', sans-serif;
             padding: 0;
             margin: 0;
             background-color: black;
         }
-
         div#container {
             width: 100%;
             height: 100%;
             margin: 0 auto 0 auto;
             padding: 0;
         }
-
         canvas {
             position: fixed;
             display: block;
         }
-
         .section-title {
             font-size: 8px;
             color: white;
@@ -781,7 +797,6 @@
             padding: 10px 0 10px 0;
             box-sizing: border-box;
         }
-
         .command {
             width: 25%;
             height: 50px;
@@ -790,25 +805,21 @@
             float: left;
             cursor: pointer;
         }
-        
         div#command-container {
             box-sizing: border-box;
             visibility: hidden;
         }
-        
         #chooser {
-        	position: fixed;
-        	width: inherit;
-        	background-color: black;
-        	z-index: 1;
-        	border-bottom: 4px solid #333;
+            position: fixed;
+            width: inherit;
+            background-color: black;
+            z-index: 1;
+            border-bottom: 4px solid #333;
         }
-
         #commands {
-        	position: relative;
-        	top: 136px;
+            position: relative;
+            top: 136px;
         }
-
         button {
             height: 24px;
             border-radius: 0;
@@ -820,64 +831,49 @@
             border: 3px solid #AFB5A8;
             cursor: pointer;
         }
-
         .command[data-command="m"][data-color="gray"] {
             background: black center center/32px 32px no-repeat url('img/gray-forward@2x.png');
         }
-
         .command[data-command="cw"][data-color="gray"] {
             background: black center center/32px 32px no-repeat url('img/gray-turnLeft@2x.png');
         }
-
         .command[data-command="ccw"][data-color="gray"] {
             background: black center center/32px 32px no-repeat url('img/gray-turnRight@2x.png');
         }
-
         .command[data-command="j"][data-color="gray"] {
             background: black center center/32px 32px no-repeat url('img/gray-jump@2x.png');
         }
-
         .command[data-command="a"][data-color="gray"] {
             background: black center center/32px 32px no-repeat url('img/gray-scream@2x.png');
         }
-
         .command[data-command="s1"][data-color="gray"] {
             background: black center center/32px 32px no-repeat url('img/gray-S1@2x.png');
         }
-
         .command[data-command="s2"][data-color="gray"] {
             background: black center center/32px 32px no-repeat url('img/gray-S2@2x.png');
         }
-
         .command[data-command="m"][data-color="blue"] {
             background: black center center/32px 32px no-repeat url('img/blue-forward@2x.png');
         }
-
         .command[data-command="cw"][data-color="blue"] {
             background: black center center/32px 32px no-repeat url('img/blue-turnLeft@2x.png');
         }
-
         .command[data-command="ccw"][data-color="blue"] {
             background: black center center/32px 32px no-repeat url('img/blue-turnRight@2x.png');
         }
-
         .command[data-command="j"][data-color="blue"] {
             background: black center center/32px 32px no-repeat url('img/blue-jump@2x.png');
         }
-
         .command[data-command="a"][data-color="blue"] {
             background: black center center/32px 32px no-repeat url('img/blue-scream@2x.png');
         }
-
         .command[data-command="s1"][data-color="blue"] {
             background: black center center/32px 32px no-repeat url('img/blue-S1@2x.png');
         }
-
         .command[data-command="s2"][data-color="blue"] {
             background: black center center/32px 32px no-repeat url('img/blue-S2@2x.png');
         }
-        
-       /* @media only screen and (min-width: 0px) and (max-width: 840px) {
+        /* @media only screen and (min-width: 0px) and (max-width: 840px) {
             div#container {
                 width: 100%;
             }
@@ -892,154 +888,140 @@
         
         // Retina
         @media only screen and (-moz-min-device-pixel-ratio: 1.5),
-               only screen and (-o-min-device-pixel-ratio: 3/2),
-               only screen and (-webkit-min-device-pixel-ratio: 1.5),
-               only screen and (min-device-pixel-ratio: 1.5) {
-	        body {
-	        	background-color: red;
-	        }
-	        .command[data-command="m"][data-color="gray"] {
-	            background: black center center/32px 32px no-repeat url('img/gray-forward@4x.png');
-	        }
-	
-	        .command[data-command="cw"][data-color="gray"] {
-	            background: black center center/32px 32px no-repeat url('img/gray-turnLeft@4x.png');
-	        }
-	
-	        .command[data-command="ccw"][data-color="gray"] {
-	            background: black center center/32px 32px no-repeat url('img/gray-turnRight@4x.png');
-	        }
-	
-	        .command[data-command="j"][data-color="gray"] {
-	            background: black center center/32px 32px no-repeat url('img/gray-jump@4x.png');
-	        }
-	
-	        .command[data-command="a"][data-color="gray"] {
-	            background: black center center/32px 32px no-repeat url('img/gray-scream@4x.png');
-	        }
-	
-	        .command[data-command="s1"][data-color="gray"] {
-	            background: black center center/32px 32px no-repeat url('img/gray-S1@4x.png');
-	        }
-	
-	        .command[data-command="s2"][data-color="gray"] {
-	            background: black center center/32px 32px no-repeat url('img/gray-S2@4x.png');
-	        }
-	
-	        .command[data-command="m"][data-color="blue"] {
-	            background: black center center/32px 32px no-repeat url('img/blue-forward@4x.png');
-	        }
-	
-	        .command[data-command="cw"][data-color="blue"] {
-	            background: black center center/32px 32px no-repeat url('img/blue-turnLeft@4x.png');
-	        }
-	
-	        .command[data-command="ccw"][data-color="blue"] {
-	            background: black center center/32px 32px no-repeat url('img/blue-turnRight@4x.png');
-	        }
-	
-	        .command[data-command="j"][data-color="blue"] {
-	            background: black center center/32px 32px no-repeat url('img/blue-jump@4x.png');
-	        }
-	
-	        .command[data-command="a"][data-color="blue"] {
-	            background: black center center/32px 32px no-repeat url('img/blue-scream@4x.png');
-	        }
-	
-	        .command[data-command="s1"][data-color="blue"] {
-	            background: black center center/32px 32px no-repeat url('img/blue-S1@4x.png');
-	        }
-	
-	        .command[data-command="s2"][data-color="blue"] {
-	            background: black center center/32px 32px no-repeat url('img/blue-S2@4x.png');
-	        }
-	        
+        only screen and (-o-min-device-pixel-ratio: 3/2),
+        only screen and (-webkit-min-device-pixel-ratio: 1.5),
+        only screen and (min-device-pixel-ratio: 1.5) {
+            body {
+                background-color: red;
+            }
+            .command[data-command="m"][data-color="gray"] {
+                background: black center center/32px 32px no-repeat url('img/gray-forward@4x.png');
+            }
+            .command[data-command="cw"][data-color="gray"] {
+                background: black center center/32px 32px no-repeat url('img/gray-turnLeft@4x.png');
+            }
+            .command[data-command="ccw"][data-color="gray"] {
+                background: black center center/32px 32px no-repeat url('img/gray-turnRight@4x.png');
+            }
+            .command[data-command="j"][data-color="gray"] {
+                background: black center center/32px 32px no-repeat url('img/gray-jump@4x.png');
+            }
+            .command[data-command="a"][data-color="gray"] {
+                background: black center center/32px 32px no-repeat url('img/gray-scream@4x.png');
+            }
+            .command[data-command="s1"][data-color="gray"] {
+                background: black center center/32px 32px no-repeat url('img/gray-S1@4x.png');
+            }
+            .command[data-command="s2"][data-color="gray"] {
+                background: black center center/32px 32px no-repeat url('img/gray-S2@4x.png');
+            }
+            .command[data-command="m"][data-color="blue"] {
+                background: black center center/32px 32px no-repeat url('img/blue-forward@4x.png');
+            }
+            .command[data-command="cw"][data-color="blue"] {
+                background: black center center/32px 32px no-repeat url('img/blue-turnLeft@4x.png');
+            }
+            .command[data-command="ccw"][data-color="blue"] {
+                background: black center center/32px 32px no-repeat url('img/blue-turnRight@4x.png');
+            }
+            .command[data-command="j"][data-color="blue"] {
+                background: black center center/32px 32px no-repeat url('img/blue-jump@4x.png');
+            }
+            .command[data-command="a"][data-color="blue"] {
+                background: black center center/32px 32px no-repeat url('img/blue-scream@4x.png');
+            }
+            .command[data-command="s1"][data-color="blue"] {
+                background: black center center/32px 32px no-repeat url('img/blue-S1@4x.png');
+            }
+            .command[data-command="s2"][data-color="blue"] {
+                background: black center center/32px 32px no-repeat url('img/blue-S2@4x.png');
+            }
         }
     </style>
 </head>
 
 <body onload="ready();">
-<div id="container">
-    <canvas id="game"></canvas>
+    <div id="container">
+        <canvas id="game"></canvas>
 
-    
-    <div id="command-container">
-    	<div class="section" id="chooser">
-    		<div class="section-title">Commands</div>
-    		<div class="command" data-command="m" data-color="gray"></div>
-    		<div class="command" data-command="cw" data-color="gray"></div>
-    		<div class="command" data-command="ccw" data-color="gray"></div>
-    		<div class="command" data-command="j" data-color="gray"></div>
-    		<div class="command" data-command="a" data-color="gray"></div>
-    		<div class="command" data-command="s1" data-color="gray"></div>
-    		<div class="command" data-command="s2" data-color="gray"></div>
-    		<div style="clear: both;"></div>
-    	</div>
 
-		<div id="commands">
-	        <div class="section" id="main">
-	            <div class="section-title">Main</div>
-	            <div class="command" data-part="main" data-index="0"></div>
-	            <div class="command" data-part="main" data-index="1"></div>
-	            <div class="command" data-part="main" data-index="2"></div>
-	            <div class="command" data-part="main" data-index="3"></div>
-	
-	            <div class="command" data-part="main" data-index="4"></div>
-	            <div class="command" data-part="main" data-index="5"></div>
-	            <div class="command" data-part="main" data-index="6"></div>
-	            <div class="command" data-part="main" data-index="7"></div>
-	
-	            <div class="command" data-part="main" data-index="8"></div>
-	            <div class="command" data-part="main" data-index="9"></div>
-	            <div class="command" data-part="main" data-index="10"></div>
-	            <div class="command" data-part="main" data-index="11"></div>
-	
-	            <div class="command" data-part="main" data-index="12"></div>
-	            <div class="command" data-part="main" data-index="13"></div>
-	            <div class="command" data-part="main" data-index="14"></div>
-	            <div class="command" data-part="main" data-index="15"></div>
-	
-	            <div style="clear: both;"></div>
-	        </div>
-	
-	        <div class="section" id="sub1">
-	            <div class="section-title">Sub1</div>
-	            <div class="command" data-part="sub1" data-index="0"></div>
-	            <div class="command" data-part="sub1" data-index="1"></div>
-	            <div class="command" data-part="sub1" data-index="2"></div>
-	            <div class="command" data-part="sub1" data-index="3"></div>
-	
-	            <div class="command" data-part="sub1" data-index="4"></div>
-	            <div class="command" data-part="sub1" data-index="5"></div>
-	            <div class="command" data-part="sub1" data-index="6"></div>
-	            <div class="command" data-part="sub1" data-index="7"></div>
-	
-	            <div style="clear: both;"></div>
-	        </div>
-	
-	        <div class="section" id="sub2">
-	            <div class="section-title">Sub2</div>
-	            <div class="command" data-part="sub2" data-index="0"></div>
-	            <div class="command" data-part="sub2" data-index="1"></div>
-	            <div class="command" data-part="sub2" data-index="2"></div>
-	            <div class="command" data-part="sub2" data-index="3"></div>
-	
-	            <div class="command" data-part="sub2" data-index="4"></div>
-	            <div class="command" data-part="sub2" data-index="5"></div>
-	            <div class="command" data-part="sub2" data-index="6"></div>
-	            <div class="command" data-part="sub2" data-index="7"></div>
-	
-	            <div style="clear: both;"></div>
-	        </div>
+        <div id="command-container">
+            <div class="section" id="chooser">
+                <div class="section-title">Commands</div>
+                <div class="command" data-command="m" data-color="gray"></div>
+                <div class="command" data-command="cw" data-color="gray"></div>
+                <div class="command" data-command="ccw" data-color="gray"></div>
+                <div class="command" data-command="j" data-color="gray"></div>
+                <div class="command" data-command="a" data-color="gray"></div>
+                <div class="command" data-command="s1" data-color="gray"></div>
+                <div class="command" data-command="s2" data-color="gray"></div>
+                <div style="clear: both;"></div>
+            </div>
 
-		</div>
+            <div id="commands">
+                <div class="section" id="main">
+                    <div class="section-title">Main</div>
+                    <div class="command" data-part="main" data-index="0"></div>
+                    <div class="command" data-part="main" data-index="1"></div>
+                    <div class="command" data-part="main" data-index="2"></div>
+                    <div class="command" data-part="main" data-index="3"></div>
 
-        
+                    <div class="command" data-part="main" data-index="4"></div>
+                    <div class="command" data-part="main" data-index="5"></div>
+                    <div class="command" data-part="main" data-index="6"></div>
+                    <div class="command" data-part="main" data-index="7"></div>
 
+                    <div class="command" data-part="main" data-index="8"></div>
+                    <div class="command" data-part="main" data-index="9"></div>
+                    <div class="command" data-part="main" data-index="10"></div>
+                    <div class="command" data-part="main" data-index="11"></div>
+
+                    <div class="command" data-part="main" data-index="12"></div>
+                    <div class="command" data-part="main" data-index="13"></div>
+                    <div class="command" data-part="main" data-index="14"></div>
+                    <div class="command" data-part="main" data-index="15"></div>
+
+                    <div style="clear: both;"></div>
+                </div>
+
+                <div class="section" id="sub1">
+                    <div class="section-title">Sub1</div>
+                    <div class="command" data-part="sub1" data-index="0"></div>
+                    <div class="command" data-part="sub1" data-index="1"></div>
+                    <div class="command" data-part="sub1" data-index="2"></div>
+                    <div class="command" data-part="sub1" data-index="3"></div>
+
+                    <div class="command" data-part="sub1" data-index="4"></div>
+                    <div class="command" data-part="sub1" data-index="5"></div>
+                    <div class="command" data-part="sub1" data-index="6"></div>
+                    <div class="command" data-part="sub1" data-index="7"></div>
+
+                    <div style="clear: both;"></div>
+                </div>
+
+                <div class="section" id="sub2">
+                    <div class="section-title">Sub2</div>
+                    <div class="command" data-part="sub2" data-index="0"></div>
+                    <div class="command" data-part="sub2" data-index="1"></div>
+                    <div class="command" data-part="sub2" data-index="2"></div>
+                    <div class="command" data-part="sub2" data-index="3"></div>
+
+                    <div class="command" data-part="sub2" data-index="4"></div>
+                    <div class="command" data-part="sub2" data-index="5"></div>
+                    <div class="command" data-part="sub2" data-index="6"></div>
+                    <div class="command" data-part="sub2" data-index="7"></div>
+
+                    <div style="clear: both;"></div>
+                </div>
+
+            </div>
+
+
+
+        </div>
+
+        <div style="clear: both;"></div>
     </div>
-    
-    <div style="clear: both;"></div>
-</div>
 </body>
 
 </html>
