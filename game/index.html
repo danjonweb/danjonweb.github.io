@@ -758,7 +758,7 @@
         }
 
         div#container {
-            width: 840px;
+            width: 100%;
             height: 100%;
             margin: 0 auto 0 auto;
             padding: 0;
@@ -820,81 +820,51 @@
         }
 
         .command[data-command="m"][data-color="gray"] {
-            background-image: url('img/gray-forward@2x.png');
-            background-repeat: no-repeat;
-            background-position: center center;
-            background-size: 32px 32px;
+            background: center center/32px 32px no-repeat url('img/gray-forward@2x.png');
         }
 
         .command[data-command="cw"][data-color="gray"] {
-            background-image: url('img/gray-turnLeft@2x.png');
-            background-repeat: no-repeat;
-            background-position: center center;
-            background-size: 32px 32px;
+            background: center center/32px 32px no-repeat url('img/gray-turnLeft@2x.png');
         }
 
         .command[data-command="ccw"][data-color="gray"] {
-            background-image: url('img/gray-turnRight@2x.png');
-            background-repeat: no-repeat;
-            background-position: center center;
-            background-size: 32px 32px;
+            background: center center/32px 32px no-repeat url('img/gray-turnRight@2x.png');
         }
 
         .command[data-command="j"][data-color="gray"] {
-            background-image: url('img/gray-jump@2x.png');
-            background-repeat: no-repeat;
-            background-position: center center;
-            background-size: 32px 32px;
+            background: center center/32px 32px no-repeat url('img/gray-jump@2x.png');
         }
 
         .command[data-command="a"][data-color="gray"] {
-            background-image: url('img/gray-scream@2x.png');
-            background-repeat: no-repeat;
-            background-position: center center;
-            background-size: 32px 32px;
+            background: center center/32px 32px no-repeat url('img/gray-scream@2x.png');
         }
 
         .command[data-command="s1"][data-color="gray"] {
-            background: black center center/32px 32px no-repeat url('img/gray-S1@2x.png');
+            background: center center/32px 32px no-repeat url('img/gray-S1@2x.png');
         }
 
         .command[data-command="s2"][data-color="gray"] {
-            background: black center center/32px 32px no-repeat url('img/gray-S2@2x.png');
+            background: center center/32px 32px no-repeat url('img/gray-S2@2x.png');
         }
 
         .command[data-command="m"][data-color="blue"] {
-            background-image: url('img/blue-forward@2x.png');
-            background-repeat: no-repeat;
-            background-position: center center;
-            background-size: 32px 32px;
+            background: center center/32px 32px no-repeat url('img/blue-forward@2x.png');
         }
 
         .command[data-command="cw"][data-color="blue"] {
-            background-image: url('img/blue-turnLeft@2x.png');
-            background-repeat: no-repeat;
-            background-position: center center;
-            background-size: 32px 32px;
+            background: center center/32px 32px no-repeat url('img/blue-turnLeft@2x.png');
         }
 
         .command[data-command="ccw"][data-color="blue"] {
-            background-image: url('img/blue-turnRight@2x.png');
-            background-repeat: no-repeat;
-            background-position: center center;
-            background-size: 32px 32px;
+            background: center center/32px 32px no-repeat url('img/blue-turnRight@2x.png');
         }
 
         .command[data-command="j"][data-color="blue"] {
-            background-image: url('img/blue-jump@2x.png');
-            background-repeat: no-repeat;
-            background-position: center center;
-            background-size: 32px 32px;
+            background: center center/32px 32px no-repeat url('img/blue-jump@2x.png');
         }
 
         .command[data-command="a"][data-color="blue"] {
-            background-image: url('img/blue-scream@2x.png');
-            background-repeat: no-repeat;
-            background-position: center center;
-            background-size: 32px 32px;
+            background: center center/32px 32px no-repeat url('img/blue-scream@2x.png');
         }
 
         .command[data-command="s1"][data-color="blue"] {
@@ -905,7 +875,7 @@
             background: center center/32px 32px no-repeat url('img/blue-S2@2x.png');
         }
         
-        @media only screen and (min-width: 500px) and (max-width: 840px) {
+       /* @media only screen and (min-width: 0px) and (max-width: 840px) {
             div#container {
                 width: 100%;
             }
@@ -916,19 +886,66 @@
                 
                 float: right;
             }
-        }
+        }*/
         
-        @media only screen and (min-width: 0px) and (max-width: 500px) {
-            div#container {
-                width: 100%;
-            }
-            canvas {
-                position: fixed;
-            }
-            div#command-container {
-                width: 40%;
-                float: right;
-            }
+        @media  only screen and (min-device-pixel-ratio: 2),   
+                only screen and (min-resolution: 192dpi) {  
+	        .command[data-command="m"][data-color="gray"] {
+	            background: center center/32px 32px no-repeat url('img/gray-forward@4x.png');
+	        }
+	
+	        .command[data-command="cw"][data-color="gray"] {
+	            background: center center/32px 32px no-repeat url('img/gray-turnLeft@4x.png');
+	        }
+	
+	        .command[data-command="ccw"][data-color="gray"] {
+	            background: center center/32px 32px no-repeat url('img/gray-turnRight@4x.png');
+	        }
+	
+	        .command[data-command="j"][data-color="gray"] {
+	            background: center center/32px 32px no-repeat url('img/gray-jump@4x.png');
+	        }
+	
+	        .command[data-command="a"][data-color="gray"] {
+	            background: center center/32px 32px no-repeat url('img/gray-scream@4x.png');
+	        }
+	
+	        .command[data-command="s1"][data-color="gray"] {
+	            background: center center/32px 32px no-repeat url('img/gray-S1@4x.png');
+	        }
+	
+	        .command[data-command="s2"][data-color="gray"] {
+	            background: center center/32px 32px no-repeat url('img/gray-S2@4x.png');
+	        }
+	
+	        .command[data-command="m"][data-color="blue"] {
+	            background: center center/32px 32px no-repeat url('img/blue-forward@4x.png');
+	        }
+	
+	        .command[data-command="cw"][data-color="blue"] {
+	            background: center center/32px 32px no-repeat url('img/blue-turnLeft@4x.png');
+	        }
+	
+	        .command[data-command="ccw"][data-color="blue"] {
+	            background: center center/32px 32px no-repeat url('img/blue-turnRight@4x.png');
+	        }
+	
+	        .command[data-command="j"][data-color="blue"] {
+	            background: center center/32px 32px no-repeat url('img/blue-jump@4x.png');
+	        }
+	
+	        .command[data-command="a"][data-color="blue"] {
+	            background: center center/32px 32px no-repeat url('img/blue-scream@4x.png');
+	        }
+	
+	        .command[data-command="s1"][data-color="blue"] {
+	            background: center center/32px 32px no-repeat url('img/blue-S1@4x.png');
+	        }
+	
+	        .command[data-command="s2"][data-color="blue"] {
+	            background: center center/32px 32px no-repeat url('img/blue-S2@4x.png');
+	        }
+	        
         }
     </style>
 </head>
