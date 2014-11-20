@@ -639,9 +639,7 @@
                 // Portrait
                 GAME_CANVAS.style.width = '100%';
                 GAME_CANVAS.style.height = '';
-                
-                document.getElementById('command-container').style.visibility = 'hidden';
-                
+                                
                 /*document.getElementById('command-container').style.float = 'none';
                 document.getElementById('command-container').style.width = '100%';
                 
@@ -693,6 +691,17 @@
                 this.style.backgroundColor = 'black';
             }});
             */
+            
+            $('#chooser .command').draggable({ revert: true, revertDuration: 100, distance: 30, zIndex: 100});
+            $('#commands .command').droppable({ accept: "#chooser .command", drop: function(event, ui) {
+                this.dataset.command = ui.draggable[0].dataset.command;
+                this.dataset.color = ui.draggable[0].dataset.color;
+                this.style.backgroundColor = 'black';
+            }, over: function(event, ui) {
+                this.style.backgroundColor = '#E3E890';
+            }, out: function(event, ui) {
+                this.style.backgroundColor = 'black';
+            }});
             
             // Window resize
             $(window).resize(function() {
@@ -791,10 +800,12 @@
             box-sizing: border-box;
             float: left;
             cursor: pointer;
+            background: black;
         }
         
         div#command-container {
             box-sizing: border-box;
+            visibility: hidden;
         }
         
         #chooser {
@@ -944,13 +955,13 @@
     <div id="command-container">
     	<div class="section" id="chooser">
     		<div class="section-title">Commands</div>
-    		<div class="command command-choose" data-command="m" data-color="gray"></div>
-    		<div class="command command-choose" data-command="cw" data-color="gray"></div>
-    		<div class="command command-choose" data-command="ccw" data-color="gray"></div>
-    		<div class="command command-choose" data-command="j" data-color="gray"></div>
-    		<div class="command command-choose" data-command="a" data-color="gray"></div>
-    		<div class="command command-choose" data-command="s1" data-color="gray"></div>
-    		<div class="command command-choose" data-command="s2" data-color="gray"></div>
+    		<div class="command" data-command="m" data-color="gray"></div>
+    		<div class="command" data-command="cw" data-color="gray"></div>
+    		<div class="command" data-command="ccw" data-color="gray"></div>
+    		<div class="command" data-command="j" data-color="gray"></div>
+    		<div class="command" data-command="a" data-color="gray"></div>
+    		<div class="command" data-command="s1" data-color="gray"></div>
+    		<div class="command" data-command="s2" data-color="gray"></div>
     		<div style="clear: both;"></div>
     	</div>
 
