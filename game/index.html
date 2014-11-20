@@ -11,7 +11,7 @@
     <script src="./js/jquery-2.1.1.min.js"></script>
     <script src="./js/jquery-ui.min.js"></script>
     <script src="./js/jquery.ui.touch-punch.min.js"></script>
-    <script type='application/javascript' src='js/fastclick.js'></script>
+    <script type='application/javascript' src='./js/fastclick.js'></script>
     <script type="text/javascript">
         function isRetina() {
             return ((window.matchMedia && (window.matchMedia('only screen and (min-resolution: 124dpi), only screen and (min-resolution: 1.3dppx), only screen and (min-resolution: 48.8dpcm)').matches || window.matchMedia('only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (-o-min-device-pixel-ratio: 2.6/2), only screen and (min--moz-device-pixel-ratio: 1.3), only screen and (min-device-pixel-ratio: 1.3)').matches)) || (window.devicePixelRatio && window.devicePixelRatio > 1.3));
@@ -489,7 +489,7 @@
                     return;
                 }
             }
-            if (EXE_INDEX >= commands.length || commands.item(EXE_INDEX).dataset.command === '') {
+            if (EXE_INDEX >= commands.length || commands.item(EXE_INDEX).dataset.command === '' || commands.item(EXE_INDEX).dataset.command == null) {
                 if (EXE_PART === 'sub1' || EXE_PART === 'sub2') {
                     EXE_PART = EXE_CALLER_PARTS.pop();
                     EXE_INDEX = EXE_CALLER_INDEXES.pop();
@@ -674,7 +674,8 @@
         }
         function ready() {
         	// Fastclick
-        	document.addEventListener("deviceready", onDeviceReady, false);
+        	//document.addEventListener("deviceready", onDeviceReady, false);
+        	FastClick.attach(document.body);
         	
             // Make commands draggable
             $('#chooser .command').draggable({ revert: true, revertDuration: 0, distance: 30, zIndex: 100});
@@ -782,11 +783,10 @@
         .command {
             width: 25%;
             height: 50px;
-            border: 1px solid #555;
+            border: 1px solid #333;
             box-sizing: border-box;
             float: left;
             cursor: pointer;
-            background: black;
         }
         
         div#command-container {
@@ -820,59 +820,59 @@
         }
 
         .command[data-command="m"][data-color="gray"] {
-            background: center center/32px 32px no-repeat url('img/gray-forward@2x.png');
+            background: black center center/32px 32px no-repeat url('img/gray-forward@2x.png');
         }
 
         .command[data-command="cw"][data-color="gray"] {
-            background: center center/32px 32px no-repeat url('img/gray-turnLeft@2x.png');
+            background: black center center/32px 32px no-repeat url('img/gray-turnLeft@2x.png');
         }
 
         .command[data-command="ccw"][data-color="gray"] {
-            background: center center/32px 32px no-repeat url('img/gray-turnRight@2x.png');
+            background: black center center/32px 32px no-repeat url('img/gray-turnRight@2x.png');
         }
 
         .command[data-command="j"][data-color="gray"] {
-            background: center center/32px 32px no-repeat url('img/gray-jump@2x.png');
+            background: black center center/32px 32px no-repeat url('img/gray-jump@2x.png');
         }
 
         .command[data-command="a"][data-color="gray"] {
-            background: center center/32px 32px no-repeat url('img/gray-scream@2x.png');
+            background: black center center/32px 32px no-repeat url('img/gray-scream@2x.png');
         }
 
         .command[data-command="s1"][data-color="gray"] {
-            background: center center/32px 32px no-repeat url('img/gray-S1@2x.png');
+            background: black center center/32px 32px no-repeat url('img/gray-S1@2x.png');
         }
 
         .command[data-command="s2"][data-color="gray"] {
-            background: center center/32px 32px no-repeat url('img/gray-S2@2x.png');
+            background: black center center/32px 32px no-repeat url('img/gray-S2@2x.png');
         }
 
         .command[data-command="m"][data-color="blue"] {
-            background: center center/32px 32px no-repeat url('img/blue-forward@2x.png');
+            background: black center center/32px 32px no-repeat url('img/blue-forward@2x.png');
         }
 
         .command[data-command="cw"][data-color="blue"] {
-            background: center center/32px 32px no-repeat url('img/blue-turnLeft@2x.png');
+            background: black center center/32px 32px no-repeat url('img/blue-turnLeft@2x.png');
         }
 
         .command[data-command="ccw"][data-color="blue"] {
-            background: center center/32px 32px no-repeat url('img/blue-turnRight@2x.png');
+            background: black center center/32px 32px no-repeat url('img/blue-turnRight@2x.png');
         }
 
         .command[data-command="j"][data-color="blue"] {
-            background: center center/32px 32px no-repeat url('img/blue-jump@2x.png');
+            background: black center center/32px 32px no-repeat url('img/blue-jump@2x.png');
         }
 
         .command[data-command="a"][data-color="blue"] {
-            background: center center/32px 32px no-repeat url('img/blue-scream@2x.png');
+            background: black center center/32px 32px no-repeat url('img/blue-scream@2x.png');
         }
 
         .command[data-command="s1"][data-color="blue"] {
-            background: center center/32px 32px no-repeat url('img/blue-S1@2x.png');
+            background: black center center/32px 32px no-repeat url('img/blue-S1@2x.png');
         }
 
         .command[data-command="s2"][data-color="blue"] {
-            background: center center/32px 32px no-repeat url('img/blue-S2@2x.png');
+            background: black center center/32px 32px no-repeat url('img/blue-S2@2x.png');
         }
         
        /* @media only screen and (min-width: 0px) and (max-width: 840px) {
@@ -888,6 +888,7 @@
             }
         }*/
         
+        // Retina
         @media only screen and (-webkit-min-device-pixel-ratio: 2),
         only screen and ( min--moz-device-pixel-ratio: 2),
         only screen and ( -o-min-device-pixel-ratio: 2/1),
@@ -895,59 +896,59 @@
         only screen and ( min-resolution: 192dpi),
         only screen and ( min-resolution: 2dppx) {
 	        .command[data-command="m"][data-color="gray"] {
-	            background: center center/32px 32px no-repeat url('img/gray-forward@4x.png');
+	            background: black center center/32px 32px no-repeat url('img/gray-forward@4x.png');
 	        }
 	
 	        .command[data-command="cw"][data-color="gray"] {
-	            background: center center/32px 32px no-repeat url('img/gray-turnLeft@4x.png');
+	            background: black center center/32px 32px no-repeat url('img/gray-turnLeft@4x.png');
 	        }
 	
 	        .command[data-command="ccw"][data-color="gray"] {
-	            background: center center/32px 32px no-repeat url('img/gray-turnRight@4x.png');
+	            background: black center center/32px 32px no-repeat url('img/gray-turnRight@4x.png');
 	        }
 	
 	        .command[data-command="j"][data-color="gray"] {
-	            background: center center/32px 32px no-repeat url('img/gray-jump@4x.png');
+	            background: black center center/32px 32px no-repeat url('img/gray-jump@4x.png');
 	        }
 	
 	        .command[data-command="a"][data-color="gray"] {
-	            background: center center/32px 32px no-repeat url('img/gray-scream@4x.png');
+	            background: black center center/32px 32px no-repeat url('img/gray-scream@4x.png');
 	        }
 	
 	        .command[data-command="s1"][data-color="gray"] {
-	            background: center center/32px 32px no-repeat url('img/gray-S1@4x.png');
+	            background: black center center/32px 32px no-repeat url('img/gray-S1@4x.png');
 	        }
 	
 	        .command[data-command="s2"][data-color="gray"] {
-	            background: center center/32px 32px no-repeat url('img/gray-S2@4x.png');
+	            background: black center center/32px 32px no-repeat url('img/gray-S2@4x.png');
 	        }
 	
 	        .command[data-command="m"][data-color="blue"] {
-	            background: center center/32px 32px no-repeat url('img/blue-forward@4x.png');
+	            background: black center center/32px 32px no-repeat url('img/blue-forward@4x.png');
 	        }
 	
 	        .command[data-command="cw"][data-color="blue"] {
-	            background: center center/32px 32px no-repeat url('img/blue-turnLeft@4x.png');
+	            background: black center center/32px 32px no-repeat url('img/blue-turnLeft@4x.png');
 	        }
 	
 	        .command[data-command="ccw"][data-color="blue"] {
-	            background: center center/32px 32px no-repeat url('img/blue-turnRight@4x.png');
+	            background: black center center/32px 32px no-repeat url('img/blue-turnRight@4x.png');
 	        }
 	
 	        .command[data-command="j"][data-color="blue"] {
-	            background: center center/32px 32px no-repeat url('img/blue-jump@4x.png');
+	            background: black center center/32px 32px no-repeat url('img/blue-jump@4x.png');
 	        }
 	
 	        .command[data-command="a"][data-color="blue"] {
-	            background: center center/32px 32px no-repeat url('img/blue-scream@4x.png');
+	            background: black center center/32px 32px no-repeat url('img/blue-scream@4x.png');
 	        }
 	
 	        .command[data-command="s1"][data-color="blue"] {
-	            background: center center/32px 32px no-repeat url('img/blue-S1@4x.png');
+	            background: black center center/32px 32px no-repeat url('img/blue-S1@4x.png');
 	        }
 	
 	        .command[data-command="s2"][data-color="blue"] {
-	            background: center center/32px 32px no-repeat url('img/blue-S2@4x.png');
+	            background: black center center/32px 32px no-repeat url('img/blue-S2@4x.png');
 	        }
 	        
         }
