@@ -5,6 +5,163 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
+    <style>
+    	body {
+    	    font-family: 'early_gameboyregular', sans-serif;
+    	    padding: 0;
+    	    margin: 0;
+    	    background-color: black;
+    	}
+    	div#container {
+    	    width: 100%;
+    	    height: 100%;
+    	    margin: 0 auto 0 auto;
+    	    padding: 0;
+    	}
+    	canvas {
+    	    position: fixed;
+    	    display: block;
+    	}
+    	.section-title {
+    	    font-size: 8px;
+    	    color: white;
+    	    background: black;
+    	    text-align: center;
+    	    border: 1px solid #FEFFFD;
+    	    padding: 10px 0 10px 0;
+    	    box-sizing: border-box;
+    	}
+    	.command {
+    	    width: 25%;
+    	    height: 50px;
+    	    border: 1px solid #333;
+    	    box-sizing: border-box;
+    	    float: left;
+    	    cursor: pointer;
+    	}
+    	div#command-container {
+    	    box-sizing: border-box;
+    	    visibility: hidden;
+    	}
+    	#chooser {
+    	    position: fixed;
+    	    width: inherit;
+    	    background-color: black;
+    	    z-index: 1;
+    	    border-bottom: 4px solid #333;
+    	}
+    	#commands {
+    	    position: relative;
+    	    top: 136px;
+    	}
+    	button {
+    	    height: 24px;
+    	    border-radius: 0;
+    	    min-width: 50px;
+    	    padding: 3px;
+    	    background-color: #FEFFFD;
+    	    font-family: 'early_gameboyregular', sans-serif;
+    	    font-size: 8px;
+    	    border: 3px solid #AFB5A8;
+    	    cursor: pointer;
+    	}
+    	.command[data-command="m"][data-color="gray"] {
+    	    background: black center center/32px 32px no-repeat url('img/gray-forward@2x.png');
+    	}
+    	.command[data-command="cw"][data-color="gray"] {
+    	    background: black center center/32px 32px no-repeat url('img/gray-turnLeft@2x.png');
+    	}
+    	.command[data-command="ccw"][data-color="gray"] {
+    	    background: black center center/32px 32px no-repeat url('img/gray-turnRight@2x.png');
+    	}
+    	.command[data-command="j"][data-color="gray"] {
+    	    background: black center center/32px 32px no-repeat url('img/gray-jump@2x.png');
+    	}
+    	.command[data-command="a"][data-color="gray"] {
+    	    background: black center center/32px 32px no-repeat url('img/gray-scream@2x.png');
+    	}
+    	.command[data-command="s1"][data-color="gray"] {
+    	    background: black center center/32px 32px no-repeat url('img/gray-S1@2x.png');
+    	}
+    	.command[data-command="s2"][data-color="gray"] {
+    	    background: black center center/32px 32px no-repeat url('img/gray-S2@2x.png');
+    	}
+    	.command[data-command="m"][data-color="blue"] {
+    	    background: black center center/32px 32px no-repeat url('img/blue-forward@2x.png');
+    	}
+    	.command[data-command="cw"][data-color="blue"] {
+    	    background: black center center/32px 32px no-repeat url('img/blue-turnLeft@2x.png');
+    	}
+    	.command[data-command="ccw"][data-color="blue"] {
+    	    background: black center center/32px 32px no-repeat url('img/blue-turnRight@2x.png');
+    	}
+    	.command[data-command="j"][data-color="blue"] {
+    	    background: black center center/32px 32px no-repeat url('img/blue-jump@2x.png');
+    	}
+    	.command[data-command="a"][data-color="blue"] {
+    	    background: black center center/32px 32px no-repeat url('img/blue-scream@2x.png');
+    	}
+    	.command[data-command="s1"][data-color="blue"] {
+    	    background: black center center/32px 32px no-repeat url('img/blue-S1@2x.png');
+    	}
+    	.command[data-command="s2"][data-color="blue"] {
+    	    background: black center center/32px 32px no-repeat url('img/blue-S2@2x.png');
+    	}
+    	
+    	// Retina
+    	@media only screen and (-webkit-min-device-pixel-ratio: 2),
+    	only screen and ( min--moz-device-pixel-ratio: 2),
+    	only screen and ( -o-min-device-pixel-ratio: 2/1),
+    	only screen and ( min-device-pixel-ratio: 2),
+    	only screen and ( min-resolution: 192dpi),
+    	only screen and ( min-resolution: 2dppx) {
+    	    body {
+    	        background-color: red !important;
+    	    }
+    	    .command[data-command="m"][data-color="gray"] {
+    	        background: black center center/32px 32px no-repeat url('img/gray-forward@4x.png');
+    	    }
+    	    .command[data-command="cw"][data-color="gray"] {
+    	        background: black center center/32px 32px no-repeat url('img/gray-turnLeft@4x.png');
+    	    }
+    	    .command[data-command="ccw"][data-color="gray"] {
+    	        background: black center center/32px 32px no-repeat url('img/gray-turnRight@4x.png');
+    	    }
+    	    .command[data-command="j"][data-color="gray"] {
+    	        background: black center center/32px 32px no-repeat url('img/gray-jump@4x.png');
+    	    }
+    	    .command[data-command="a"][data-color="gray"] {
+    	        background: black center center/32px 32px no-repeat url('img/gray-scream@4x.png');
+    	    }
+    	    .command[data-command="s1"][data-color="gray"] {
+    	        background: black center center/32px 32px no-repeat url('img/gray-S1@4x.png');
+    	    }
+    	    .command[data-command="s2"][data-color="gray"] {
+    	        background: black center center/32px 32px no-repeat url('img/gray-S2@4x.png');
+    	    }
+    	    .command[data-command="m"][data-color="blue"] {
+    	        background: black center center/32px 32px no-repeat url('img/blue-forward@4x.png');
+    	    }
+    	    .command[data-command="cw"][data-color="blue"] {
+    	        background: black center center/32px 32px no-repeat url('img/blue-turnLeft@4x.png');
+    	    }
+    	    .command[data-command="ccw"][data-color="blue"] {
+    	        background: black center center/32px 32px no-repeat url('img/blue-turnRight@4x.png');
+    	    }
+    	    .command[data-command="j"][data-color="blue"] {
+    	        background: black center center/32px 32px no-repeat url('img/blue-jump@4x.png');
+    	    }
+    	    .command[data-command="a"][data-color="blue"] {
+    	        background: black center center/32px 32px no-repeat url('img/blue-scream@4x.png');
+    	    }
+    	    .command[data-command="s1"][data-color="blue"] {
+    	        background: black center center/32px 32px no-repeat url('img/blue-S1@4x.png');
+    	    }
+    	    .command[data-command="s2"][data-color="blue"] {
+    	        background: black center center/32px 32px no-repeat url('img/blue-S2@4x.png');
+    	    }
+    	}
+    </style>
     <link rel="stylesheet" href="./css/font.css" type="text/css" charset="utf-8" />
     <title>Game</title>
     <script src="./js/jquery-2.1.1.min.js"></script>
@@ -771,163 +928,6 @@
 
         }
     </script>
-    <style type="text/css">
-        body {
-            font-family: 'early_gameboyregular', sans-serif;
-            padding: 0;
-            margin: 0;
-            background-color: black;
-        }
-        div#container {
-            width: 100%;
-            height: 100%;
-            margin: 0 auto 0 auto;
-            padding: 0;
-        }
-        canvas {
-            position: fixed;
-            display: block;
-        }
-        .section-title {
-            font-size: 8px;
-            color: white;
-            background: black;
-            text-align: center;
-            border: 1px solid #FEFFFD;
-            padding: 10px 0 10px 0;
-            box-sizing: border-box;
-        }
-        .command {
-            width: 25%;
-            height: 50px;
-            border: 1px solid #333;
-            box-sizing: border-box;
-            float: left;
-            cursor: pointer;
-        }
-        div#command-container {
-            box-sizing: border-box;
-            visibility: hidden;
-        }
-        #chooser {
-            position: fixed;
-            width: inherit;
-            background-color: black;
-            z-index: 1;
-            border-bottom: 4px solid #333;
-        }
-        #commands {
-            position: relative;
-            top: 136px;
-        }
-        button {
-            height: 24px;
-            border-radius: 0;
-            min-width: 50px;
-            padding: 3px;
-            background-color: #FEFFFD;
-            font-family: 'early_gameboyregular', sans-serif;
-            font-size: 8px;
-            border: 3px solid #AFB5A8;
-            cursor: pointer;
-        }
-        .command[data-command="m"][data-color="gray"] {
-            background: black center center/32px 32px no-repeat url('img/gray-forward@2x.png');
-        }
-        .command[data-command="cw"][data-color="gray"] {
-            background: black center center/32px 32px no-repeat url('img/gray-turnLeft@2x.png');
-        }
-        .command[data-command="ccw"][data-color="gray"] {
-            background: black center center/32px 32px no-repeat url('img/gray-turnRight@2x.png');
-        }
-        .command[data-command="j"][data-color="gray"] {
-            background: black center center/32px 32px no-repeat url('img/gray-jump@2x.png');
-        }
-        .command[data-command="a"][data-color="gray"] {
-            background: black center center/32px 32px no-repeat url('img/gray-scream@2x.png');
-        }
-        .command[data-command="s1"][data-color="gray"] {
-            background: black center center/32px 32px no-repeat url('img/gray-S1@2x.png');
-        }
-        .command[data-command="s2"][data-color="gray"] {
-            background: black center center/32px 32px no-repeat url('img/gray-S2@2x.png');
-        }
-        .command[data-command="m"][data-color="blue"] {
-            background: black center center/32px 32px no-repeat url('img/blue-forward@2x.png');
-        }
-        .command[data-command="cw"][data-color="blue"] {
-            background: black center center/32px 32px no-repeat url('img/blue-turnLeft@2x.png');
-        }
-        .command[data-command="ccw"][data-color="blue"] {
-            background: black center center/32px 32px no-repeat url('img/blue-turnRight@2x.png');
-        }
-        .command[data-command="j"][data-color="blue"] {
-            background: black center center/32px 32px no-repeat url('img/blue-jump@2x.png');
-        }
-        .command[data-command="a"][data-color="blue"] {
-            background: black center center/32px 32px no-repeat url('img/blue-scream@2x.png');
-        }
-        .command[data-command="s1"][data-color="blue"] {
-            background: black center center/32px 32px no-repeat url('img/blue-S1@2x.png');
-        }
-        .command[data-command="s2"][data-color="blue"] {
-            background: black center center/32px 32px no-repeat url('img/blue-S2@2x.png');
-        }
-        
-        // Retina
-        @media only screen and (-webkit-min-device-pixel-ratio: 2),
-        only screen and ( min--moz-device-pixel-ratio: 2),
-        only screen and ( -o-min-device-pixel-ratio: 2/1),
-        only screen and ( min-device-pixel-ratio: 2),
-        only screen and ( min-resolution: 192dpi),
-        only screen and ( min-resolution: 2dppx) {
-            body {
-                background-color: red;
-            }
-            .command[data-command="m"][data-color="gray"] {
-                background: black center center/32px 32px no-repeat url('img/gray-forward@4x.png');
-            }
-            .command[data-command="cw"][data-color="gray"] {
-                background: black center center/32px 32px no-repeat url('img/gray-turnLeft@4x.png');
-            }
-            .command[data-command="ccw"][data-color="gray"] {
-                background: black center center/32px 32px no-repeat url('img/gray-turnRight@4x.png');
-            }
-            .command[data-command="j"][data-color="gray"] {
-                background: black center center/32px 32px no-repeat url('img/gray-jump@4x.png');
-            }
-            .command[data-command="a"][data-color="gray"] {
-                background: black center center/32px 32px no-repeat url('img/gray-scream@4x.png');
-            }
-            .command[data-command="s1"][data-color="gray"] {
-                background: black center center/32px 32px no-repeat url('img/gray-S1@4x.png');
-            }
-            .command[data-command="s2"][data-color="gray"] {
-                background: black center center/32px 32px no-repeat url('img/gray-S2@4x.png');
-            }
-            .command[data-command="m"][data-color="blue"] {
-                background: black center center/32px 32px no-repeat url('img/blue-forward@4x.png');
-            }
-            .command[data-command="cw"][data-color="blue"] {
-                background: black center center/32px 32px no-repeat url('img/blue-turnLeft@4x.png');
-            }
-            .command[data-command="ccw"][data-color="blue"] {
-                background: black center center/32px 32px no-repeat url('img/blue-turnRight@4x.png');
-            }
-            .command[data-command="j"][data-color="blue"] {
-                background: black center center/32px 32px no-repeat url('img/blue-jump@4x.png');
-            }
-            .command[data-command="a"][data-color="blue"] {
-                background: black center center/32px 32px no-repeat url('img/blue-scream@4x.png');
-            }
-            .command[data-command="s1"][data-color="blue"] {
-                background: black center center/32px 32px no-repeat url('img/blue-S1@4x.png');
-            }
-            .command[data-command="s2"][data-color="blue"] {
-                background: black center center/32px 32px no-repeat url('img/blue-S2@4x.png');
-            }
-        }
-    </style>
 </head>
 
 <body onload="ready();">
