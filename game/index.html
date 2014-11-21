@@ -885,7 +885,7 @@
                 document.getElementById('command-container').style.display = 'block';
                 document.getElementById('command-container').style.float = 'right';
                 $('div#command-container').width($(window).width() - $(GAME_CANVAS).width());
-                $('#commands').height($(GAME_CANVAS).height() - $('#chooser').height());
+                //$('#commands').height($(GAME_CANVAS).height() - $('#chooser').height());
 
 
                 //document.getElementById('game').style.position = 'fixed';
@@ -903,6 +903,10 @@
 
         function ready() {
         	GAME_CANVAS = document.getElementById('game');
+        	
+        	document.addEventListener("touchmove", function(event){
+        	    event.preventDefault();
+        	});
         
             // Fastclick
             setTimeout(loadFastClick, 500);
