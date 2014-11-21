@@ -48,7 +48,7 @@
         }
         div#command-container {
             box-sizing: border-box;
-            visibility: hidden;
+            display: none;
         }
         #chooser {
             position: fixed;
@@ -79,7 +79,7 @@
         }
         .handle {
         	height: 100%;
-        	width:  20px;
+        	width:  10px;
         	float: right;
         	border-right: 2px dotted #333;
         }
@@ -803,15 +803,15 @@
             // Setup game canvas
             
             if (LEVEL['sub1'] === false) {
-            	document.getElementById('sub1').style.visibility = 'hidden';
+            	document.getElementById('sub1').style.display = 'none';
             } else {
-            	document.getElementById('sub1').style.visibility = 'visible';
+            	document.getElementById('sub1').style.display = 'block';
             }
             
             if (LEVEL['sub2'] === false) {
-            	document.getElementById('sub2').style.visibility = 'hidden';
+            	document.getElementById('sub2').style.display = 'none';
             } else {
-            	document.getElementById('sub2').style.visibility = 'visible';
+            	document.getElementById('sub2').style.display = 'block';
             }
 
             if (GAME_CANVAS.getContext) {
@@ -857,8 +857,9 @@
                 GAME_CANVAS.style.width = '100%';
                 GAME_CANVAS.style.height = '';
 
-                document.getElementById('command-container').style.visibility = 'hidden';
-
+                document.getElementById('command-container').style.display = 'none';
+                
+				
                 /*document.getElementById('command-container').style.float = 'none';
                 document.getElementById('command-container').style.width = '100%';
                 
@@ -874,7 +875,7 @@
                 GAME_CANVAS.style.height = '100%';
                 GAME_CANVAS.style.width = '';
 
-                document.getElementById('command-container').style.visibility = 'visible';
+                document.getElementById('command-container').style.display = 'block';
                 document.getElementById('command-container').style.float = 'right';
                 $('div#command-container').width($(window).width() - $(GAME_CANVAS).width());
                 //$('div#command-container').height($(window).height() - Math.ceil($(GAME_CANVAS).height()/11));
