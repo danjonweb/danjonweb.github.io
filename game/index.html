@@ -950,6 +950,8 @@
             for (var i = 0; i < list.length; i++) {
             	list.item(i).onmousedown = commandMouseDownEvent;
             	list.item(i).onmouseup = commandMouseUpEvent;
+            	list.item(i).ontouchdown = commandMouseDownEvent;
+            	list.item(i).ontouchup = commandMouseUpEvent;
             }
 
             // Command blank
