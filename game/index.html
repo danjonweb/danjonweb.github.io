@@ -32,21 +32,25 @@
             display: block;
         }
         .section-title {
-            font-size: 8px;
+            font-size: 8pt;
             color: white;
-            background: #333;
+            background: #555;
             text-align: center;
             padding: 4px 0 4px 0;
             box-sizing: border-box;
         }
+        .box {
+        	width: 25%;
+        	height: 45px;
+        	line-height: 45px;
+        	border: 1px solid #555;
+        	box-sizing: border-box;
+        	float: left;
+        	cursor: pointer;
+        	background-color: black;
+        }
         .command {
-            width: 25%;
-            height: 44px;
-            border: 1px solid #333;
-            box-sizing: border-box;
-            float: left;
-            cursor: pointer;
-            background-color: black;
+            
         }
         div#command-container {
             box-sizing: border-box;
@@ -58,12 +62,20 @@
             width: inherit;
             background-color: black;
             z-index: 1;
-            border-bottom: 4px solid #333;
+            border-bottom: 4px solid #555;
+        }
+        #chooser .box {
+        	width: calc(25% - 2px);
+        	margin: 1px;
+        	border: none;
         }
         #chooser .command {
-        	border: 2px dotted #333;
-        	margin: 1px;
-        	width: calc(25% - 2px);
+        	border: 2px dotted #555;
+        }
+        #edit {
+        	color: white;
+        	font-size: 8pt;
+        	text-align: center;
         }
         #commands {
             position: relative;
@@ -81,10 +93,8 @@
             cursor: pointer;
         }
         .handle {
-        	height: 100%;
-        	width:  10px;
-        	float: right;
-        	border-right: 2px dotted #333;
+        	height: 0;
+        	width: 0;
         }
         
         .command[data-command="m"][data-color="gray"] {
@@ -885,8 +895,6 @@
                 $(GAME_CANVAS).height($('body').height());
                 GAME_CANVAS.style.width = '';
                 
-                console.log('resizing');
-
                 document.getElementById('command-container').style.display = 'block';
                 document.getElementById('command-container').style.float = 'right';
                 $('div#command-container').width($(window).width() - $(GAME_CANVAS).width());
@@ -908,13 +916,6 @@
 
         function ready() {
         	GAME_CANVAS = document.getElementById('game');
-        	
-        	$(document).on("scrollstart",function(){
-        		console.log('start');
-        	});
-        	$(document).on("scrollstop",function(){
-        		console.log("stopped");
-        	});
         	
             // Fastclick
             setTimeout(loadFastClick, 500);
@@ -949,6 +950,35 @@
             	handle: '.handle',
             	zIndex: 100
             });
+            
+            document.getElementById('edit').onclick = function() {
+            	if (this.dataset.state === 'off') {
+            		// Turn on editing
+            		this.style.backgroundColor = '#555';
+            		this.dataset.state = 'on';
+            		var list = document.querySelectorAll('.handle');
+            		for (var i = 0; i < list.length; i++) {
+            			list.item(i).style.width = '100%';
+            			list.item(i).style.height = '100%';
+            			
+            			//list.item(i).parentNode.style.margin = '1px';
+            			//list.item(i).parentNode.style.width = 'calc(25% - 2px)';
+            			//list.item(i).parentNode.style.border = '2px dotted #333';
+            			
+            		}
+            	} else if (this.dataset.state === 'on') {
+            		// Turn off editing
+            		this.style.backgroundColor = 'black';
+            		this.dataset.state = 'off';
+            		var list = document.querySelectorAll('.handle');
+            		for (var i = 0; i < list.length; i++) {
+            			list.item(i).style.width = '0';
+            			list.item(i).style.height = '0';
+            			//list.item(i).style.border = 'none';
+            			//list.item(i).parentNode.style.border = '1px solid #333';
+            		}
+            	}
+            }
 
             // Window resize
             $(window).resize(function() {
@@ -1056,68 +1086,69 @@
         <div id="command-container">
             <div class="section" id="chooser">
                 <div class="section-title">Commands</div>
-                <div class="command" data-command="m" data-color="gray"></div>
-                <div class="command" data-command="cw" data-color="gray"></div>
-                <div class="command" data-command="ccw" data-color="gray"></div>
-                <div class="command" data-command="j" data-color="gray"></div>
-                <div class="command" data-command="a" data-color="gray"></div>
-                <div class="command" data-command="s1" data-color="gray"></div>
-                <div class="command" data-command="s2" data-color="gray"></div>
+                <div class="box command" data-command="m" data-color="gray"></div>
+                <div class="box command" data-command="cw" data-color="gray"></div>
+                <div class="box command" data-command="ccw" data-color="gray"></div>
+                <div class="box command" data-command="j" data-color="gray"></div>
+                <div class="box command" data-command="a" data-color="gray"></div>
+                <div class="box command" data-command="s1" data-color="gray"></div>
+                <div class="box command" data-command="s2" data-color="gray"></div>
+                <div class="box" id="edit" data-state='off'>Edit</div>
                 <div style="clear: both;"></div>
             </div>
 
             <div id="commands">
                 <div class="section" id="main">
                     <div class="section-title">Main</div>
-                    <div class="command" data-part="main" data-index="0"><div class="handle"></div></div>
-                    <div class="command" data-part="main" data-index="1"><div class="handle"></div></div>
-                    <div class="command" data-part="main" data-index="2"><div class="handle"></div></div>
-                    <div class="command" data-part="main" data-index="3"><div class="handle"></div></div>
+                    <div class="box command" data-part="main" data-index="0"><div class="handle"></div></div>
+                    <div class="box command" data-part="main" data-index="1"><div class="handle"></div></div>
+                    <div class="box command" data-part="main" data-index="2"><div class="handle"></div></div>
+                    <div class="box command" data-part="main" data-index="3"><div class="handle"></div></div>
 
-                    <div class="command" data-part="main" data-index="4"><div class="handle"></div></div>
-                    <div class="command" data-part="main" data-index="5"><div class="handle"></div></div>
-                    <div class="command" data-part="main" data-index="6"><div class="handle"></div></div>
-                    <div class="command" data-part="main" data-index="7"><div class="handle"></div></div>
+                    <div class="box command" data-part="main" data-index="4"><div class="handle"></div></div>
+                    <div class="box command" data-part="main" data-index="5"><div class="handle"></div></div>
+                    <div class="box command" data-part="main" data-index="6"><div class="handle"></div></div>
+                    <div class="box command" data-part="main" data-index="7"><div class="handle"></div></div>
 
-                    <div class="command" data-part="main" data-index="8"><div class="handle"></div></div>
-                    <div class="command" data-part="main" data-index="9"><div class="handle"></div></div>
-                    <div class="command" data-part="main" data-index="10"><div class="handle"></div></div>
-                    <div class="command" data-part="main" data-index="11"><div class="handle"></div></div>
+                    <div class="box command" data-part="main" data-index="8"><div class="handle"></div></div>
+                    <div class="box command" data-part="main" data-index="9"><div class="handle"></div></div>
+                    <div class="box command" data-part="main" data-index="10"><div class="handle"></div></div>
+                    <div class="box command" data-part="main" data-index="11"><div class="handle"></div></div>
 
-                    <div class="command" data-part="main" data-index="12"><div class="handle"></div></div>
-                    <div class="command" data-part="main" data-index="13"><div class="handle"></div></div>
-                    <div class="command" data-part="main" data-index="14"><div class="handle"></div></div>
-                    <div class="command" data-part="main" data-index="15"><div class="handle"></div></div>
+                    <div class="box command" data-part="main" data-index="12"><div class="handle"></div></div>
+                    <div class="box command" data-part="main" data-index="13"><div class="handle"></div></div>
+                    <div class="box command" data-part="main" data-index="14"><div class="handle"></div></div>
+                    <div class="box command" data-part="main" data-index="15"><div class="handle"></div></div>
 
                     <div style="clear: both;"></div>
                 </div>
 
                 <div class="section" id="sub1">
                     <div class="section-title">Sub1</div>
-                    <div class="command" data-part="sub1" data-index="0"><div class="handle"></div></div>
-                    <div class="command" data-part="sub1" data-index="1"><div class="handle"></div></div>
-                    <div class="command" data-part="sub1" data-index="2"><div class="handle"></div></div>
-                    <div class="command" data-part="sub1" data-index="3"><div class="handle"></div></div>
+                    <div class="box command" data-part="sub1" data-index="0"><div class="handle"></div></div>
+                    <div class="box command" data-part="sub1" data-index="1"><div class="handle"></div></div>
+                    <div class="box command" data-part="sub1" data-index="2"><div class="handle"></div></div>
+                    <div class="box command" data-part="sub1" data-index="3"><div class="handle"></div></div>
 
-                    <div class="command" data-part="sub1" data-index="4"><div class="handle"></div></div>
-                    <div class="command" data-part="sub1" data-index="5"><div class="handle"></div></div>
-                    <div class="command" data-part="sub1" data-index="6"><div class="handle"></div></div>
-                    <div class="command" data-part="sub1" data-index="7"><div class="handle"></div></div>
+                    <div class="box command" data-part="sub1" data-index="4"><div class="handle"></div></div>
+                    <div class="box command" data-part="sub1" data-index="5"><div class="handle"></div></div>
+                    <div class="box command" data-part="sub1" data-index="6"><div class="handle"></div></div>
+                    <div class="box command" data-part="sub1" data-index="7"><div class="handle"></div></div>
 
                     <div style="clear: both;"></div>
                 </div>
 
                 <div class="section" id="sub2">
                     <div class="section-title">Sub2</div>
-                    <div class="command" data-part="sub2" data-index="0"><div class="handle"></div></div>
-                    <div class="command" data-part="sub2" data-index="1"><div class="handle"></div></div>
-                    <div class="command" data-part="sub2" data-index="2"><div class="handle"></div></div>
-                    <div class="command" data-part="sub2" data-index="3"><div class="handle"></div></div>
+                    <div class="box command" data-part="sub2" data-index="0"><div class="handle"></div></div>
+                    <div class="box command" data-part="sub2" data-index="1"><div class="handle"></div></div>
+                    <div class="box command" data-part="sub2" data-index="2"><div class="handle"></div></div>
+                    <div class="box command" data-part="sub2" data-index="3"><div class="handle"></div></div>
 
-                    <div class="command" data-part="sub2" data-index="4"><div class="handle"></div></div>
-                    <div class="command" data-part="sub2" data-index="5"><div class="handle"></div></div>
-                    <div class="command" data-part="sub2" data-index="6"><div class="handle"></div></div>
-                    <div class="command" data-part="sub2" data-index="7"><div class="handle"></div></div>
+                    <div class="box command" data-part="sub2" data-index="4"><div class="handle"></div></div>
+                    <div class="box command" data-part="sub2" data-index="5"><div class="handle"></div></div>
+                    <div class="box command" data-part="sub2" data-index="6"><div class="handle"></div></div>
+                    <div class="box command" data-part="sub2" data-index="7"><div class="handle"></div></div>
 
                     <div style="clear: both;"></div>
                 </div>
