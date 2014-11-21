@@ -174,9 +174,9 @@
         }
 
         var ENTITIES = [];
-        var LEVEL_INDEX = 1;
-        var LEVELS = [{"tileset":"tileset0", "max_commands":"10", "layer0":[100,110,86,111,100,97,100,100,100,100,100,98,54,99,110,111,100,97,100,100,86,87,0,85,87,85,86,86,86,86,0,0,39,27,27,43,0,0,36,37,88,0,0,0,102,35,0,0,45,46,0,0,0,101,0,35,0,44,0,0,0,0,41,27,27,28,0,0,44,0,88,0,34,0,102,0,0,0,0,0,0,76,34,0,89,0,0,0,0,0,0,0,26,27,27,63,0,0,0,0], "layer1":[-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,1002,-1,-1,18,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,1,-1,-1,18,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,1,-1,-1,1005,-1,-1,-1,-1], "layer2":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1,1,1,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,1,1,1,0,0,0,0]},
-        {"tileset":"tileset0", "max_commands":"12", "layer0":[76,92,95,94,0,35,0,101,88,101,107,78,93,80,102,34,101,0,0,0,109,106,94,41,42,25,42,40,27,27,79,79,80,35,44,34,0,34,105,106,27,27,27,32,27,33,89,34,78,79,106,106,106,107,103,26,27,25,42,42,79,93,108,94,0,0,0,63,0,77,88,92,95,80,112,83,113,88,112,83,88,78,80,91,99,97,82,83,84,100,0,101,102,0,99,100,100,100,100,81], "layer1":[-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,18,-1,-1,-1,1004,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,18,-1,1,-1,-1,-1,-1,-1,-1,-1,-1,-1,18,-1,1,-1,-1,-1,-1,-1,-1,-1,-1,-1,1005,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1], "layer2":[0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,1,1,1,1,1,1,0,0,0,1,0,1,0,1,0,0,1,1,1,1,1,1,0,1,0,0,0,0,0,0,0,1,1,1,1,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}
+        var LEVEL_INDEX = 0;
+        var LEVELS = [{"tileset":"tileset0", "max_commands":10, "sub1":true, "sub2":false, "layer0":[100,110,86,111,100,97,100,100,100,100,100,98,54,99,110,111,100,97,100,100,86,87,0,85,87,85,86,86,86,86,0,0,39,27,27,43,0,0,36,37,88,0,0,0,102,35,0,0,45,46,0,0,0,101,0,35,0,44,0,0,0,0,41,27,27,28,0,0,44,0,88,0,34,0,102,0,0,0,0,0,0,76,34,0,89,0,0,0,0,0,0,0,26,27,27,63,0,0,0,0], "layer1":[-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,1002,-1,-1,18,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,1,-1,-1,18,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,1,-1,-1,1005,-1,-1,-1,-1], "layer2":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1,1,1,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,1,1,1,0,0,0,0]},
+        {"tileset":"tileset0", "max_commands":12, "sub1":true, "sub2":false, "layer0":[76,92,95,94,0,35,0,101,88,101,107,78,93,80,102,34,101,0,0,0,109,106,94,41,42,25,42,40,27,27,79,79,80,35,44,34,0,34,105,106,27,27,27,32,27,33,89,34,78,79,106,106,106,107,103,26,27,25,42,42,79,93,108,94,0,0,0,63,0,77,88,92,95,80,112,83,113,88,112,83,88,78,80,91,99,97,82,83,84,100,0,101,102,0,99,100,100,100,100,81], "layer1":[-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,18,-1,-1,-1,1004,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,18,-1,1,-1,-1,-1,-1,-1,-1,-1,-1,-1,18,-1,1,-1,-1,-1,-1,-1,-1,-1,-1,-1,1005,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1], "layer2":[0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,1,1,1,1,1,1,0,0,0,1,0,1,0,1,0,0,1,1,1,1,1,1,0,1,0,0,0,0,0,0,0,1,1,1,1,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}
         
         ];
         
@@ -615,7 +615,7 @@
 
             // Draw items
             for (var i = 0; i < COLLECTED_ITEMS.length; i++) {
-                var item = parseInt(LEVEL['layer1'][COLLECTED_ITEMS[i]]);
+                var item = LEVEL['layer1'][COLLECTED_ITEMS[i]];
                 GAME_CONTEXT.drawImage(IMAGES['items'], item * CELL_WIDTH * pr, 0, CELL_WIDTH * pr, CELL_HEIGHT * pr, i * CELL_WIDTH, CELL_HEIGHT * MAP_HEIGHT, CELL_WIDTH, CELL_HEIGHT);
             }
 
@@ -669,7 +669,7 @@
                     }
                 }
                 if (allItemsCollected) {
-                	if (numberOfCommands <= parseInt(LEVEL['max_commands'])) {
+                	if (numberOfCommands <= LEVEL['max_commands']) {
 	                	IS_EXE = false;
 	                	clearInterval(GAME_TIMER);
 	                	clearTimeout(EXE_TIMER);
@@ -789,7 +789,18 @@
 
         function start() {
             // Setup game canvas
-            GAME_CANVAS = document.getElementById('game');
+            
+            if (LEVEL['sub1'] === false) {
+            	document.getElementById('sub1').style.visibility = 'hidden';
+            } else {
+            	document.getElementById('sub1').style.visibility = 'visible';
+            }
+            
+            if (LEVEL['sub2'] === false) {
+            	document.getElementById('sub2').style.visibility = 'hidden';
+            } else {
+            	document.getElementById('sub2').style.visibility = 'visible';
+            }
 
             if (GAME_CANVAS.getContext) {
                 GAME_CONTEXT = GAME_CANVAS.getContext('2d');
@@ -871,6 +882,7 @@
         }
 
         function ready() {
+        	GAME_CANVAS = document.getElementById('game');
         
             // Fastclick
             setTimeout(loadFastClick, 500);
@@ -923,13 +935,29 @@
                     IMAGES[key].src = './img/' + path;
                 }
             }
+            
+            // Long press
+            
+            var commandMouseDownEvent = function() {
+            	pressTimer = setTimeout(function() {
+            		console.log('long press');
+            	}, 1000);
+            }
+            var commandMouseUpEvent = function() {
+            	clearTimeout(pressTimer);
+            }
+            var list = document.querySelectorAll('#commands .command');
+            for (var i = 0; i < list.length; i++) {
+            	list.item(i).onmousedown = commandMouseDownEvent;
+            	list.item(i).onmouseup = commandMouseUpEvent;
+            }
 
             // Command blank
             var commandEvent = function() {
                 this.dataset.command = '';
                 this.dataset.color = '';
             }
-            var list = document.querySelectorAll('#commands .command');
+            list = document.querySelectorAll('#commands .command');
             for (var i = 0; i < list.length; i++) {
                 list.item(i).onclick = commandEvent;
                 //list.item(i).touchstart = commandEvent;
@@ -951,7 +979,6 @@
             list = document.querySelectorAll('#chooser .command');
             for (var i = 0; i < list.length; i++) {
                 list.item(i).onclick = changeCommandColor;
-                //list.item(i).touchstart = commandEvent;
             }
             
             // Click on canvas
@@ -989,8 +1016,8 @@
 	            	EXE_TIMER = setTimeout(executeNextCommand, COMMAND_SPEED / 2);
 	            });
 	        }
-	        document.getElementById('game').addEventListener('mouseup', canvasMouseUpEvent);
-	        document.getElementById('game').addEventListener('touchstart', canvasMouseUpEvent);
+	        GAME_CANVAS.addEventListener('mouseup', canvasMouseUpEvent);
+	        GAME_CANVAS.addEventListener('touchstart', canvasMouseUpEvent);
 
         }
     </script>
