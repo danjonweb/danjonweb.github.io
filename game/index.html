@@ -878,7 +878,7 @@
                 //document.getElementById('game').style.position = 'fix';*/
             } else {
                 // Landscape
-                GAME_CANVAS.style.height = '100%';
+                $(GAME_CANVAS).height($('body').height());
                 GAME_CANVAS.style.width = '';
                 
                 console.log('resizing');
