@@ -937,22 +937,16 @@
             }
             
             // Long press
-            
-            var commandMouseDownEvent = function() {
-            	pressTimer = setTimeout(function() {
-            		console.log('long press');
-            	}, 1000);
-            }
-            var commandMouseUpEvent = function() {
-            	clearTimeout(pressTimer);
-            }
-            var list = document.querySelectorAll('#commands .command');
-            for (var i = 0; i < list.length; i++) {
-            	list.item(i).onmousedown = commandMouseDownEvent;
-            	list.item(i).onmouseup = commandMouseUpEvent;
-            	list.item(i).ontouchdown = commandMouseDownEvent;
-            	list.item(i).ontouchup = commandMouseUpEvent;
-            }
+            $('#commands .command').on('mousedown touchstart', function() {
+                var timeout = window.setTimeout(function() {
+                	console.log('longpress');
+                }, 1000);
+                $(this).on('mouseup mousemove touchup touchmove', function() {
+                    window.clearTimeout(timeout);
+                    return false;
+                });
+                return false;
+            });
 
             // Command blank
             var commandEvent = function() {
