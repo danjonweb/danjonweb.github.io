@@ -10,11 +10,13 @@
     <style>
     	html {
     		background-color: black;
+    		height: 100%;
     	}
         body {
             font-family: 'early_gameboyregular', sans-serif;
             padding: 0;
             margin: 0;
+            height: 100%;
             background-color: black;
             -webkit-user-select: none;
             -moz-user-select: none;
@@ -47,8 +49,10 @@
             background-color: black;
         }
         div#command-container {
+        	overflow: scroll;
             box-sizing: border-box;
             display: none;
+            height: 100%;
         }
         #chooser {
             position: fixed;
@@ -64,7 +68,7 @@
         }
         #commands {
             position: relative;
-            top: 111px;
+            top: 114px;
         }
         button {
             height: 24px;
@@ -610,6 +614,9 @@
         function redraw() {
             // clear the canvas for this loop's animation
             GAME_CONTEXT.clearRect(0, 0, GAME_CANVAS.width, GAME_CANVAS.height);
+            
+            GAME_CONTEXT.fillStyle = '#000';
+            GAME_CONTEXT.fillRect(0, 0, GAME_CANVAS.width, GAME_CANVAS.height);
 
             // Draw map
             for (var i = 0; i < LEVEL['layer0'].length; i++) {
@@ -878,7 +885,7 @@
                 document.getElementById('command-container').style.display = 'block';
                 document.getElementById('command-container').style.float = 'right';
                 $('div#command-container').width($(window).width() - $(GAME_CANVAS).width());
-                //$('div#command-container').height($(window).height() - Math.ceil($(GAME_CANVAS).height()/11));
+                $('#commands').height($(GAME_CANVAS).height() - $('#chooser').height());
 
 
                 //document.getElementById('game').style.position = 'fixed';
