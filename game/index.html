@@ -32,15 +32,14 @@
         .section-title {
             font-size: 8px;
             color: white;
-            background: black;
+            background: #333;
             text-align: center;
-            border: 1px solid #FEFFFD;
-            padding: 10px 0 10px 0;
+            padding: 4px 0 4px 0;
             box-sizing: border-box;
         }
         .command {
             width: 25%;
-            height: 50px;
+            height: 44px;
             border: 1px solid #333;
             box-sizing: border-box;
             float: left;
@@ -58,9 +57,14 @@
             z-index: 1;
             border-bottom: 4px solid #333;
         }
+        #chooser .command {
+        	border: 2px dotted #333;
+        	margin: 1px;
+        	width: calc(25% - 2px);
+        }
         #commands {
             position: relative;
-            top: 136px;
+            top: 111px;
         }
         button {
             height: 24px;
@@ -76,7 +80,8 @@
         .handle {
         	height: 100%;
         	width:  20px;
-        	background-color: #333;
+        	float: right;
+        	border-right: 2px dotted #333;
         }
         
         .command[data-command="m"][data-color="gray"] {
