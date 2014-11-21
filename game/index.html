@@ -903,15 +903,13 @@
         function ready() {
         	GAME_CANVAS = document.getElementById('game');
         	
-        	document.addEventListener("touchmove", function(event){
-        	    event.preventDefault();
+        	$(document).on("scrollstart",function(){
+        		console.log('start');
+        	});
+        	$(document).on("scrollstop",function(){
+        		console.log("stopped");
         	});
         	
-        	var scrollingDiv = document.getElementById('commands');
-        	scrollingDiv.addEventListener('touchmove', function(event){
-        	    event.stopPropagation();
-        	});
-        
             // Fastclick
             setTimeout(loadFastClick, 500);
 
