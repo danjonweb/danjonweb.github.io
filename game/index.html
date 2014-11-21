@@ -907,6 +907,11 @@
         	document.addEventListener("touchmove", function(event){
         	    event.preventDefault();
         	});
+        	
+        	var scrollingDiv = document.getElementById('commands');
+        	scrollingDiv.addEventListener('touchmove', function(event){
+        	    event.stopPropagation();
+        	});
         
             // Fastclick
             setTimeout(loadFastClick, 500);
