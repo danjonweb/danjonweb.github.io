@@ -12,12 +12,15 @@
     		background-color: black;
     		height: 100%;
     	}
+    	html, body {
+    	    max-width: 100%;
+    	    overflow-x: hidden;
+    	}
         body {
             font-family: 'early_gameboyregular', sans-serif;
             padding: 0;
             margin: 0;
             height: 100%;
-            background-color: black;
             -webkit-user-select: none;
             -moz-user-select: none;
         }
@@ -48,6 +51,7 @@
         	float: left;
         	cursor: pointer;
         	background-color: black;
+        	outline: 1px solid transparent;
         }
         .command {
             
@@ -62,15 +66,15 @@
             width: inherit;
             background-color: black;
             z-index: 1;
-            border-bottom: 4px solid #555;
+            border-bottom: 4px solid black;
         }
         #chooser .box {
-        	width: calc(25% - 2px);
-        	margin: 1px;
+        	width: calc(25% - 4px);
+        	margin: 2px;
         	border: none;
         }
         #chooser .command {
-        	border: 2px dotted #555;
+        	border: 1px dashed #555;
         }
         #edit {
         	color: white;
@@ -79,7 +83,7 @@
         }
         #commands {
             position: relative;
-            top: 114px;
+            top: 124px;
         }
         button {
             height: 24px;
@@ -95,95 +99,199 @@
         .handle {
         	height: 0;
         	width: 0;
+        	z-index: 100;
+        	position: absolute;
         }
         
-        .command[data-command="m"][data-color="gray"] {
-            background: black center center/32px 32px no-repeat url('img/gray-forward@2x.png');
+        .command:before {
+        	content: "";
+        	width: 32px;
+        	height: 32px;
+        	position: absolute;
+        	margin: auto;
+        	left: 0;
+        	right: 0;
+        	top: 0;
+        	bottom: 0;
+        	z-index: 1;
         }
-        .command[data-command="cw"][data-color="gray"] {
-            background: black center center/32px 32px no-repeat url('img/gray-turnLeft@2x.png');
+        .command[data-command="m"][data-color="gray"]:before {
+        	background: 0px 0 url('img/gray-commands-32.png');
         }
-        .command[data-command="ccw"][data-color="gray"] {
-            background: black center center/32px 32px no-repeat url('img/gray-turnRight@2x.png');
+        .command[data-command="cw"][data-color="gray"]:before {
+        	background: -64px 0 url('img/gray-commands-32.png');
         }
-        .command[data-command="j"][data-color="gray"] {
-            background: black center center/32px 32px no-repeat url('img/gray-jump@2x.png');
+        .command[data-command="ccw"][data-color="gray"]:before {
+        	background: -96px 0 url('img/gray-commands-32.png');
         }
-        .command[data-command="a"][data-color="gray"] {
-            background: black center center/32px 32px no-repeat url('img/gray-scream@2x.png');
+        .command[data-command="j"][data-color="gray"]:before {
+        	background: -128px 0 url('img/gray-commands-32.png');
         }
-        .command[data-command="s1"][data-color="gray"] {
-            background: black center center/32px 32px no-repeat url('img/gray-S1@2x.png');
+        .command[data-command="a"][data-color="gray"]:before {
+        	background: -32px 0 url('img/gray-commands-32.png');
         }
-        .command[data-command="s2"][data-color="gray"] {
-            background: black center center/32px 32px no-repeat url('img/gray-S2@2x.png');
+        .command[data-command="s1"][data-color="gray"]:before {
+        	background: -160px 0 url('img/gray-commands-32.png');
         }
-        .command[data-command="m"][data-color="blue"] {
-            background: black center center/32px 32px no-repeat url('img/blue-forward@2x.png');
+        .command[data-command="s2"][data-color="gray"]:before {
+        	background: -192px 0 url('img/gray-commands-32.png');
         }
-        .command[data-command="cw"][data-color="blue"] {
-            background: black center center/32px 32px no-repeat url('img/blue-turnLeft@2x.png');
+        
+        .command[data-command="m"][data-color="blue"]:before {
+        	background: 0px 0 url('img/blue-commands-32.png');
         }
-        .command[data-command="ccw"][data-color="blue"] {
-            background: black center center/32px 32px no-repeat url('img/blue-turnRight@2x.png');
+        .command[data-command="cw"][data-color="blue"]:before {
+        	background: -64px 0 url('img/blue-commands-32.png');
         }
-        .command[data-command="j"][data-color="blue"] {
-            background: black center center/32px 32px no-repeat url('img/blue-jump@2x.png');
+        .command[data-command="ccw"][data-color="blue"]:before {
+        	background: -96px 0 url('img/blue-commands-32.png');
         }
-        .command[data-command="a"][data-color="blue"] {
-            background: black center center/32px 32px no-repeat url('img/blue-scream@2x.png');
+        .command[data-command="j"][data-color="blue"]:before {
+        	background: -128px 0 url('img/blue-commands-32.png');
         }
-        .command[data-command="s1"][data-color="blue"] {
-            background: black center center/32px 32px no-repeat url('img/blue-S1@2x.png');
+        .command[data-command="a"][data-color="blue"]:before {
+        	background: -32px 0 url('img/blue-commands-32.png');
         }
-        .command[data-command="s2"][data-color="blue"] {
-            background: black center center/32px 32px no-repeat url('img/blue-S2@2x.png');
+        .command[data-command="s1"][data-color="blue"]:before {
+        	background: -160px 0 url('img/blue-commands-32.png');
         }
+        .command[data-command="s2"][data-color="blue"]:before {
+        	background: -192px 0 url('img/blue-commands-32.png');
+        }
+        
+        .command[data-command="m"][data-color="green"]:before {
+        	background: 0px 0 url('img/green-commands-32.png');
+        }
+        .command[data-command="cw"][data-color="green"]:before {
+        	background: -64px 0 url('img/green-commands-32.png');
+        }
+        .command[data-command="ccw"][data-color="green"]:before {
+        	background: -96px 0 url('img/green-commands-32.png');
+        }
+        .command[data-command="j"][data-color="green"]:before {
+        	background: -128px 0 url('img/green-commands-32.png');
+        }
+        .command[data-command="a"][data-color="green"]:before {
+        	background: -32px 0 url('img/green-commands-32.png');
+        }
+        .command[data-command="s1"][data-color="green"]:before {
+        	background: -160px 0 url('img/green-commands-32.png');
+        }
+        .command[data-command="s2"][data-color="green"]:before {
+        	background: -192px 0 url('img/green-commands-32.png');
+        }
+        
+        .command[data-command="m"][data-color="red"]:before {
+        	background: 0px 0 url('img/red-commands-32.png');
+        }
+        .command[data-command="cw"][data-color="red"]:before {
+        	background: -64px 0 url('img/red-commands-32.png');
+        }
+        .command[data-command="ccw"][data-color="red"]:before {
+        	background: -96px 0 url('img/red-commands-32.png');
+        }
+        .command[data-command="j"][data-color="red"]:before {
+        	background: -128px 0 url('img/red-commands-32.png');
+        }
+        .command[data-command="a"][data-color="red"]:before {
+        	background: -32px 0 url('img/red-commands-32.png');
+        }
+        .command[data-command="s1"][data-color="red"]:before {
+        	background: -160px 0 url('img/red-commands-32.png');
+        }
+        .command[data-command="s2"][data-color="red"]:before {
+        	background: -192px 0 url('img/red-commands-32.png');
+        }
+        
         /* Retina */
-        
         @media only screen and (-webkit-min-device-pixel-ratio: 2),
         only screen and (min-resolution: 192dpi) {
-            .command[data-command="m"][data-color="gray"] {
-                background: black center center/32px 32px no-repeat url('img/gray-forward@4x.png');
+            .command[data-command="m"][data-color="gray"]:before {
+            	background: 0px 0 url('img/gray-commands-64.png');
             }
-            .command[data-command="cw"][data-color="gray"] {
-                background: black center center/32px 32px no-repeat url('img/gray-turnLeft@4x.png');
+            .command[data-command="cw"][data-color="gray"]:before {
+            	background: -64px 0 url('img/gray-commands-64.png');
             }
-            .command[data-command="ccw"][data-color="gray"] {
-                background: black center center/32px 32px no-repeat url('img/gray-turnRight@4x.png');
+            .command[data-command="ccw"][data-color="gray"]:before {
+            	background: -96px 0 url('img/gray-commands-64.png');
             }
-            .command[data-command="j"][data-color="gray"] {
-                background: black center center/32px 32px no-repeat url('img/gray-jump@4x.png');
+            .command[data-command="j"][data-color="gray"]:before {
+            	background: -128px 0 url('img/gray-commands-64.png');
             }
-            .command[data-command="a"][data-color="gray"] {
-                background: black center center/32px 32px no-repeat url('img/gray-scream@4x.png');
+            .command[data-command="a"][data-color="gray"]:before {
+            	background: -32px 0 url('img/gray-commands-64.png');
             }
-            .command[data-command="s1"][data-color="gray"] {
-                background: black center center/32px 32px no-repeat url('img/gray-S1@4x.png');
+            .command[data-command="s1"][data-color="gray"]:before {
+            	background: -160px 0 url('img/gray-commands-64.png');
             }
-            .command[data-command="s2"][data-color="gray"] {
-                background: black center center/32px 32px no-repeat url('img/gray-S2@4x.png');
+            .command[data-command="s2"][data-color="gray"]:before {
+            	background: -192px 0 url('img/gray-commands-64.png');
             }
-            .command[data-command="m"][data-color="blue"] {
-                background: black center center/32px 32px no-repeat url('img/blue-forward@4x.png');
+            
+            .command[data-command="m"][data-color="blue"]:before {
+            	background: 0px 0 url('img/blue-commands-64.png');
             }
-            .command[data-command="cw"][data-color="blue"] {
-                background: black center center/32px 32px no-repeat url('img/blue-turnLeft@4x.png');
+            .command[data-command="cw"][data-color="blue"]:before {
+            	background: -64px 0 url('img/blue-commands-64.png');
             }
-            .command[data-command="ccw"][data-color="blue"] {
-                background: black center center/32px 32px no-repeat url('img/blue-turnRight@4x.png');
+            .command[data-command="ccw"][data-color="blue"]:before {
+            	background: -96px 0 url('img/blue-commands-64.png');
             }
-            .command[data-command="j"][data-color="blue"] {
-                background: black center center/32px 32px no-repeat url('img/blue-jump@4x.png');
+            .command[data-command="j"][data-color="blue"]:before {
+            	background: -128px 0 url('img/blue-commands-64.png');
             }
-            .command[data-command="a"][data-color="blue"] {
-                background: black center center/32px 32px no-repeat url('img/blue-scream@4x.png');
+            .command[data-command="a"][data-color="blue"]:before {
+            	background: -32px 0 url('img/blue-commands-64.png');
             }
-            .command[data-command="s1"][data-color="blue"] {
-                background: black center center/32px 32px no-repeat url('img/blue-S1@4x.png');
+            .command[data-command="s1"][data-color="blue"]:before {
+            	background: -160px 0 url('img/blue-commands-64.png');
             }
-            .command[data-command="s2"][data-color="blue"] {
-                background: black center center/32px 32px no-repeat url('img/blue-S2@4x.png');
+            .command[data-command="s2"][data-color="blue"]:before {
+            	background: -192px 0 url('img/blue-commands-64.png');
+            }
+            
+            .command[data-command="m"][data-color="green"]:before {
+            	background: 0px 0 url('img/green-commands-64.png');
+            }
+            .command[data-command="cw"][data-color="green"]:before {
+            	background: -64px 0 url('img/green-commands-64.png');
+            }
+            .command[data-command="ccw"][data-color="green"]:before {
+            	background: -96px 0 url('img/green-commands-64.png');
+            }
+            .command[data-command="j"][data-color="green"]:before {
+            	background: -128px 0 url('img/green-commands-64.png');
+            }
+            .command[data-command="a"][data-color="green"]:before {
+            	background: -32px 0 url('img/green-commands-64.png');
+            }
+            .command[data-command="s1"][data-color="green"]:before {
+            	background: -160px 0 url('img/green-commands-64.png');
+            }
+            .command[data-command="s2"][data-color="green"]:before {
+            	background: -192px 0 url('img/green-commands-64.png');
+            }
+            
+            .command[data-command="m"][data-color="red"]:before {
+            	background: 0px 0 url('img/red-commands-64.png');
+            }
+            .command[data-command="cw"][data-color="red"]:before {
+            	background: -64px 0 url('img/red-commands-64.png');
+            }
+            .command[data-command="ccw"][data-color="red"]:before {
+            	background: -96px 0 url('img/red-commands-64.png');
+            }
+            .command[data-command="j"][data-color="red"]:before {
+            	background: -128px 0 url('img/red-commands-64.png');
+            }
+            .command[data-command="a"][data-color="red"]:before {
+            	background: -32px 0 url('img/red-commands-64.png');
+            }
+            .command[data-command="s1"][data-color="red"]:before {
+            	background: -160px 0 url('img/red-commands-64.png');
+            }
+            .command[data-command="s2"][data-color="red"]:before {
+            	background: -192px 0 url('img/red-commands-64.png');
             }
         }
 
@@ -963,7 +1071,7 @@
             			
             			//list.item(i).parentNode.style.margin = '1px';
             			//list.item(i).parentNode.style.width = 'calc(25% - 2px)';
-            			//list.item(i).parentNode.style.border = '2px dotted #333';
+            			list.item(i).parentNode.style.border = '1px dashed #555';
             			
             		}
             	} else if (this.dataset.state === 'on') {
@@ -975,7 +1083,7 @@
             			list.item(i).style.width = '0';
             			list.item(i).style.height = '0';
             			//list.item(i).style.border = 'none';
-            			//list.item(i).parentNode.style.border = '1px solid #333';
+            			list.item(i).parentNode.style.border = '1px solid #555';
             		}
             	}
             }
@@ -1024,7 +1132,11 @@
                 if (this.dataset.color === 'gray') {
                     newColor = 'blue';
                 } else if (this.dataset.color === 'blue') {
-                    newColor = 'gray';
+                    newColor = 'green';
+                } else if (this.dataset.color === 'green') {
+                	newColor = 'red';
+                } else if (this.dataset.color === 'red') {
+                	newColor = 'gray';
                 }
                 var list = document.querySelectorAll('#chooser .command');
                 for (var i = 0; i < list.length; i++) {
