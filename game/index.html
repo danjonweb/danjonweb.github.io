@@ -116,7 +116,7 @@
         	z-index: 1;
         }
         .command[data-command="m"][data-color="gray"]:before {
-        	background: 0px 0 url('img/gray-commands-32.png');
+        	background: blue 0px 0 url('img/gray-commands-32.png');
         }
         .command[data-command="cw"][data-color="gray"]:before {
         	background: -64px 0 url('img/gray-commands-32.png');
@@ -214,7 +214,7 @@
         // -320 = ccw
         // -128 = j
             .command[data-command="m"][data-color="gray"]:before {
-            	background: 0px 0 / auto 32px url('img/gray-commands-64.png');
+            	background: red 0px 0 / auto 32px url('img/gray-commands-64.png');
             }
             .command[data-command="cw"][data-color="gray"]:before {
             	background: -64px 0 / auto 32px url('img/gray-commands-64.png');
@@ -372,7 +372,7 @@
         var COMMAND_SPEED = 600;
         // When displaying text
         var DISPLAY_TIMER;
-
+        
         function cellAboveCell(n) {
             if (n === -1) {
                 return -1;
