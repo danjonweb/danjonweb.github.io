@@ -136,6 +136,9 @@
         .command[data-command="s2"][data-color="gray"]:before {
         	background: -192px 0 url('img/gray-commands-32.png');
         }
+        .command[data-command="b"][data-color="gray"]:before {
+        	background: -224px 0 url('img/gray-commands-32.png');
+        }
         
         .command[data-command="m"][data-color="blue"]:before {
         	background: 0px 0 url('img/blue-commands-32.png');
@@ -157,6 +160,9 @@
         }
         .command[data-command="s2"][data-color="blue"]:before {
         	background: -192px 0 url('img/blue-commands-32.png');
+        }
+        .command[data-command="b"][data-color="blue"]:before {
+        	background: -224px 0 url('img/blue-commands-32.png');
         }
         
         .command[data-command="m"][data-color="green"]:before {
@@ -180,6 +186,9 @@
         .command[data-command="s2"][data-color="green"]:before {
         	background: -192px 0 url('img/green-commands-32.png');
         }
+        .command[data-command="b"][data-color="green"]:before {
+        	background: -224px 0 url('img/green-commands-32.png');
+        }
         
         .command[data-command="m"][data-color="red"]:before {
         	background: 0px 0 url('img/red-commands-32.png');
@@ -201,6 +210,9 @@
         }
         .command[data-command="s2"][data-color="red"]:before {
         	background: -192px 0 url('img/red-commands-32.png');
+        }
+        .command[data-command="b"][data-color="red"]:before {
+        	background: -224px 0 url('img/red-commands-32.png');
         }
         
         /* Retina */
@@ -233,6 +245,9 @@
             }
             .command[data-command="s2"][data-color="gray"]:before {
             	background: -192px 0 / auto 32px url('img/gray-commands-64.png');
+            }
+            .command[data-command="b"][data-color="gray"]:before {
+            	background: -384px 0 url('img/gray-commands-64.png');
             }
             
             .command[data-command="m"][data-color="blue"]:before {
@@ -630,15 +645,15 @@
             this.scale = 1;
             if (this.direction === 'n') {
                 this.xSpeed = 0;
-                this.ySpeed = -this.speed * 2;
+                this.ySpeed = -this.speed * 3;
             } else if (this.direction === 'e') {
-                this.xSpeed = this.speed * 2;
+                this.xSpeed = this.speed * 3;
                 this.ySpeed = 0;
             } else if (this.direction === 's') {
                 this.xSpeed = 0;
-                this.ySpeed = this.speed * 2;
+                this.ySpeed = this.speed * 3;
             } else if (this.direction === 'w') {
-                this.xSpeed = -this.speed * 2;
+                this.xSpeed = -this.speed * 3;
                 this.ySpeed = 0;
             }
         }
@@ -727,12 +742,12 @@
 
                 this.current_frame = this.start_frame + 1;
 
-                var maxDistance = (this.direction === 'n' || this.direction === 's') ? 2 * CELL_WIDTH : 2 * CELL_HEIGHT;
+                var maxDistance = (this.direction === 'n' || this.direction === 's') ? 3 * CELL_WIDTH : 3 * CELL_HEIGHT;
                 if (this.distance < maxDistance) {
                     this.xPos += this.xSpeed;
                     this.yPos += this.ySpeed;
                     this.distance += (Math.abs(this.xSpeed) + Math.abs(this.ySpeed));
-                    this.scale = -0.0001 * Math.pow(this.distance, 2) + 0.0083 * (this.distance) + 1;
+                    this.scale = -0.0001 * Math.pow(this.distance, 2) + 0.0104 * (this.distance) + 1;
                 } else {
                     this.requestStop = true;
                 }
@@ -1214,6 +1229,7 @@
                 <div class="box command" data-command="a" data-color="gray"></div>
                 <div class="box command" data-command="s1" data-color="gray"></div>
                 <div class="box command" data-command="s2" data-color="gray"></div>
+                <div class="box command" data-command="b" data-color="gray"></div>
                 <div class="box" id="edit" data-state='off'>Edit</div>
                 <div style="clear: both;"></div>
             </div>
