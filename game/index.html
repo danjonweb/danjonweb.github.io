@@ -750,7 +750,7 @@
                     this.xPos += this.xSpeed;
                     this.yPos += this.ySpeed;
                     this.distance += (Math.abs(this.xSpeed) + Math.abs(this.ySpeed));
-                    this.scale = -0.0001 * Math.pow(this.distance, 2) + 0.0104 * (this.distance) + 1;
+                    this.scale = (-0.0022 * Math.pow(this.distance, 2) + 0.4167 * (this.distance) + 100) / 100.0;
                 } else {
                     this.requestStop = true;
                 }
